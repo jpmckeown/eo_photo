@@ -15,6 +15,9 @@ library(countrycode)
 library(Hmisc)
 
 # include('helpers.R')
+source <- c('wikimedia', 'pixnio', 'pixabay', 'unsplash')
+# countSource <- as.data.frame(cbind(source, 0))
+# names(countSource)[2] <- 'count'
 
 country_count <- 0
 country_found <- vector()
@@ -47,9 +50,45 @@ for (i in seq_along(allRead)) {
       iso3c <- countrycode(country, origin = 'country.name', destination = 'iso3c')
       iso3c_found[country_count] <- iso3c
       
-      print(paste(iso3c, country))
+      # print(paste(iso3c, country))
+      # ready to count photos in this country      
+      photoID <- 0
       
     } # country label 
+    
+    # photo
+    if (expectPhoto && grepl('https', line)) {
+      
+      photoID <- photoID +1
+      imageFileAddr <- line  # default
+      landingPageAddr <- ''
+      
+      if (grepl('commons.wikimedia', line)) {
+        landingPageAddr <- line
+      } else if (grepl('upload.wikimedia', line)) {
+        imageFileAddr <- line
+      }
+
+      if (grepl('pixnio.com', line)) {
+        landingPageAddr <- line
+      }
+      if (grepl('pixabay.com', line)) {
+      }
+      if (grepl('unsplash.com', line)) {
+      }
+
+      # ext <- grepl('[jpg|png|svg]$', line)
+      # if (grepl('jpg'))
+      expectPhoto <- FALSE
+    }
+    
+    # caption
+    if (grepl('^#', line)) {
+      caption <- cleanCaption(line)
+      expectPhoto <- TRUE
+    }
+    
+    
   } # blank line excluder
 } # read lines
 

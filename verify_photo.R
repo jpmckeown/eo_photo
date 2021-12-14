@@ -150,7 +150,7 @@ for (i in seq_along(allRead)) {
       if(grepl('https', line)) {
         goodURL <- goodURL + 1
         # if (url.exists(line)) {
-        #   print(paste(photoID, line))          
+      print(paste(photoID, line))          
         # } else {
         #   print(paste('DODGY?===', photoID, line))
         # }
@@ -167,7 +167,7 @@ for (i in seq_along(allRead)) {
     
     # caption
     if (grepl('^#', line)) {
-      caption <- cleanCaption(line)
+      # caption <- cleanCaption(line)
       expectPhoto <- TRUE
     }
     
