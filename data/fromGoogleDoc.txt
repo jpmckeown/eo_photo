@@ -1,4 +1,3 @@
-Downloaded 13 December 2021
 Photos for Country Data Map Project
  
 We are trying to compile data and images on every country to demonstrate either its progress or lack thereof toward achieving sustainability. One area we need help with is the gathering of 3-5 photos for each country. The photos should ideally represent, in part, the most important information presented. 
@@ -37,7 +36,7 @@ https://pixnio.com/nature-landscapes/wetlands-and-swamps/dry-wetlands-in-summer-
 *** Albania:  
 Photos showing air pollution, poor waste management, agriculture (which represents a large part of their economy), crowded city
 
-#Albania’s biggest city, Tirana
+#Albania’s biggest city,Tirana
 https://commons.wikimedia.org/wiki/File:Tirana_from_South.jpg
 
 #Farmer in Northern Albania
@@ -175,17 +174,17 @@ https://commons.wikimedia.org/wiki/File:Couple_in_Wedding_Dress_-_Palace_of_the_
 #Of the more than one million seals which inhabited the shores and islands of the Caspian a century ago fewer than 10 percent remain, and the species has been declared endangered. 
 ​​
 https://commons.wikimedia.org/wiki/File:Stamp_of_Azerbaijan_-_1997_-_Colnect_879218_-_Caspian_Seal_Phoca_caspica.jpeg
+
 *** Bahamas: 
 Photos reflecting -
-#Crystal clear ocean water and sandy beaches favor a heavy tourism
+#Crystal clear ocean water and sandy beaches favor a heavy tourism-based economy
 
 https://commons.wikimedia.org/wiki/File:Warwick_Paradise_in_Island_Bahamas.jpg
 
-#Agriculture especially fruits as well as fishing are large industries. 
+#Serious concerns have been raised about coral reef damage by luxury cruise ships anchored offshore.
 
-https://pixabay.com/photos/search/cay/
+https://commons.wikimedia.org/wiki/File:Bahamas_Cruise_-_ship_exterior_-_June_2018_(3578).jpg
 
-#overfishing, pollution from agriculture 
 
 https://commons.wikimedia.org/wiki/File:Trawlers_overfishing_cod.jpg
 
@@ -204,11 +203,8 @@ https://commons.wikimedia.org/wiki/File:Dugong_Marsa_Alam.jpg
 
 https://commons.wikimedia.org/wiki/File:Colours_of_the_Persian_Gulf_ESA353290.jpg
 
-#water scarcity
 
-https://pixabay.com/photos/search/water%20shortage/
-
-#population growth has been driven almost entirely by immigration of low wage workers from South Asia
+#Population growth has been driven almost entirely by immigration of low wage workers from South Asia
 
 https://commons.wikimedia.org/wiki/File:Migrant_workers_in_West_Bay_Doha.jpg
 
@@ -219,15 +215,16 @@ Photos reflecting -
 
 https://cdn.pixabay.com/photo/2019/11/01/12/15/bangladesh-4594049_1280.jpg
 
+
 #Billboard promoting girls’ education
 
 ​​
 
 https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Billboard_Promoting_Girls%27_Education_-_Tobolchuri_-_Chittagong_Hill_Tracts_-_Bangladesh_%2813241169394%29.jpg/640px-Billboard_Promoting_Girls%27_Education_-_Tobolchuri_-_Chittagong_Hill_Tracts_-_Bangladesh_%2813241169394%29.jpg
 
-#rapid and unplanned urbanisation
+#Many of Bangladesh’s evironmental problems are driven by rapid and unplanned urbanisation
 
-https://pixabay.com/photos/search/dhaka/
+https://commons.wikimedia.org/wiki/File:Dhaka_14th_March_(32624769393).jpg
 
 #climate-induced extreme events
 
@@ -324,6 +321,7 @@ https://commons.wikimedia.org/wiki/File:Red-bellied_tamarin_(Saguinus_labiatus)_
 #water pollution.
 
 https://commons.wikimedia.org/wiki/File:Benin_river.jpg
+
 *** Bhutan
 Photos reflecting-
 #Manas National Forest may be listed as endangered because of encroachment from farm activity 
@@ -352,7 +350,7 @@ https://commons.wikimedia.org/wiki/File:Forest,_Santa_Criz_Dept,_Bolivia.jpg
 
 https://commons.wikimedia.org/wiki/File:Circle_of_life%3F.jpg
 
-<missing caption>
+#<missing caption>
 https://pxhere.com/en/photo/1413610
 
 #The country has among the highest fertility and infant mortality rates and lowest average life expectancies in Latin America.
@@ -423,6 +421,7 @@ https://commons.wikimedia.org/wiki/File:Brunei_Pumpjack-2.jpg
 https://commons.wikimedia.org/wiki/File:Brunei_City_Mosque_-_panoramio.jpg
 
 #Brunei government’s introduction of a new Sharia penal code (2019) poses grave threats to fundamental human rights
+
 #Sultan Hassanal Bolkiah
 https://snl.no/Hassanal_Bolkiah_Muizaddin_Waddaulah
 
@@ -584,7 +583,7 @@ https://commons.wikimedia.org/wiki/File:Agriculture_au_tchad.jpg
 
 https://commons.wikimedia.org/wiki/File:COVID-19_Equipments_to_Chile_(05890121).jpg
 
-#Population is still growing, largely driven by immigration. Fastest immigration rate in South America.
+#Population is still growing, largely driven by immigration - the fastest immigration rate in South America.
 
 https://wikimapia.org/75583/es/Centro-de-Justicia-de-Santiago
 
@@ -595,9 +594,9 @@ https://commons.wikimedia.org/wiki/File:Montegrande_in_Northern_Chile.jpg
 
 
 
-#Global demand for the country’s most valuable resources copper, lithium, avocados, salmon, paper pulp 
+#Global demand for the country’s most valuable resources copper, lithium, avocados, salmon, paper pulp. A salmon farm off the coast of Chile.
 
-https://pixabay.com/photos/search/harvest%20crates/
+https://commons.wikimedia.org/wiki/File:Chilean_farmed_salmon_farms_-_panoramio.jpg
 
 
 *** China
@@ -925,11 +924,11 @@ https://commons.wikimedia.org/wiki/File:Ni%C3%B1os_pescadores_en_Kogo,_Guinea_Ec
 
 
 
-#The primary threat to wildlife in Eritrea is habitat loss.
+#The primary threat to wildlife is habitat loss.
 https://commons.wikimedia.org/wiki/File:Yellow-billed_Turacos_in_Equatorial_Guinea_2006.jpg
 
 
-#Eritrea’s citizens live very modestly with 80% working in the agricultural sector. 
+#Citizens live very modestly with 80% working in the agricultural sector. 
 https://commons.wikimedia.org/wiki/File:Mujer_ecuatoguineana_vendiendo_acelgas.png
 
 *** Eritrea
@@ -957,7 +956,9 @@ https://commons.wikimedia.org/wiki/File:Estonia_Endla_Nature_Reserve_07_Forest.j
 
 
 
-#Pollution of the environment has been cut considerably since 1990 following the economic collapse and as a result of investments in the environment. https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Kaberneeme%2C_Estonia%2C_2012-08-12%2C_DD_04.jpg/800px-Kaberneeme%2C_Estonia%2C_2012-08-12%2C_DD_04.jpg
+#Pollution of the environment has been cut considerably since 1990 following the economic collapse and as a result of investments in the environment.
+
+https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Kaberneeme%2C_Estonia%2C_2012-08-12%2C_DD_04.jpg/800px-Kaberneeme%2C_Estonia%2C_2012-08-12%2C_DD_04.jpg
 
 
 
@@ -1453,6 +1454,24 @@ https://images.unsplash.com/photo-1511219096939-ce77f5f44cc8?ixid=MnwxMjA3fDB8MH
 https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/DingleMen.jpg/640px-DingleMen.jpg
 
 
+***ISRAEL
+
+#With urban development taking over about five square miles of open space every five years, Israel’s wildlife is in steep decline.
+
+https://commons.wikimedia.org/wiki/File:Tel_Aviv_Port_Lowshot.jpg
+
+
+
+#Israel’s high fertility rate (averaging three children per woman) is 50 percent higher than most other Western countries.
+
+ 
+https://commons.wikimedia.org/wiki/File:Kids_in_Jerusalem_(3271334451).jpg
+
+#The Griffon Vulture population is in great danger of extinction due to unsuitable field conditions, worsening each year.
+
+
+https://commons.wikimedia.org/wiki/File:Griffon_vulture_landing.jpg
+
 *** ITALY
 
 #The image shows high levels of nitrogen dioxide in the Po Valley in northern Italy as a result of traffic and the combustion of fossil fuel in industrial processes.
@@ -1691,8 +1710,7 @@ https://images.unsplash.com/photo-1622959185723-7cc78767d064?ixid=MnwxMjA3fDB8MH
 https://images.unsplash.com/photo-1566082544790-53f82bed239e?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1336&q=80
 
 
-#Health spending in Latvia is among the lowest in the EU, resulting in considerable resource constraints
-within the health system. 
+#Health spending in Latvia is among the lowest in the EU, resulting in considerable resource constraints within the health system. 
 
 https://upload.wikimedia.org/wikipedia/commons/thumb/f/f7/Jelgava_town_hospital_-_Igors_Jefimovs_-_Panoramio.jpg/640px-Jelgava_town_hospital_-_Igors_Jefimovs_-_Panoramio.jpg
 
@@ -2237,6 +2255,25 @@ https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Niger_millet_Koremairw
 https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Hippos_niger_2006_river.jpg/640px-Hippos_niger_2006_river.jpg
 
 
+
+***NIGERIA
+
+#The individual Nigerian consumes minimal resources yet as a whole the country has almost twice as many people than it can sustain.  A market in Lagos. 
+
+
+https://commons.wikimedia.org/wiki/File:2005_market_Lagos_Nigeria_12129005.jpg
+
+#Environmental health-related risks are becoming a primary concern in Nigeria due to air pollution, water pollution, oil spillage, deforestation, desertification, erosion, and flooding.
+
+
+
+https://commons.wikimedia.org/wiki/File:Lagos_Street_at_high_tide.jpg
+
+#While the Nigerian Government provides contraceptives and other family planning commodities at no cost, state governments are responsible for getting the products to the clinics, pharmacies and other health facilities where women can access them. 
+
+<Missing URL>
+
+
 *** NORTH KOREA
 
 #Scientific American reported people cut down trees on a massive scale, both for fuel but also to clear room for farming.  
@@ -2406,6 +2443,22 @@ https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Fishing_Philippines_st
 
 https://images.unsplash.com/photo-1507675841101-8c757cb4cc6d?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1480&q=80
 
+***POLAND
+#Forest cover has been increasing since the mid 1990s and reached 29.3% of the country's territory in 2012.
+
+https://commons.wikimedia.org/wiki/File:Poland_forests.jpg
+
+
+#Poland enacted a near total ban on abortion even with public opinion polls that show a majority of citiizens opposed additional restrictions.
+
+https://commons.wikimedia.org/wiki/File:Protest_in_Gdansk_against_Poland%27s_new_abortion_laws_24.10.2020.jpg
+
+#Poland has the worst air pollution in the European Union. 
+
+https://commons.wikimedia.org/wiki/File:Warszawski_smog_(22798350941).jpg
+
+
+
 
 *** PORTUGAL
 
@@ -2527,7 +2580,7 @@ https://upload.wikimedia.org/wikipedia/commons/thumb/2/25/Rwandan_family.jpg/640
 
 #Rwanda is 50% Catholic and their health centers are many citizens only health care option. Although the Catholic church forbids birth control, the church recognizes the practicality of the need in limiting childbirth and protecting against HIV.
 
-
+<missing URL>
 
 #Women make up a majority of the legislature in Rwanda with 49 out of 80 seats in the lower house and 10 of 26 in the upper house. 
 
@@ -2662,6 +2715,24 @@ https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Family-Jelen_1959.jpg/
 
 
 https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/Peat_Bog_%2815870737355%29.jpg/640px-Peat_Bog_%2815870737355%29.jpg
+
+
+***SOLOMON ISLANDS
+
+#Industrial logging threatens the Islands’ biodiversity. This path leads to a logging camp that is harvesting old growth forest on the island of Nggatokae in the Western Province of the Solomon Islands.
+
+
+https://commons.wikimedia.org/wiki/File:Walking_to_Logging_Camp.jpg
+
+#Gender equality is still a challenge; Only 8% of seats in Parliament are held by women. Solomon Islanders march against gender-based violence. 
+
+https://commons.wikimedia.org/wiki/File:16_Days_of_Activism_campaign_-_Solomon_Islands_(14038323737).jpg
+
+
+#The Convention on Biological Diversity recognizes the Solomon Islands as a “Centre of Plant Diversity”, counting 4,500 species of plants.
+
+
+https://commons.wikimedia.org/wiki/File:Malaita,_Solomon_Island_(22673896083).jpg
 
 
 ***SOMALIA
