@@ -35,17 +35,19 @@ for (i in seq_along(allRead)) {
       # get country
       country <- sub("^[*][*][*][ ]*([A-Z|a-z| ]*)[-|:| ]*", "\\1", line)
       
-      # not needed while only checking countries included
-      # country <- str_to_title(country)
-      # if (country == 'Guineabissau') {
-      #   country <- 'Guinea-Bissau'
-      # }
+      # clean upperCase 
+      country <- str_to_title(country)
+      grepl('Guineabissau', 'Guinea-Bissau', country)
+      grepl('Republic Of The Congo', 'Republic of the Congo', country)
+      grepl('Democratic Republic Of The Congo', 'Democratic Republic of the Congo', country)
       
       country_count <- country_count + 1
       country_found[country_count] <- country
 
       iso3c <- countrycode(country, origin = 'country.name', destination = 'iso3c')
       iso3c_found[country_count] <- iso3c
+      
+      print(paste(iso3c, country))
       
     } # country label 
   } # blank line excluder

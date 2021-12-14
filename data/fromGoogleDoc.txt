@@ -21,14 +21,14 @@ For each photo include source (link) and caption as to what it represents. Have 
 *** Afghanistan: 
 Photos showing any of: poor healthcare, lack of adequate girls education, large families. Environmental woes: including lowered water tables, desiccation of wetlands, widespread loss of vegetative cover, erosion and loss of wildlife
 
-~Inadequate female education
+#Inadequate female education
 https://pixnio.com/people/children-kids/afghan-girls-receive-food-aid-and-education
 
 
-Large Afghan family
+#Large Afghan family
 https://upload.wikimedia.org/wikipedia/commons/thumb/3/37/Afghan_family_Pashtun_home.JPEG/640px-Afghan_family_Pashtun_home.JPEG
 
-~Dessicated wetland
+#Dessicated wetland
 https://pixnio.com/nature-landscapes/wetlands-and-swamps/dry-wetlands-in-summer-time
 
 
@@ -49,25 +49,21 @@ https://commons.wikimedia.org/wiki/File:Albanian_children_at_school.jpg
 https://pixnio.com/miscellaneous/smoke-technology-toxic-air-pollution-climate-factory
 
 *** Algeria:  
-Pollution, oil and gas industry, over-grazing and soil erosion, water scarcity, pollution
 
-#Hybrid power plant
-https://commons.wikimedia.org/wiki/File:Hybrid_Power_Plant_in_Laghouat_Province,_Algeria.jpg
+#Algeria has large proved reserves of crude oil and natural gas, as well as resources that already are connected to world markets through an extensive natural gas pipeline network.
 
 
 
-
+https://commons.wikimedia.org/wiki/File:Oil_and_natural_gas_basins_and_pipeline_infrastructure_in_Algeria_(29079856511).png
 
 
 
 
-
-
-#Reforestation efforts combat desertification
+#4/5 of Algeria is desert
 https://commons.wikimedia.org/wiki/File:Lone_tree_in_the_desert.jpg
 
+#Algeria imports roughly half of all the food it needs for its growing population.
 
-#Algerian university students
 https://commons.wikimedia.org/wiki/File:Wikipedia_Education_Program_Algeria_V2_Ceremony_(53).jpg
 
 *** Angola:  
@@ -86,16 +82,16 @@ https://commons.wikimedia.org/wiki/File:Agroforestry_contour_planting.jpg
 https://commons.wikimedia.org/wiki/File:Water_pollution_due_to_plastic.jpg
 
 
-*** Antigua & Barbuda: 
-destruction of forests, girls in school, large hotels or other tourism, sugar cane plantation
+*** Antigua & Barbuda
 
-#Tourism
+#Tourism threatens the remaining forest as well as the mangroves which are being cleared for large-scale hotels.
 https://commons.wikimedia.org/wiki/File:St_John%27s,_Antigua_and_Barbuda_-_panoramio_(1).jpg
 
-#Sugar mill on a plantation
+#Most of the trees were destroyed in order to make room for the sugar cane plantations.
 https://commons.wikimedia.org/wiki/File:Plantation_sugar_mills.jpg
 
-#Girls in school
+
+#Education in Antigua and Barbuda has had some successes largely as the result of mandatory school enrollment for all children aged five to 16.
 https://commons.wikimedia.org/wiki/File:Antigua-_Buckleys_Primary_School_(7178622314).jpg
 
 
@@ -111,6 +107,7 @@ https://commons.wikimedia.org/wiki/File:Selva_montana_de_las_Yungas_en_Catamarca
 
 #Soybean farming
 https://commons.wikimedia.org/wiki/File:Sembrado_de_soja_en_argentina.jpg
+
 *** Armenia: 
 rural poverty, pollution, mountainous terrain, example of climate change affect
 
@@ -129,6 +126,7 @@ https://commons.wikimedia.org/wiki/File:Teghut_Mine_-_polluted_Shnogh_River_meet
 https://commons.wikimedia.org/wiki/File:Armenian_Genocide_Remembrance_Day_in_Tehran,_Iran_2017-04-24_01.jpg
 
 
+
 *** Australia: 
 invasive animal species, water scarcity, population growth along coastline, great barrier reef, clogged roads
 
@@ -140,6 +138,7 @@ https://commons.wikimedia.org/wiki/File:Oryctolagus_cuniculus_Tasmania_2.jpg
 
 #"Climate Angel" protestors advocating for sustainability
 https://commons.wikimedia.org/wiki/File:Climate_Angels_outside_the_Australian_Government_offices_-_Extinction_Rebellion_Melbourne_-_IMG_4443_(33564980458).jpg
+
 *** Austria: 
 forests, organic farming, child or children in a doctor’s office or hospital, mountainous areas
 
@@ -420,7 +419,7 @@ https://commons.wikimedia.org/wiki/File:Brunei_Pumpjack-2.jpg
 
 https://commons.wikimedia.org/wiki/File:Brunei_City_Mosque_-_panoramio.jpg
 
-#Brunei government’s introduction of a new Sharia penal code (2019) poses grave threats to fundamental human rights
+Brunei government’s introduction of a new Sharia penal code (2019) poses grave threats to fundamental human rights
 
 #Sultan Hassanal Bolkiah
 https://snl.no/Hassanal_Bolkiah_Muizaddin_Waddaulah
@@ -724,7 +723,7 @@ https://commons.wikimedia.org/wiki/File:Ayia_Napa,_Cyprus_-_panoramio_(155).jpg
 
 
 
-*** Czech Republic / Czechia
+*** Czech Republic
 #Population growth has modestly been increasing every year due to immigration policies that for the past decade have allowed from twelve thousand to fifty thousand new citizens a year. 
 
 https://commons.wikimedia.org/wiki/File:Prague_crowd_Mal%C3%A1_Strana.jpg
@@ -741,7 +740,7 @@ https://commons.wikimedia.org/wiki/File:Illegal_landfill_in_natural_monumet_Nad_
 
 
 
-*** Democratic Republic of The Congo
+*** Democratic Republic of the Congo
 #With half of Africa's forests and water resources and trillion-dollar mineral reserves the country must navigate the pressures on the demand for the extraction of its natural resources and the consequential environmental damages it causes.
 
 
@@ -871,7 +870,7 @@ https://commons.wikimedia.org/wiki/File:Market,_Maubisse,_East_Timor_(312833929)
 
 https://commons.wikimedia.org/wiki/File:CAMPA%C3%91A_LA_MANO_SUCIA_DE_CHEVRON_-_11532358094.jpg
 
-#In most families, women are not allowed to work and completely depend on their husbands financially.  
+In most families, women are not allowed to work and completely depend on their husbands financially.  
 
 <missing URL>
 
@@ -1024,14 +1023,15 @@ https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/Fiji_International_Aug
 *** Finland
 #Helsinki Cathedral
 
-https://unsplash.com/photos/bpDJvls-h-0
-
 https://images.unsplash.com/photo-1538332576228-eb5b4c4de6f5?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2250&q=80
+
+https://unsplash.com/photos/bpDJvls-h-0
 
 
 #More than 70% of Finland’s land area is forest, making it one of the most forested countries in the world. 
 
 https://images.unsplash.com/photo-1601272564986-4d4fb56d0c4c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=975&q=80
+
 
 
 #Finland has the cleanest air of the EU countries and the third cleanest air in the world after Canada and Iceland.  
@@ -1076,6 +1076,7 @@ https://upload.wikimedia.org/wikipedia/commons/thumb/2/26/PlacedesPalmistes.JPG/
 
 
 *** Gabon
+
 #Construction of logging roads open interior forest areas to exploitation.
 
 https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/Logging_Trucks_%2846170117302%29.jpg/640px-Logging_Trucks_%2846170117302%29.jpg
@@ -1461,16 +1462,14 @@ https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/DingleMen.jpg/640px-Di
 https://commons.wikimedia.org/wiki/File:Tel_Aviv_Port_Lowshot.jpg
 
 
-
 #Israel’s high fertility rate (averaging three children per woman) is 50 percent higher than most other Western countries.
-
  
 https://commons.wikimedia.org/wiki/File:Kids_in_Jerusalem_(3271334451).jpg
 
 #The Griffon Vulture population is in great danger of extinction due to unsuitable field conditions, worsening each year.
 
-
 https://commons.wikimedia.org/wiki/File:Griffon_vulture_landing.jpg
+
 
 *** ITALY
 
@@ -2269,7 +2268,7 @@ https://commons.wikimedia.org/wiki/File:2005_market_Lagos_Nigeria_12129005.jpg
 
 https://commons.wikimedia.org/wiki/File:Lagos_Street_at_high_tide.jpg
 
-#While the Nigerian Government provides contraceptives and other family planning commodities at no cost, state governments are responsible for getting the products to the clinics, pharmacies and other health facilities where women can access them. 
+While the Nigerian Government provides contraceptives and other family planning commodities at no cost, state governments are responsible for getting the products to the clinics, pharmacies and other health facilities where women can access them. 
 
 <Missing URL>
 
@@ -2578,7 +2577,7 @@ https://images.unsplash.com/photo-1570340831042-040b3999690c?ixid=MnwxMjA3fDB8MH
 https://upload.wikimedia.org/wikipedia/commons/thumb/2/25/Rwandan_family.jpg/640px-Rwandan_family.jpg
 
 
-#Rwanda is 50% Catholic and their health centers are many citizens only health care option. Although the Catholic church forbids birth control, the church recognizes the practicality of the need in limiting childbirth and protecting against HIV.
+Rwanda is 50% Catholic and their health centers are many citizens only health care option. Although the Catholic church forbids birth control, the church recognizes the practicality of the need in limiting childbirth and protecting against HIV.
 
 <missing URL>
 
@@ -2848,7 +2847,7 @@ https://upload.wikimedia.org/wikipedia/commons/thumb/a/ae/Kreuzf-Hafen-st-lucia.
 https://images.unsplash.com/photo-1585420966319-78f5b8b1d9bb?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1336&q=80
 
 
-***ST.VINCENT/GRENADINES
+***ST. VINCENT & GRENADINES
 
 #St. Vincent and the Grenadines are witnessing population levels four times greater than what is sustainable. 
 
@@ -3321,8 +3320,4 @@ https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/Bumi_Hills_Anti-Poachi
 #Gains have been made in education and gender equality the past 20 years but significant gaps still remain. 
 
 https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Delphine_at_her_high_school%2C_Zimbabwe_%2836938574942%29.jpg/640px-Delphine_at_her_high_school%2C_Zimbabwe_%2836938574942%29.jpg
-
-
-
-
 
