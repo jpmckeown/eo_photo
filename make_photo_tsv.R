@@ -16,7 +16,7 @@ library(Hmisc)
 
 # include('helpers.R')
 # how many from each photo platform/provider
-provider <- c('wikimedia', 'pixnio', 'pixabay', 'unsplash', 'freeimages', 'other')
+provider <- c('wikimedia', 'unsplash', 'pixnio', 'pixabay', 'freeimages', 'other')
 numSource <- rep(0, length(provider))
 names(numSource) <- provider
 
@@ -51,7 +51,7 @@ for (i in seq_along(allRead)) {
       iso3c <- countrycode(country, origin = 'country.name', destination = 'iso3c')
       iso3c_found[country_count] <- iso3c
       
-      print(paste(iso3c, country))
+      # print(paste(iso3c, country))
       # ready to count photos in this country      
       photoID <- 0
       
@@ -73,7 +73,7 @@ for (i in seq_along(allRead)) {
         numSource['wikimedia'] <- numSource['wikimedia'] + 1
       } 
 
-      if (grepl('unsplash.com', line)) {
+      else if (grepl('unsplash.com', line)) {
         numSource['unsplash'] <- numSource['unsplash'] + 1
       }
       
@@ -110,3 +110,4 @@ for (i in seq_along(allRead)) {
 
 close(con)
 print(numSource)
+print(paste('Total photos =', sum(numSource)))
