@@ -49,9 +49,10 @@ df <- data.frame(iso3c = character(),
                  LicenseURL = character(),
                  InfoURL = character(),
                  FileURL = character(),
-                 Format = character(),
                  Width = numeric(),
                  Height = numeric(),
+                 Format = character(),
+                 Provider = character(),
                  stringsAsFactors=FALSE) 
 
 infile <- 'data/fromGoogleDoc.txt'
@@ -62,7 +63,7 @@ for (i in seq_along(allRead)) {
   line = allRead[i]
   
   # ignore header and blank lines
-  if (line != '' && i > 20 && country_count < 5) {
+  if (line != '' && i > 20 && country_count < 199) {
     
     if (grepl('^[*][*][*]', line)) {
       
@@ -95,6 +96,13 @@ for (i in seq_along(allRead)) {
       imageFileAddr <- ''
       landingPageAddr <- ''
       credit <- ''
+      artist <- ''
+      artistURL <- ''
+      license <- ''
+      licenseURL <- ''
+      ext <- ''
+      width <- 0
+      height <- 0
       
       if (grepl('wikimedia.org', line)) {
         if (grepl('commons.wikimedia', line)) {
@@ -102,6 +110,7 @@ for (i in seq_along(allRead)) {
         } else if (grepl('upload.wikimedia', line)) {
           imageFileAddr <- line
         }
+        provider <- 'Wikimedia'
         incr(numSource['wikimedia'])
       } 
 
@@ -112,6 +121,7 @@ for (i in seq_along(allRead)) {
         } else {
           landingPageAddr <- line
         }
+        provider <- 'Unsplash'
         incr(numSource['unsplash'])
       }
       
@@ -120,23 +130,27 @@ for (i in seq_along(allRead)) {
         license <- 'CC0'
         licenseURL <- 'https://pixnio.com/creative-commons-license'
         # creditHTML <- 'Pixnio <a href="https://pixnio.com/">free images</a>'
+        provider <- 'Pixnio'
         incr(numSource['pixnio'])
       }
       
       else if (grepl('pixabay.com', line)) {
         landingPageAddr <- line
         licenseURL <- 'https://pixabay.com/service/license/'
+        provider <- 'Pixabay'
         incr(numSource['pixabay'])
       }
       
       else if (grepl('freeimages.com', line)) {
         landingPageAddr <- line
         licenseURL <- 'https://www.freeimages.com/license'
+        provider <- 'FreeImages'
         incr(numSource['freeimages'])
       }
       
       else {
         landingPageAddr <- line
+        provider <- 'Other'
         incr(numSource['other'])
       }
       
@@ -151,8 +165,16 @@ for (i in seq_along(allRead)) {
       df[p, 'ID'] <- photoID
       df[p, 'Caption'] <- caption
       df[p, 'CreditHTML'] <- credit
+      df[p, 'Artist'] <- artist
+      df[p, 'ArtistURL'] <- artistURL
+      df[p, 'License'] <- license
+      df[p, 'LicenseURL'] <- licenseURL
       df[p, 'FileURL'] <- imageFileAddr
       df[p, 'InfoURL'] <- landingPageAddr
+      df[p, 'Format'] <- ext  
+      df[p, 'Width'] <- width
+      df[p, 'Height'] <- height
+      df[p, 'Provider'] <- provider
       
       expectPhoto <- FALSE
     }
