@@ -11,6 +11,8 @@
 # 2. get file URL
 # 3. download and name with iso3c and photoID
 # 4. get dimensions
+# 5. get artist and licence with API
+# 6. write credit HTML
 
 # Output must be Tab-separated because commas in caption, attribution, and URLs
 # Goal is tsv with columns: Country, iso3c, (photo)ID, format, width, height, Caption, Attribution, File_address, Commons_address
@@ -23,7 +25,9 @@ library(countrycode)
 incr <- function(x) {eval.parent(substitute(x <- x + 1))}
 
 cleanCaption <- function(line) {
+  # stops odd characters
   caption <- stri_encode(line, '', 'UTF-8')
+  # remove prefix
   caption <- sub('#', '', caption)
   caption <- capitalize(caption)
   # remove trailing spaces
@@ -67,6 +71,8 @@ allRead <- readLines(con, warn = FALSE)
 
 for (i in seq_along(allRead)) {
   line = allRead[i]
+  # remove any trailing space
+  line <- trimws(line, which = "right", whitespace = "[ \t\r\n]")
   
   # ignore header and blank lines
   if (line != '' && i > 20 && country_count < 199) {
