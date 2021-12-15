@@ -33,13 +33,20 @@ numSource <- rep(0, length(provider))
 names(numSource) <- provider
 
 country_count <- 0
+p <- 0 # photoCount
 country_found <- vector()
 iso3c_found <- vector()
 
 df <- data.frame(iso3c = character(),
-                 ID = numeric(), 
-                 FileURL = character(), 
+                 ID = numeric(),
+                 Caption = character(),
+                 Artist = character(),
+                 ArtistLink = character(),
                  InfoURL = character(),
+                 FileURL = character(),
+                 Format = character(),
+                 Width = numeric(),
+                 Height = numeric(),
                  stringsAsFactors=FALSE) 
 
 infile <- 'data/fromGoogleDoc.txt'
@@ -50,7 +57,7 @@ for (i in seq_along(allRead)) {
   line = allRead[i]
   
   # ignore header and blank lines
-  if (line != '' && i > 20) {
+  if (line != '' && i > 20 && country_count < 5) {
     
     if (grepl('^[*][*][*]', line)) {
       
@@ -63,7 +70,7 @@ for (i in seq_along(allRead)) {
       grepl('Republic Of The Congo', 'Republic of the Congo', country)
       grepl('Democratic Republic Of The Congo', 'Democratic Republic of the Congo', country)
       
-      country_count <- country_count + 1
+      incr(country_count)
       country_found[country_count] <- country
 
       iso3c <- countrycode(country, origin = 'country.name', destination = 'iso3c')
@@ -78,6 +85,7 @@ for (i in seq_along(allRead)) {
     # photo
     if (expectPhoto && grepl('https', line)) {
       
+      incr(p)
       photoID <- photoID + 1
       imageFileAddr <- ''
       landingPageAddr <- ''
@@ -122,8 +130,14 @@ for (i in seq_along(allRead)) {
       # ext <- grepl('[jpg|png|svg]$', line)
       # if (grepl('jpg'))
       
-      rowVector <- c(iso3c, photoID, imageFileAddr, landingPageAddr)
-      rbind(df, rowVector)
+      row <- c(iso3c, as.numeric(photoID), imageFileAddr, landingPageAddr)
+      # print(row)
+      # rbind(df, rowVector)
+      df[p, 'iso3c'] <- iso3c
+      df[p, 'ID'] <- photoID
+      df[p, 'caption'] <- caption
+      df[p, 'FileURL'] <- imageFileAddr
+      df[p, 'InfoURL'] <- landingPageAddr
       
       expectPhoto <- FALSE
     }
