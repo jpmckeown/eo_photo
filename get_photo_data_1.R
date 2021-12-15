@@ -58,7 +58,8 @@ p <- 0 # photoCount
 country_found <- vector()
 iso3c_found <- vector()
 
-df <- data.frame(iso3c = character(),
+df <- data.frame(Country = character(),
+                 iso3c = character(),
                  ID = numeric(),
                  Caption = character(),
                  Provider = character(),
@@ -136,10 +137,10 @@ for (i in seq_along(allRead)) {
       } 
 
       else if (grepl('unsplash.com', url)) {
-        if (grepl('images.unsplash.com/photo', url)) {
+        if (grepl('images.unsplash.com', url)) {
           imageFileAddr <- url
           #creditHTML <- 'Photo from <a href="https://unsplash.com/">Unsplash.com</a>'
-        } else {
+        } else if (grepl('unsplash.com/photos', url)) {
           landingPageAddr <- url
         }
         provider <- 'Unsplash'
@@ -169,9 +170,9 @@ for (i in seq_along(allRead)) {
       }
       
       else if (grepl('freeimages.com', url)) {
-        if (grepl('www.freeimages')) {
+        if (grepl('www.freeimages', url)) {
           landingPageAddr <- url 
-        } else if (grepl('images.freeimages')) {
+        } else if (grepl('images.freeimages', url)) {
           imageFileAddr <- url
         }
         licenseURL <- 'https://www.freeimages.com/license'
@@ -189,6 +190,7 @@ for (i in seq_along(allRead)) {
       ext <- tolower(file_ext(line))
       if (ext == 'jpeg') { ext <- 'jpg'}
       
+      df[p, 'Country'] <- country
       df[p, 'iso3c'] <- iso3c
       df[p, 'ID'] <- photoID
       df[p, 'Caption'] <- caption
@@ -219,3 +221,5 @@ for (i in seq_along(allRead)) {
 close(con)
 print(numSource)
 print(paste('Total photos =', sum(numSource)))
+
+write_tsv(df, 'data/photo_step_1.tsv')
