@@ -40,6 +40,14 @@ cleanCaption <- function(line) {
   return(caption)
 }
 
+cleanURL <- function(url) {
+  # remove any characters before http
+  line <- gsub('.*http', 'http', line)
+  # remove any trailing space
+  url <- trimws(line, which = "right", whitespace = "[ \t\r\n]")
+  return(url)
+}
+
 # how many from each photo platform/provider
 provider <- c('wikimedia', 'unsplash', 'pixnio', 'pixabay', 'freeimages', 'other')
 numSource <- rep(0, length(provider))
@@ -72,8 +80,6 @@ allRead <- readLines(con, warn = FALSE)
 
 for (i in seq_along(allRead)) {
   line = allRead[i]
-  # remove any trailing space
-  line <- trimws(line, which = "right", whitespace = "[ \t\r\n]")
   
   # ignore header and blank lines
   if (line != '' && i > 20 && country_count < 199) {
@@ -104,8 +110,10 @@ for (i in seq_along(allRead)) {
     # photo
     if (expectPhoto && grepl('https', line)) {
       
+      line <- cleanURL(line)
       incr(p)
-      photoID <- photoID + 1
+      incr(photoID)
+    
       imageFileAddr <- ''
       landingPageAddr <- ''
       credit <- ''
@@ -168,7 +176,8 @@ for (i in seq_along(allRead)) {
       }
       
       # identify photo format jpg png svg
-      ext <- file_ext(line)
+      ext <- tolower(file_ext(line))
+      if (ext == 'jpeg') { ext <- 'jpg'}
       
       row <- c(iso3c, as.numeric(photoID), imageFileAddr, landingPageAddr)
       # print(row)
