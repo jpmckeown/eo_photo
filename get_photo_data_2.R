@@ -31,9 +31,11 @@ fileURL_to_folder <- function(fileURL) {
   return(paste0(folder, '/'))
 }
 
-freeimages_fileURL_to_infoURL <- function(fileAddr) {
-  imgName <- fileURL_to_imgName(fileURL)
-  infoURL <- paste0('https://commons.wikimedia.org/wiki/File:', imgName)
+# https://images.freeimages.com/images/large-previews/e0c/kuwait-tower-1451754.jpg
+# https://www.freeimages.com/photo/kuwait-tower-1451754
+freeimages_fileURL_to_infoURL <- function(fileURL) {
+  imgName <- sub('https://images.freeimages.com/images/large-previews/[a-z|0-9]+/(.*)')
+  infoURL <- paste0('https://www.freeimages.com/photo/', imgName)
   return(infoURL)
 }
 
@@ -42,6 +44,9 @@ photoCount <- 0
 
 # cannot filter because need to keep spreadsheet whole
 # order by Provider desc then process Wikimedia_count rows only
+
+# stop! just loop once and handle Wikimedia, FreeImages, etc
+
 wikimedia_count <- sum(df$Provider == 'Wikimedia')
 df2 <- df[order(df$Provider, decreasing=TRUE), ]
 
@@ -64,4 +69,11 @@ for (i in 1:loopEnd) {
   }
 }
 
+freeimages_count <- sum(df$Provider == 'Wikimedia')
+df2 <- df[order(df2$Provider), ]
+loopEnd <- freeimages_count 
+
+for (i in 1:loopEnd) {
+}
+  
 write_tsv(df2, 'data/photo_step_2.tsv')
