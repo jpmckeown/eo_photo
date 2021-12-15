@@ -6,6 +6,12 @@
 # a country may contain 0+ pairs of caption and image
 # each caption must be followed by a URL address
 
+# Steps
+# 1. fill in all possible without API call or download
+# 2. get file URL
+# 3. download and name with iso3c and photoID
+# 4. get dimensions
+
 # Output must be Tab-separated because commas in caption, attribution, and URLs
 # Goal is tsv with columns: Country, iso3c, (photo)ID, format, width, height, Caption, Attribution, File_address, Commons_address
 
@@ -42,6 +48,7 @@ iso3c_found <- vector()
 df <- data.frame(iso3c = character(),
                  ID = numeric(),
                  Caption = character(),
+                 Provider = character(),
                  CreditHTML = character(),
                  Artist = character(),
                  ArtistURL = character(),
@@ -49,10 +56,9 @@ df <- data.frame(iso3c = character(),
                  LicenseURL = character(),
                  InfoURL = character(),
                  FileURL = character(),
+                 Format = character(),
                  Width = numeric(),
                  Height = numeric(),
-                 Format = character(),
-                 Provider = character(),
                  stringsAsFactors=FALSE) 
 
 infile <- 'data/fromGoogleDoc.txt'
