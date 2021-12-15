@@ -12,9 +12,21 @@
 library(readr)
 library(stringr)
 library(countrycode)
-library(Hmisc)
+# library(Hmisc)
+incr <- function(x) {eval.parent(substitute(x <- x + 1))}
 
-# include('helpers.R')
+cleanCaption <- function(line) {
+  caption <- sub('#', '', line)
+  caption <- capitalize(caption)
+  # remove trailing spaces
+  caption <- trimws(caption, which = "right", whitespace = "[ \t\r\n]")
+  # add final period if missing
+  if (!str_sub(caption, -1) == '.') {
+    caption <- paste0(caption, '.')
+  }
+  return(caption)
+}
+
 # how many from each photo platform/provider
 provider <- c('wikimedia', 'unsplash', 'pixnio', 'pixabay', 'freeimages', 'other')
 numSource <- rep(0, length(provider))
@@ -60,8 +72,8 @@ for (i in seq_along(allRead)) {
     # photo
     if (expectPhoto && grepl('https', line)) {
       
-      photoID <- photoID +1
-      imageFileAddr <- line  # default
+      photoID <- photoID + 1
+      imageFileAddr <- ''
       landingPageAddr <- ''
       
       if (grepl('wikimedia.org', line)) {
@@ -70,28 +82,28 @@ for (i in seq_along(allRead)) {
         } else if (grepl('upload.wikimedia', line)) {
           imageFileAddr <- line
         }
-        numSource['wikimedia'] <- numSource['wikimedia'] + 1
+        incr(numSource['wikimedia'])
       } 
 
       else if (grepl('unsplash.com', line)) {
-        numSource['unsplash'] <- numSource['unsplash'] + 1
+        incr(numSource['unsplash'])
       }
       
       else if (grepl('pixnio.com', line)) {
         landingPageAddr <- line
-        numSource['pixnio'] <- numSource['pixnio'] + 1
+        incr(numSource['pixnio'])
       }
       
       else if (grepl('pixabay.com', line)) {
-        numSource['pixabay'] <- numSource['pixabay'] + 1
+        incr(numSource['pixabay'])
       }
       
       else if (grepl('freeimages.com', line)) {
-        numSource['freeimages'] <- numSource['freeimages'] + 1
+        incr(numSource['freeimages'])
       }
       
       else {
-        numSource['other'] <- numSource['other'] + 1
+        incr(numSource['other'])
       }
       # ext <- grepl('[jpg|png|svg]$', line)
       # if (grepl('jpg'))
@@ -103,7 +115,6 @@ for (i in seq_along(allRead)) {
       caption <- cleanCaption(line)
       expectPhoto <- TRUE
     }
-    
     
   } # blank line excluder
 } # read lines
