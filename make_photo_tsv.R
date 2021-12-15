@@ -110,7 +110,7 @@ for (i in seq_along(allRead)) {
     # photo
     if (expectPhoto && grepl('https', line)) {
       
-      line <- cleanURL(line)
+      url <- cleanURL(line)
       incr(p)
       incr(photoID)
     
@@ -125,29 +125,29 @@ for (i in seq_along(allRead)) {
       width <- 0
       height <- 0
       
-      if (grepl('wikimedia.org', line)) {
-        if (grepl('commons.wikimedia', line)) {
-          landingPageAddr <- line
-        } else if (grepl('upload.wikimedia', line)) {
-          imageFileAddr <- line
+      if (grepl('wikimedia.org', url)) {
+        if (grepl('commons.wikimedia', url)) {
+          landingPageAddr <- url
+        } else if (grepl('upload.wikimedia', url)) {
+          imageFileAddr <- url
         }
         provider <- 'Wikimedia'
         incr(numSource['wikimedia'])
       } 
 
-      else if (grepl('unsplash.com', line)) {
-        if (grepl('images.unsplash.com/photo', line)) {
-          imageFileAddr <- line
+      else if (grepl('unsplash.com', url)) {
+        if (grepl('images.unsplash.com/photo', url)) {
+          imageFileAddr <- url
           credit <- 'Photo from <a href="https://unsplash.com/">Unsplash.com</a>'
         } else {
-          landingPageAddr <- line
+          landingPageAddr <- url
         }
         provider <- 'Unsplash'
         incr(numSource['unsplash'])
       }
       
-      else if (grepl('pixnio.com', line)) {
-        landingPageAddr <- line
+      else if (grepl('pixnio.com', url)) {
+        landingPageAddr <- url
         license <- 'CC0'
         licenseURL <- 'https://pixnio.com/creative-commons-license'
         # creditHTML <- 'Pixnio <a href="https://pixnio.com/">free images</a>'
@@ -155,18 +155,22 @@ for (i in seq_along(allRead)) {
         incr(numSource['pixnio'])
       }
       
-      else if (grepl('pixabay.com', line)) {
-        landingPageAddr <- line
+      else if (grepl('pixabay.com', url)) {
+        if (grepl('cdn.pixabay', url)) {
+          imageFileAddr <- url
+        } else {
+          landingPageAddr <- url 
+        }
         licenseURL <- 'https://pixabay.com/service/license/'
         provider <- 'Pixabay'
         incr(numSource['pixabay'])
       }
       
-      else if (grepl('freeimages.com', line)) {
+      else if (grepl('freeimages.com', url)) {
         if (grepl('www.freeimages')) {
-          landingPageAddr <- line 
+          landingPageAddr <- url 
         } else if (grepl('images.freeimages')) {
-          imageFileAddr <- line
+          imageFileAddr <- url
         }
         licenseURL <- 'https://www.freeimages.com/license'
         provider <- 'FreeImages'
@@ -174,7 +178,7 @@ for (i in seq_along(allRead)) {
       }
       
       else {
-        landingPageAddr <- line
+        landingPageAddr <- url
         provider <- 'Other'
         incr(numSource['other'])
       }
