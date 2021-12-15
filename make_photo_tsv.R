@@ -11,12 +11,14 @@
 
 library(readr)
 library(stringr)
+library(stringi)
 library(countrycode)
 # library(Hmisc)
 incr <- function(x) {eval.parent(substitute(x <- x + 1))}
 
 cleanCaption <- function(line) {
-  caption <- sub('#', '', line)
+  caption <- stri_encode(line, '', 'UTF-8')
+  caption <- sub('#', '', caption)
   caption <- capitalize(caption)
   # remove trailing spaces
   caption <- trimws(caption, which = "right", whitespace = "[ \t\r\n]")
@@ -40,8 +42,11 @@ iso3c_found <- vector()
 df <- data.frame(iso3c = character(),
                  ID = numeric(),
                  Caption = character(),
+                 CreditHTML = character(),
                  Artist = character(),
-                 ArtistLink = character(),
+                 ArtistURL = character(),
+                 License = character(),
+                 LicenseURL = character(),
                  InfoURL = character(),
                  FileURL = character(),
                  Format = character(),
@@ -89,6 +94,7 @@ for (i in seq_along(allRead)) {
       photoID <- photoID + 1
       imageFileAddr <- ''
       landingPageAddr <- ''
+      credit <- ''
       
       if (grepl('wikimedia.org', line)) {
         if (grepl('commons.wikimedia', line)) {
@@ -102,6 +108,7 @@ for (i in seq_along(allRead)) {
       else if (grepl('unsplash.com', line)) {
         if (grepl('images.unsplash.com/photo', line)) {
           imageFileAddr <- line
+          credit <- 'Photo from <a href="https://unsplash.com/">Unsplash.com</a>'
         } else {
           landingPageAddr <- line
         }
@@ -110,16 +117,21 @@ for (i in seq_along(allRead)) {
       
       else if (grepl('pixnio.com', line)) {
         landingPageAddr <- line
+        license <- 'CC0'
+        licenseURL <- 'https://pixnio.com/creative-commons-license'
+        # creditHTML <- 'Pixnio <a href="https://pixnio.com/">free images</a>'
         incr(numSource['pixnio'])
       }
       
       else if (grepl('pixabay.com', line)) {
         landingPageAddr <- line
+        licenseURL <- 'https://pixabay.com/service/license/'
         incr(numSource['pixabay'])
       }
       
       else if (grepl('freeimages.com', line)) {
         landingPageAddr <- line
+        licenseURL <- 'https://www.freeimages.com/license'
         incr(numSource['freeimages'])
       }
       
@@ -127,6 +139,8 @@ for (i in seq_along(allRead)) {
         landingPageAddr <- line
         incr(numSource['other'])
       }
+      
+      # identify format
       # ext <- grepl('[jpg|png|svg]$', line)
       # if (grepl('jpg'))
       
@@ -135,7 +149,8 @@ for (i in seq_along(allRead)) {
       # rbind(df, rowVector)
       df[p, 'iso3c'] <- iso3c
       df[p, 'ID'] <- photoID
-      df[p, 'caption'] <- caption
+      df[p, 'Caption'] <- caption
+      df[p, 'CreditHTML'] <- credit
       df[p, 'FileURL'] <- imageFileAddr
       df[p, 'InfoURL'] <- landingPageAddr
       
