@@ -6,8 +6,8 @@
 # a country may contain 0+ pairs of caption and image
 # each caption must be followed by a URL address
 
-# Steps
-# 1. fill in all possible without API call or download
+# Steps 2-6 in other files
+# 1. do all possible without API call or download
 # 2. get file URL
 # 3. download and name with iso3c and photoID
 # 4. get dimensions
@@ -116,7 +116,7 @@ for (i in seq_along(allRead)) {
     
       imageFileAddr <- ''
       landingPageAddr <- ''
-      credit <- ''
+      creditHTML <- ''
       artist <- ''
       artistURL <- ''
       license <- ''
@@ -138,7 +138,7 @@ for (i in seq_along(allRead)) {
       else if (grepl('unsplash.com', url)) {
         if (grepl('images.unsplash.com/photo', url)) {
           imageFileAddr <- url
-          credit <- 'Photo from <a href="https://unsplash.com/">Unsplash.com</a>'
+          #creditHTML <- 'Photo from <a href="https://unsplash.com/">Unsplash.com</a>'
         } else {
           landingPageAddr <- url
         }
@@ -147,7 +147,9 @@ for (i in seq_along(allRead)) {
       }
       
       else if (grepl('pixnio.com', url)) {
+        # Pixnio only offers Info page, no file address
         landingPageAddr <- url
+        # apparently all on Pixnio are CC0
         license <- 'CC0'
         licenseURL <- 'https://pixnio.com/creative-commons-license'
         # creditHTML <- 'Pixnio <a href="https://pixnio.com/">free images</a>'
@@ -187,13 +189,10 @@ for (i in seq_along(allRead)) {
       ext <- tolower(file_ext(line))
       if (ext == 'jpeg') { ext <- 'jpg'}
       
-      row <- c(iso3c, as.numeric(photoID), imageFileAddr, landingPageAddr)
-      # print(row)
-      # rbind(df, rowVector)
       df[p, 'iso3c'] <- iso3c
       df[p, 'ID'] <- photoID
       df[p, 'Caption'] <- caption
-      df[p, 'CreditHTML'] <- credit
+      df[p, 'CreditHTML'] <- creditHTML
       df[p, 'Artist'] <- artist
       df[p, 'ArtistURL'] <- artistURL
       df[p, 'License'] <- license
