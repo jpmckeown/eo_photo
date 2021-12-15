@@ -68,6 +68,7 @@ df <- data.frame(Country = character(),
                  ArtistURL = character(),
                  License = character(),
                  LicenseURL = character(),
+                 ImageName = character(),
                  InfoURL = character(),
                  FileURL = character(),
                  Format = character(),
@@ -115,6 +116,7 @@ for (i in seq_along(allRead)) {
       incr(p)
       incr(photoID)
     
+      imgName <- ''
       imageFileAddr <- ''
       landingPageAddr <- ''
       creditHTML <- ''
@@ -199,6 +201,7 @@ for (i in seq_along(allRead)) {
       df[p, 'ArtistURL'] <- artistURL
       df[p, 'License'] <- license
       df[p, 'LicenseURL'] <- licenseURL
+      df[p, 'ImageName'] <- imgName
       df[p, 'FileURL'] <- imageFileAddr
       df[p, 'InfoURL'] <- landingPageAddr
       df[p, 'Format'] <- ext
