@@ -1,11 +1,17 @@
-# 2nd step after get_photo_data_1.R and relies on df made there
-df2 <- df  # FileURL will be added, for Wikimedia only 
+# 2nd step after get_photo_data_1.R and relies on df created there
 
-# fix where Wikimedia lacks File_address but has Info_address
-# cannot filter because need to keep spreadsheet whole
+# for Wikimedia only add InfoURL where missing (will have FileURL) 
+
 photoCount <- 0
 
-for (i in 1:nrow(df2)) {
+# cannot filter because need to keep spreadsheet whole
+# order by Provider desc then process Wikimedia_count rows only
+wikimedia_count <- 
+df2 <-   
+
+loopEnd <- wikimedia_count # nrow(df2)
+
+for (i in 1:loopEnd) {
   
   if (df2[i, 'Provider'] == 'Wikimedia') {
     
