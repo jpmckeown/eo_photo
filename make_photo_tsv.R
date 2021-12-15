@@ -15,9 +15,10 @@ library(countrycode)
 library(Hmisc)
 
 # include('helpers.R')
-source <- c('wikimedia', 'pixnio', 'pixabay', 'unsplash')
-# countSource <- as.data.frame(cbind(source, 0))
-# names(countSource)[2] <- 'count'
+# how many from each photo platform/provider
+provider <- c('wikimedia', 'pixnio', 'pixabay', 'unsplash', 'freeimages', 'other')
+numSource <- rep(0, length(provider))
+names(numSource) <- provider
 
 country_count <- 0
 country_found <- vector()
@@ -50,7 +51,7 @@ for (i in seq_along(allRead)) {
       iso3c <- countrycode(country, origin = 'country.name', destination = 'iso3c')
       iso3c_found[country_count] <- iso3c
       
-      # print(paste(iso3c, country))
+      print(paste(iso3c, country))
       # ready to count photos in this country      
       photoID <- 0
       
@@ -63,20 +64,35 @@ for (i in seq_along(allRead)) {
       imageFileAddr <- line  # default
       landingPageAddr <- ''
       
-      if (grepl('commons.wikimedia', line)) {
-        landingPageAddr <- line
-      } else if (grepl('upload.wikimedia', line)) {
-        imageFileAddr <- line
-      }
+      if (grepl('wikimedia.org', line)) {
+        if (grepl('commons.wikimedia', line)) {
+          landingPageAddr <- line
+        } else if (grepl('upload.wikimedia', line)) {
+          imageFileAddr <- line
+        }
+        numSource['wikimedia'] <- numSource['wikimedia'] + 1
+      } 
 
-      if (grepl('pixnio.com', line)) {
-        landingPageAddr <- line
-      }
-      if (grepl('pixabay.com', line)) {
-      }
       if (grepl('unsplash.com', line)) {
+        numSource['unsplash'] <- numSource['unsplash'] + 1
       }
-
+      
+      else if (grepl('pixnio.com', line)) {
+        landingPageAddr <- line
+        numSource['pixnio'] <- numSource['pixnio'] + 1
+      }
+      
+      else if (grepl('pixabay.com', line)) {
+        numSource['pixabay'] <- numSource['pixabay'] + 1
+      }
+      
+      else if (grepl('freeimages.com', line)) {
+        numSource['freeimages'] <- numSource['freeimages'] + 1
+      }
+      
+      else {
+        numSource['other'] <- numSource['other'] + 1
+      }
       # ext <- grepl('[jpg|png|svg]$', line)
       # if (grepl('jpg'))
       expectPhoto <- FALSE
@@ -93,3 +109,4 @@ for (i in seq_along(allRead)) {
 } # read lines
 
 close(con)
+print(numSource)

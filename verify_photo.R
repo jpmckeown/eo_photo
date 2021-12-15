@@ -113,7 +113,6 @@ for (i in seq_along(allRead)) {
   
   # ignore header and blank lines
   if (line != '' && i > 20) {
-    
   if (!grepl('[a-zA-Z0-9]+', line)) {
     # print(paste('Exclude', line))
   } else {
@@ -176,20 +175,20 @@ for (i in seq_along(allRead)) {
       print(paste(country, 'ID', photoID, line))
     }
 
-  }
+  } # GoogleDoc pagebreak symbol excluder
   } # blank line excluder
 } # read lines
 
 close(con)
 
 # check for duplicates
-# if (length(unique(iso3c_found)) == length(iso3c_found)) {
-#   print('Countries appear once each, no duplicates')
-# }
+if (length(unique(iso3c_found)) == length(iso3c_found)) {
+  print('Countries appear once each, no duplicates')
+}
 
 # identify missing countries (versus those on data sheet)
 # load('data/eo.Rda')
 
 missing_iso3c <- setdiff(as.vector(eo$iso3c), iso3c_found)
-# 
+ 
 countrycode(missing_iso3c, origin = 'iso3c', destination = 'country.name')
