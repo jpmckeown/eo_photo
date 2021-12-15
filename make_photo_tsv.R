@@ -163,7 +163,11 @@ for (i in seq_along(allRead)) {
       }
       
       else if (grepl('freeimages.com', line)) {
-        landingPageAddr <- line
+        if (grepl('www.freeimages')) {
+          landingPageAddr <- line 
+        } else if (grepl('images.freeimages')) {
+          imageFileAddr <- line
+        }
         licenseURL <- 'https://www.freeimages.com/license'
         provider <- 'FreeImages'
         incr(numSource['freeimages'])
