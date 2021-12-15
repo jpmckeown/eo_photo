@@ -36,6 +36,12 @@ country_count <- 0
 country_found <- vector()
 iso3c_found <- vector()
 
+df <- data.frame(iso3c = character(),
+                 ID = numeric(), 
+                 FileURL = character(), 
+                 InfoURL = character(),
+                 stringsAsFactors=FALSE) 
+
 infile <- 'data/fromGoogleDoc.txt'
 con = file(infile, "r")
 allRead <- readLines(con, warn = FALSE)
@@ -86,6 +92,11 @@ for (i in seq_along(allRead)) {
       } 
 
       else if (grepl('unsplash.com', line)) {
+        if (grepl('images.unsplash.com/photo', line)) {
+          imageFileAddr <- line
+        } else {
+          landingPageAddr <- line
+        }
         incr(numSource['unsplash'])
       }
       
@@ -95,18 +106,25 @@ for (i in seq_along(allRead)) {
       }
       
       else if (grepl('pixabay.com', line)) {
+        landingPageAddr <- line
         incr(numSource['pixabay'])
       }
       
       else if (grepl('freeimages.com', line)) {
+        landingPageAddr <- line
         incr(numSource['freeimages'])
       }
       
       else {
+        landingPageAddr <- line
         incr(numSource['other'])
       }
       # ext <- grepl('[jpg|png|svg]$', line)
       # if (grepl('jpg'))
+      
+      rowVector <- c(iso3c, photoID, imageFileAddr, landingPageAddr)
+      rbind(df, rowVector)
+      
       expectPhoto <- FALSE
     }
     
