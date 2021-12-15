@@ -1,29 +1,41 @@
 # 2nd step after get_photo_data_1.R and relies on df created there
 
 # for Wikimedia only add InfoURL where missing (will have FileURL) 
+fileAddr_to_infoAddr <- function(fileAddr) {
+  imgName <- sub('https://upload.wikimedia.org/wikipedia/commons/thumb/([A-Z|a-z|0-9]+/[A-Z|a-z|0-9]+)/.*', '\\1', fileURL)
+  return(infoAddr)
+}
+fileURL_to_imgName <- function(fileURL) {
+  imgName <- sub('https://upload.wikimedia.org/wikipedia/commons/thumb/[A-Z|a-z|0-9]+/[A-Z|a-z|0-9]+/([A-Z|a-z|0-9|-|_])+/.*', '\\1', fileURL)
+  return(imgName)
+}
+fileURL_to_folder <- function(fileURL) {
+  folder <- sub('https://upload.wikimedia.org/wikipedia/commons/thumb/([A-Z|a-z|0-9]+/[A-Z|a-z|0-9]+)/.*', '\\1', fileURL)
+  return(paste0(folder, '/'))
+}
+#fileAddr_to_folder(testFileAddr)
 
+# sub('', '', testFileAddr)
 photoCount <- 0
 
 # cannot filter because need to keep spreadsheet whole
 # order by Provider desc then process Wikimedia_count rows only
-wikimedia_count <- 
-df2 <-   
+wikimedia_count <- sum(df$Provider == 'Wikimedia')
+df2 <- df[order(df$Provider, decreasing=TRUE), ]
 
 loopEnd <- wikimedia_count # nrow(df2)
 
 for (i in 1:loopEnd) {
+  #if (df2[i, 'Provider'] == 'Wikimedia') {
   
-  if (df2[i, 'Provider'] == 'Wikimedia') {
-    
-    addr <- as.character(df2[i, 'FileURL'])
-    info <- as.character(df2[i, 'InfoURL'])
+  addr <- as.character(df2[i, 'FileURL'])
+  info <- as.character(df2[i, 'InfoURL'])
+
+  if (!is.na(addr) && is.na(info)) {
     
   }
+}
   
-
-  
-  if (is.na(addr) && !is.na(info)) {
-    
     # extract filename to use in API
     img_name <- commonsToFilename(info)
     
