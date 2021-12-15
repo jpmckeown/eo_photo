@@ -21,6 +21,7 @@ library(readr)
 library(stringr)
 library(stringi)
 library(countrycode)
+library(tools)
 # library(Hmisc)
 incr <- function(x) {eval.parent(substitute(x <- x + 1))}
 
@@ -166,9 +167,8 @@ for (i in seq_along(allRead)) {
         incr(numSource['other'])
       }
       
-      # identify format
-      # ext <- grepl('[jpg|png|svg]$', line)
-      # if (grepl('jpg'))
+      # identify photo format jpg png svg
+      ext <- file_ext(line)
       
       row <- c(iso3c, as.numeric(photoID), imageFileAddr, landingPageAddr)
       # print(row)
@@ -183,7 +183,7 @@ for (i in seq_along(allRead)) {
       df[p, 'LicenseURL'] <- licenseURL
       df[p, 'FileURL'] <- imageFileAddr
       df[p, 'InfoURL'] <- landingPageAddr
-      df[p, 'Format'] <- ext  
+      df[p, 'Format'] <- ext
       df[p, 'Width'] <- width
       df[p, 'Height'] <- height
       df[p, 'Provider'] <- provider
