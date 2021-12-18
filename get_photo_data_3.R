@@ -12,6 +12,12 @@ freeimages_fileURL_to_imgName <- function(fileURL) {
   imgName <- sub('https://images.freeimages.com/images/large-previews/[a-z|0-9]+/(.*)[.]+[a-z|A-Z]+', '\\1', fileURL)
   return(imgName)
 }
+
+freeimages_infoURL_to_imgName <- function(infoURL) {
+  imgName <- sub('https://www.freeimages.com/photo/(.*)', '\\1', infoURL)
+  return(imgName)
+}
+
 freeimages_imgName_to_infoURL <- function(imgName) {
   infoURL <- paste0('https://www.freeimages.com/photo/', imgName)
   return(infoURL)
@@ -33,9 +39,9 @@ for (i in 1:loopEnd) {
   if (df3[i, 'Provider'] == 'Wikimedia') { 
     
     # InfoURL present
-    if (!is.na(fileURL) && is.na(infoURL)) {
+    if (!is.na(infoURL)) {
       
-      imgName <- fileURL_to_imgName(fileURL)
+      imgName <- infoURL_to_imgName(infoURL)
       print(paste(i, imgName))
       
       df3[i, 'ImageName'] <- imgName
@@ -59,9 +65,9 @@ for (i in 1:loopEnd) {
   if (df3[i, 'Provider'] == 'FreeImages') {
     
     # InfoURL present
-    if (!is.na(fileURL) && is.na(infoURL)) {
+    if (!is.na(infoURL)) {
       
-      imgName <- freeimages_fileURL_to_imgName(fileURL)
+      imgName <- freeimages_infoURL_to_imgName(infoURL)
       print(paste(i, imgName))
       
       df3[i, 'ImageName'] <- imgName
@@ -91,6 +97,7 @@ infos <- df3 %>%
   filter(Provider == 'Wikimedia') %>% 
   select(InfoURL)
 sum(is.na(infos))
+
 inames <- df3 %>% 
   filter(Provider == 'Wikimedia') %>% 
   select(ImageName)

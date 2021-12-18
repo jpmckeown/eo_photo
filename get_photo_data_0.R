@@ -118,7 +118,7 @@ fileURL_to_imgName <- function(fileURL) {
 }
 
 infoURL_to_imgName <- function(infoURL) {
-  imgName <- sub('https://commons.wikimedia.org/wiki/File:(.*)', '\\1', uploadURL)
+  imgName <- sub('https://commons.wikimedia.org/wiki/File:(.*)', '\\1', infoURL)
   return(imgName)
 }
 
