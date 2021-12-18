@@ -29,4 +29,4 @@ for (oldRun  in 1:loopEnd) {
   # }
 }
 
-write_tsv(df3, 'data/photo_step_3.tsv')
+write_tsv(df2, 'data/photo_step_2.tsv')

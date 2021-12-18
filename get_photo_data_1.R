@@ -73,17 +73,28 @@ for (i in seq_along(allRead)) {
       incr(p)
       incr(photoID)
     
-      imgName <- ''
-      imageFileAddr <- ''
-      landingPageAddr <- ''
-      creditHTML <- ''
-      artist <- ''
-      artistURL <- ''
-      license <- ''
-      licenseURL <- ''
-      ext <- ''
-      width <- 0
-      height <- 0
+      imgName <- NA
+      imageFileAddr <- NA
+      landingPageAddr <- NA
+      creditHTML <- NA
+      artist <- NA
+      artistURL <- NA
+      license <- NA
+      licenseURL <- NA
+      ext <- NA
+      width <- NA
+      height <- NA
+      # imgName <- ''
+      # imageFileAddr <- ''
+      # landingPageAddr <- ''
+      # creditHTML <- ''
+      # artist <- ''
+      # artistURL <- ''
+      # license <- ''
+      # licenseURL <- ''
+      # ext <- ''
+      # width <- 0
+      # height <- 0
       
       if (grepl('wikimedia.org', url)) {
         if (grepl('commons.wikimedia', url)) {
@@ -144,10 +155,6 @@ for (i in seq_along(allRead)) {
         provider <- 'Other'
         incr(numSource['other'])
       }
-      
-      # identify photo format jpg png svg
-      ext <- tolower(file_ext(line))
-      if (ext == 'jpeg') { ext <- 'jpg'}
       
       df[p, 'Country'] <- country
       df[p, 'iso3c'] <- iso3c

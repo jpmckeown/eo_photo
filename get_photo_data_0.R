@@ -1,5 +1,5 @@
 # functions for photo_data
-
+library(tidyverse)
 library(readr)
 library(stringr)
 library(stringi)
@@ -97,4 +97,32 @@ cleanURL <- function(url) {
   # remove any trailing space
   url <- trimws(line, which = "right", whitespace = "[ \t\r\n]")
   return(url)
+}
+
+fileURL_to_infoURL <- function(fileURL) {
+  imgName <- fileURL_to_imgName(fileURL)
+  infoURL <- paste0('https://commons.wikimedia.org/wiki/File:', imgName)
+  return(infoURL)
+}
+
+imgName_to_infoURL <- function(imgName) {
+  infoURL <- paste0('https://commons.wikimedia.org/wiki/File:', imgName)
+  return(infoURL)
+}
+
+fileURL_to_imgName <- function(fileURL) {
+  # keeping extension as part of imgName
+  # imgName <- sub('https://upload.wikimedia.org/wikipedia/commons/thumb/[A-Z|a-z|0-9]+/[A-Z|a-z|0-9]+/([A-Z|a-z|0-9|-|_|%]+[.jpg|.JPG|.jpeg|.JPEG|.png|.PNG]+)/.*', '\\1', fileURL)
+  imgName <- sub('https://upload.wikimedia.org/wikipedia/commons/thumb/[A-Z|a-z|0-9]+/[A-Z|a-z|0-9]+/([A-Z|a-z|0-9|_|%|Ä|Å|‡|.|-]+)/.*', '\\1', fileURL)
+  return(imgName)
+}
+
+infoURL_to_imgName <- function(infoURL) {
+  imgName <- sub('https://commons.wikimedia.org/wiki/File:(.*)', '\\1', uploadURL)
+  return(imgName)
+}
+
+fileURL_to_folder <- function(fileURL) {
+  folder <- sub('https://upload.wikimedia.org/wikipedia/commons/thumb/([A-Z|a-z|0-9]+/[A-Z|a-z|0-9]+)/.*', '\\1', fileURL)
+  return(paste0(folder, '/'))
 }
