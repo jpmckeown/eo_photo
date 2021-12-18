@@ -1,52 +1,4 @@
-# Google Doc pasted in data/fromGoogleDoc.txt
-
-# country name prefixed *** 3 asterisks
-# caption # wikimedia; @ other source; £ other landing; ~ no image
-
-# a country may contain 0+ pairs of caption and image
-# each caption must be followed by a URL address
-
-# Steps 2-6 in other files
-# 1. do all possible without API call or download
-# 2. get file URL
-# 3. download and name with iso3c and photoID
-# 4. get dimensions
-# 5. get artist and licence with API
-# 6. write credit HTML
-
-# Output must be Tab-separated because commas in caption, attribution, and URLs
-# Goal is tsv with columns: Country, iso3c, (photo)ID, format, width, height, Caption, Attribution, File_address, Commons_address
-
-library(readr)
-library(stringr)
-library(stringi)
-library(countrycode)
-library(tools)
-# library(Hmisc)
-incr <- function(x) {eval.parent(substitute(x <- x + 1))}
-
-cleanCaption <- function(line) {
-  # stops odd characters
-  caption <- stri_encode(line, '', 'UTF-8')
-  # remove prefix
-  caption <- sub('#', '', caption)
-  caption <- capitalize(caption)
-  # remove trailing spaces
-  caption <- trimws(caption, which = "right", whitespace = "[ \t\r\n]")
-  # add final period if missing
-  if (!str_sub(caption, -1) == '.') {
-    caption <- paste0(caption, '.')
-  }
-  return(caption)
-}
-
-cleanURL <- function(url) {
-  # remove any characters before http
-  line <- gsub('.*http', 'http', line)
-  # remove any trailing space
-  url <- trimws(line, which = "right", whitespace = "[ \t\r\n]")
-  return(url)
-}
+# read photo ID, caption, URL from gDoc 
 
 # how many from each photo platform/provider
 provider <- c('wikimedia', 'unsplash', 'pixnio', 'pixabay', 'freeimages', 'other')
@@ -54,11 +6,13 @@ numSource <- rep(0, length(provider))
 names(numSource) <- provider
 
 country_count <- 0
+expectPhoto <- FALSE
 p <- 0 # photoCount
 country_found <- vector()
 iso3c_found <- vector()
 
 df <- data.frame(Country = character(),
+                 iso2c = character(),
                  iso3c = character(),
                  ID = numeric(),
                  Caption = character(),
@@ -102,6 +56,9 @@ for (i in seq_along(allRead)) {
 
       iso3c <- countrycode(country, origin = 'country.name', destination = 'iso3c')
       iso3c_found[country_count] <- iso3c
+      
+      # enable referencing old imgdata in step 2
+      iso2c <- countrycode(country, origin = 'country.name', destination = 'iso2c')
       
       # print(paste(iso3c, country))
       # ready to count photos in this country      
@@ -193,6 +150,7 @@ for (i in seq_along(allRead)) {
       if (ext == 'jpeg') { ext <- 'jpg'}
       
       df[p, 'Country'] <- country
+      df[p, 'iso2c'] <- iso2c
       df[p, 'iso3c'] <- iso3c
       df[p, 'ID'] <- photoID
       df[p, 'Caption'] <- caption
