@@ -40,14 +40,16 @@ column_order <- c('Country', 'iso3c', 'ID', 'Caption', 'Artist', 'ArtistURL', 'L
 dfo <- dfo[, column_order]
 
 # old photos stored in web make folder
-# dir <- '../eo_html/photo/'
+dir <- '../eo_html/photo/'
 
-# maybe use imgdata ID list instead
-# old_photo <- list.files(dir)
-# yy <- image_read(paste0(dir, xx))
-# print(image_info(yy)$width)
+# loop imgdata # No! file extension is unknown, loop dir instead
+# for (o in seq_along(1:nrow(dfo))) {
+#   path <- paste0(dir, dfo$iso2c, '_', dfo$ID, )
+# }
 
-# loop imgdata
-for (o in seq_along(1:nrow(imgdata))) {
-  
+old_photos <- list.files(dir)
+for (o in 1:length(old_photos)) {
+  # print(old_photos[o])
+  img <- image_read(paste0(dir, old_photos[o]))
+  # print(image_info(yy)$width)
 }
