@@ -4,8 +4,10 @@
 # from FileURL reconstruct missing InfoURL
 # for Wikimedia, FreeImages
 
+# FreeImages = Provider
 # https://images.freeimages.com/images/large-previews/e0c/kuwait-tower-1451754.jpg
 # https://www.freeimages.com/photo/kuwait-tower-1451754
+
 freeimages_fileURL_to_imgName <- function(fileURL) {
   imgName <- sub('https://images.freeimages.com/images/large-previews/[a-z|0-9]+/(.*)[.]+[a-z|A-Z]+', '\\1', fileURL)
   return(imgName)
@@ -15,9 +17,7 @@ freeimages_imgName_to_infoURL <- function(imgName) {
   return(infoURL)
 }
 
-# sub('', '', testFileAddr)
 photoCount <- 0
-
 # cannot filter because need to keep spreadsheet whole
 
 df3 <- df
@@ -32,6 +32,17 @@ for (i in 1:loopEnd) {
   
   if (df3[i, 'Provider'] == 'Wikimedia') { 
     
+    # InfoURL present
+    if (!is.na(fileURL) && is.na(infoURL)) {
+      
+      imgName <- fileURL_to_imgName(fileURL)
+      print(paste(i, imgName))
+      
+      df3[i, 'ImageName'] <- imgName
+      
+    } # end InfoURL present
+
+    # InfoURL missing
     if (!is.na(fileURL) && is.na(infoURL)) {
       
       imgName <- fileURL_to_imgName(fileURL)
@@ -41,10 +52,21 @@ for (i in 1:loopEnd) {
       df3[i, 'ImageName'] <- imgName
       df3[i, 'InfoURL'] <- infoURL
       
-    } # where InfoURL missing
+    } # end InfoURL missing
+    
   } # end Wikimedia
   
   if (df3[i, 'Provider'] == 'FreeImages') {
+    
+    # InfoURL present
+    if (!is.na(fileURL) && is.na(infoURL)) {
+      
+      imgName <- freeimages_fileURL_to_imgName(fileURL)
+      print(paste(i, imgName))
+      
+      df3[i, 'ImageName'] <- imgName
+      
+    } # end InfoURL present
     
     if (!is.na(fileURL) && is.na(infoURL)) {
       
@@ -55,7 +77,7 @@ for (i in 1:loopEnd) {
       df3[i, 'ImageName'] <- imgName
       df3[i, 'InfoURL'] <- infoURL
       
-    } # where InfoURL missing
+    } # end InfoURL missing
     
   } # end FreeImages
   
@@ -69,5 +91,9 @@ infos <- df3 %>%
   filter(Provider == 'Wikimedia') %>% 
   select(InfoURL)
 sum(is.na(infos))
+inames <- df3 %>% 
+  filter(Provider == 'Wikimedia') %>% 
+  select(ImageName)
+sum(is.na(inames))
 
 # write_tsv(df3, 'data/photo_step_3.tsv')
