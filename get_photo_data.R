@@ -24,7 +24,8 @@ save(df2, file='data/df2.Rda')
 rm(list = ls())
 
 # reconstruct missing Info_URL, from FileURL get ImageName and folder
-load('data/df2.Rda')
+# load('data/df2.Rda')
+df <- readRDS('data/df1.Rda')
 source('get_photo_data_3.R')
 save(df3, file='data/df3.Rda')
 rm(list = ls())

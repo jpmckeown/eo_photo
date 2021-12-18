@@ -12,7 +12,6 @@ country_found <- vector()
 iso3c_found <- vector()
 
 df <- data.frame(Country = character(),
-                 iso2c = character(),
                  iso3c = character(),
                  ID = numeric(),
                  Caption = character(),
@@ -29,6 +28,7 @@ df <- data.frame(Country = character(),
                  Format = character(),
                  Width = numeric(),
                  Height = numeric(),
+                 iso2c = character(),
                  stringsAsFactors=FALSE) 
 
 infile <- 'data/fromGoogleDoc.txt'
@@ -162,6 +162,7 @@ for (i in seq_along(allRead)) {
       df[p, 'iso3c'] <- iso3c
       df[p, 'ID'] <- photoID
       df[p, 'Caption'] <- caption
+      df[p, 'Provider'] <- provider
       df[p, 'Artist'] <- artist
       df[p, 'ArtistURL'] <- artistURL
       df[p, 'License'] <- license
@@ -174,7 +175,6 @@ for (i in seq_along(allRead)) {
       df[p, 'Format'] <- ext
       df[p, 'Width'] <- width
       df[p, 'Height'] <- height
-      df[p, 'Provider'] <- provider
       df[p, 'iso2c'] <- iso2c
       
       expectPhoto <- FALSE
@@ -193,6 +193,6 @@ close(con)
 print(numSource)
 print(paste('Total photos =', sum(numSource)))
 
-save(df, file='data/df1.Rda')
+saveRDS(df, file='data/df1.Rda')
 
 # write_tsv(df, 'data/photo_step_1.tsv')
