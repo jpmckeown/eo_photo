@@ -126,3 +126,8 @@ fileURL_to_folder <- function(fileURL) {
   folder <- sub('https://upload.wikimedia.org/wikipedia/commons/thumb/([A-Z|a-z|0-9]+/[A-Z|a-z|0-9]+)/.*', '\\1', fileURL)
   return(paste0(folder, '/'))
 }
+
+originalURL_to_folder <- function(originalURL) {
+  folder <- sub('https://upload.wikimedia.org/wikipedia/commons/([A-Z|a-z|0-9]+/[A-Z|a-z|0-9]+)/.*', '\\1', uploadURL)
+  return(paste0(folder, '/'))
+}

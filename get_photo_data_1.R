@@ -24,6 +24,7 @@ df <- data.frame(Country = character(),
                  ImageName = character(),
                  InfoURL = character(),
                  FileURL = character(),
+                 folder = character(),   # only for Wikimedia
                  CreditHTML = character(),
                  Format = character(),
                  Width = numeric(),
@@ -74,6 +75,7 @@ for (i in seq_along(allRead)) {
       incr(photoID)
     
       imgName <- NA
+      folder <- NA
       imageFileAddr <- NA
       landingPageAddr <- NA
       creditHTML <- NA
@@ -165,6 +167,7 @@ for (i in seq_along(allRead)) {
       df[p, 'License'] <- license
       df[p, 'LicenseURL'] <- licenseURL
       df[p, 'ImageName'] <- imgName
+      df[p, 'folder'] <- folder
       df[p, 'FileURL'] <- imageFileAddr
       df[p, 'InfoURL'] <- landingPageAddr
       df[p, 'CreditHTML'] <- creditHTML

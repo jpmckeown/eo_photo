@@ -60,6 +60,13 @@ for (i in 1:loopEnd) {
       
     } # end InfoURL missing
     
+    # from FileURL can extract folders
+    if (!is.na(fileURL)) {
+      
+      folder <- fileURL_to_folder(fileURL)
+      df3[i, 'folder'] <- folder
+    }
+    
   } # end Wikimedia
   
   if (df3[i, 'Provider'] == 'FreeImages') {
