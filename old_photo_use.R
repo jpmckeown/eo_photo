@@ -23,8 +23,8 @@ dfo <- data.frame(Country = character(),
                  stringsAsFactors=FALSE) 
 
 dfo <- imgdata
-dfo <- subset(dfo, select = -c(Attribution))
-names(dfo) <- c("Country", "iso2c", "ID", "Caption", "FileURL", "InfoURL")
+# dfo <- subset(dfo, select = -c(Attribution))
+names(dfo) <- c("Country", "iso2c", "ID", "Caption", 'Attribution', "FileURL", "InfoURL")
 dfo$iso3c <- ''
 dfo$Artist <- ''
 dfo$ArtistURL <- ''
@@ -36,20 +36,21 @@ dfo$Format <- ''
 dfo$Width <- 0
 dfo$Height <- 0
 # setdiff(names(df), names(dfo)) # check columns present
-column_order <- c('Country', 'iso3c', 'ID', 'Caption', 'Artist', 'ArtistURL', 'License', 'LicenseURL', 'ImageName', 'InfoURL', 'FileURL', 'Format', 'Width', 'Height', 'CreditHTML', 'iso2c')
+column_order <- c('Country', 'iso3c', 'ID', 'Caption', 'Artist', 'ArtistURL', 'License', 'LicenseURL', 'ImageName', 'InfoURL', 'FileURL', 'Format', 'Width', 'Height', 'CreditHTML', 'iso2c', 'Attribution')
 dfo <- dfo[, column_order]
 
 # old photos stored in web make folder
 dir <- '../eo_html/photo/'
 
 # loop imgdata # No! file extension is unknown, loop dir instead
-# for (o in seq_along(1:nrow(dfo))) {
-#   path <- paste0(dir, dfo$iso2c, '_', dfo$ID, )
-# }
+for (o in seq_along(1:nrow(imgdata))) {
+  attrib <- 
+}
 
 old_photos <- list.files(dir)
 for (o in 1:length(old_photos)) {
   # print(old_photos[o])
-  img <- image_read(paste0(dir, old_photos[o]))
-  # print(image_info(yy)$width)
+  #img <- image_read(paste0(dir, old_photos[o]))
+  #print(image_info(img)$width)
+
 }
