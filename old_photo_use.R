@@ -4,24 +4,6 @@
 library(magick)
 library(countrycode)
 
-dfo <- data.frame(Country = character(),
-                 iso2c = character(),
-                 iso3c = character(),
-                 ID = numeric(),
-                 Caption = character(),
-                 Artist = character(),
-                 ArtistURL = character(),
-                 License = character(),
-                 LicenseURL = character(),
-                 ImageName = character(),
-                 InfoURL = character(),
-                 FileURL = character(),
-                 CreditHTML = character(),
-                 Format = character(),
-                 Width = numeric(),
-                 Height = numeric(),
-                 stringsAsFactors=FALSE) 
-
 dfo <- imgdata
 # dfo <- subset(dfo, select = -c(Attribution))
 names(dfo) <- c("Country", "iso2c", "ID", "Caption", 'Attribution', "FileURL", "InfoURL")
@@ -36,7 +18,7 @@ dfo$Format <- ''
 dfo$Width <- 0
 dfo$Height <- 0
 # setdiff(names(df), names(dfo)) # check columns present
-column_order <- c('Country', 'iso3c', 'ID', 'Caption', 'Artist', 'ArtistURL', 'License', 'LicenseURL', 'ImageName', 'InfoURL', 'FileURL', 'Format', 'Width', 'Height', 'CreditHTML', 'iso2c', 'Attribution')
+column_order <- c('Country', 'iso3c', 'ID', 'Caption', 'Artist', 'ArtistURL', 'License', 'LicenseURL', 'ImageName', 'FileURL', 'InfoURL', 'CreditHTML', 'Format', 'Width', 'Height', 'iso2c', 'Attribution')
 dfo <- dfo[, column_order]
 
 # old photos stored in web make folder

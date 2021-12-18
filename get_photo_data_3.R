@@ -1,4 +1,5 @@
-# 2nd step after get_photo_data_1.R and relies on df created there
+# 3rd step after get_photo_data_1.R and relies on df2 created there
+# currently skipping 2nd step
 
 # from FileURL reconstruct missing InfoURL
 # for Wikimedia, FreeImages
@@ -47,33 +48,40 @@ photoCount <- 0
 
 # stop! just loop once and handle Wikimedia, FreeImages, etc
 
-wikimedia_count <- sum(df$Provider == 'Wikimedia')
-df2 <- df[order(df$Provider, decreasing=TRUE), ]
+# wikimedia_count <- sum(df$Provider == 'Wikimedia')
+# df2 <- df[order(df$Provider, decreasing=TRUE), ]
 
-loopEnd <- wikimedia_count # nrow(df2)
+df3 <- df
 
-for (i in 1:loopEnd) {
-  #if (df2[i, 'Provider'] == 'Wikimedia') { # not needed, only Wiki rows
-  
-  fileURL <- as.character(df2[i, 'FileURL'])
-  infoURL <- as.character(df2[i, 'InfoURL'])
-  
-  if (fileURL != '' && infoURL == '') {
-    
-    imgName <- fileURL_to_imgName(fileURL)
-    infoURL <- imgName_to_infoURL(imgName)
-    print(paste(i, infoURL))
-    
-    df2[i, 'ImageName'] <- imgName
-    df2[i, 'InfoURL'] <- infoURL
-  }
-}
-
-freeimages_count <- sum(df$Provider == 'Wikimedia')
-df2 <- df[order(df2$Provider), ]
-loopEnd <- freeimages_count 
+loopEnd <- nrow(df3) # wikimedia_count # 
 
 for (i in 1:loopEnd) {
-}
   
-write_tsv(df2, 'data/photo_step_2.tsv')
+  if (df3[i, 'Provider'] == 'Wikimedia') { 
+  
+    fileURL <- as.character(df3[i, 'FileURL'])
+    infoURL <- as.character(df3[i, 'InfoURL'])
+    
+    if (fileURL != '' && infoURL == '') {
+      
+      imgName <- fileURL_to_imgName(fileURL)
+      infoURL <- imgName_to_infoURL(imgName)
+      print(paste(i, infoURL))
+      
+      df3[i, 'ImageName'] <- imgName
+      df3[i, 'InfoURL'] <- infoURL
+      
+    } # where InfoURL missing
+  } # end Wikimedia
+  
+  if (df3[i, 'Provider'] == '') {
+    
+  } # end FreeImages
+  
+} # loop df3 rows
+
+# freeimages_count <- sum(df$Provider == '')
+# df3 <- df[order(df3$Provider), ]
+# loopEnd <- freeimages_count 
+  
+write_tsv(df3, 'data/photo_step_2.tsv')

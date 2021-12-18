@@ -150,11 +150,9 @@ for (i in seq_along(allRead)) {
       if (ext == 'jpeg') { ext <- 'jpg'}
       
       df[p, 'Country'] <- country
-      df[p, 'iso2c'] <- iso2c
       df[p, 'iso3c'] <- iso3c
       df[p, 'ID'] <- photoID
       df[p, 'Caption'] <- caption
-      df[p, 'CreditHTML'] <- creditHTML
       df[p, 'Artist'] <- artist
       df[p, 'ArtistURL'] <- artistURL
       df[p, 'License'] <- license
@@ -162,10 +160,12 @@ for (i in seq_along(allRead)) {
       df[p, 'ImageName'] <- imgName
       df[p, 'FileURL'] <- imageFileAddr
       df[p, 'InfoURL'] <- landingPageAddr
+      df[p, 'CreditHTML'] <- creditHTML
       df[p, 'Format'] <- ext
       df[p, 'Width'] <- width
       df[p, 'Height'] <- height
       df[p, 'Provider'] <- provider
+      df[p, 'iso2c'] <- iso2c
       
       expectPhoto <- FALSE
     }
