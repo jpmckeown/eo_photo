@@ -43,8 +43,12 @@ dfo <- dfo[, column_order]
 dir <- '../eo_html/photo/'
 
 # loop imgdata # No! file extension is unknown, loop dir instead
-for (o in seq_along(1:nrow(imgdata))) {
-  attrib <- 
+loopEnd <- 3 # nrow(dfo)
+for (o in seq_along(1:loopEnd)) {
+  attrib <- dfo$Attribution[o]
+  #print(attrib)
+  imgName <- sub("commons.wikimedia.org/wiki/File:([\w\d_]+)'>[.]+", "\\1", attrib)
+  print(imgName)
 }
 
 old_photos <- list.files(dir)
