@@ -35,14 +35,15 @@ dfo$CreditHTML <- ''
 dfo$Format <- ''
 dfo$Width <- 0
 dfo$Height <- 0
-
 # setdiff(names(df), names(dfo)) # check columns present
+column_order <- c('Country', 'iso3c', 'ID', 'Caption', 'Artist', 'ArtistURL', 'License', 'LicenseURL', 'ImageName', 'InfoURL', 'FileURL', 'Format', 'Width', 'Height', 'CreditHTML', 'iso2c')
+dfo <- dfo[, column_order]
 
 # old photos stored in web make folder
-dir <- '../eo_html/photo/'
+# dir <- '../eo_html/photo/'
 
 # maybe use imgdata ID list instead
-old_photo <- list.files(dir)
+# old_photo <- list.files(dir)
 # yy <- image_read(paste0(dir, xx))
 # print(image_info(yy)$width)
 

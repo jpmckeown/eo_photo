@@ -11,6 +11,9 @@ source('get_photo_data_0.R')
 source('verify_photo.R')
 source('clean_verify_photo.R')
 
+# old photos recycle 640
+source('old_photo_use.R')
+
 # get id, caption, URL from Photo gdoc
 source('get_photo_data_1.R')
 source('clean_get_photo_data_1.R')
