@@ -105,9 +105,16 @@ infos <- df3 %>%
   select(InfoURL)
 sum(is.na(infos))
 
+# test if all Wikimedia now have ImageName
 inames <- df3 %>% 
   filter(Provider == 'Wikimedia') %>% 
   select(ImageName)
 sum(is.na(inames))
+
+# test if Wikimedia with FileURL now have folder
+folds <- df3 %>% 
+  filter(Provider == 'Wikimedia' && !is.na('FileUrl')) %>% 
+  select(folder)
+sum(is.na(folds))
 
 # write_tsv(df3, 'data/photo_step_3.tsv')
