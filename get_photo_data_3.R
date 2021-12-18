@@ -34,8 +34,11 @@ fileURL_to_folder <- function(fileURL) {
 
 # https://images.freeimages.com/images/large-previews/e0c/kuwait-tower-1451754.jpg
 # https://www.freeimages.com/photo/kuwait-tower-1451754
-freeimages_fileURL_to_infoURL <- function(fileURL) {
-  imgName <- sub('https://images.freeimages.com/images/large-previews/[a-z|0-9]+/(.*)')
+freeimages_fileURL_to_imgName <- function(fileURL) {
+  imgName <- sub('https://images.freeimages.com/images/large-previews/[a-z|0-9]+/(.*)[.]+[a-z|A-Z]+', '\\1', fileURL)
+  return(imgName)
+}
+freeimages_imgName_to_infoURL <- function(imgName) {
   infoURL <- paste0('https://www.freeimages.com/photo/', imgName)
   return(infoURL)
 }
@@ -44,23 +47,22 @@ freeimages_fileURL_to_infoURL <- function(fileURL) {
 photoCount <- 0
 
 # cannot filter because need to keep spreadsheet whole
+
 # order by Provider desc then process Wikimedia_count rows only
-
-# stop! just loop once and handle Wikimedia, FreeImages, etc
-
 # wikimedia_count <- sum(df$Provider == 'Wikimedia')
 # df2 <- df[order(df$Provider, decreasing=TRUE), ]
 
 df3 <- df
+# Wikimedia image name includes extension; FreeImages does not.
 
 loopEnd <- nrow(df3) # wikimedia_count # 
 
 for (i in 1:loopEnd) {
   
-  if (df3[i, 'Provider'] == 'Wikimedia') { 
+  fileURL <- as.character(df3[i, 'FileURL'])
+  infoURL <- as.character(df3[i, 'InfoURL'])
   
-    fileURL <- as.character(df3[i, 'FileURL'])
-    infoURL <- as.character(df3[i, 'InfoURL'])
+  if (df3[i, 'Provider'] == 'Wikimedia') { 
     
     if (fileURL != '' && infoURL == '') {
       
@@ -74,7 +76,18 @@ for (i in 1:loopEnd) {
     } # where InfoURL missing
   } # end Wikimedia
   
-  if (df3[i, 'Provider'] == '') {
+  if (df3[i, 'Provider'] == 'FreeImages') {
+    
+    if (fileURL != '' && infoURL == '') {
+      
+      imgName <- freeimages_fileURL_to_imgName(fileURL)
+      infoURL <- freeimages_imgName_to_infoURL(imgName)
+      print(paste(i, infoURL))
+      
+      df3[i, 'ImageName'] <- imgName
+      df3[i, 'InfoURL'] <- infoURL
+      
+    } # where InfoURL missing
     
   } # end FreeImages
   
@@ -84,4 +97,4 @@ for (i in 1:loopEnd) {
 # df3 <- df[order(df3$Provider), ]
 # loopEnd <- freeimages_count 
   
-write_tsv(df3, 'data/photo_step_2.tsv')
+# write_tsv(df3, 'data/photo_step_2.tsv')
