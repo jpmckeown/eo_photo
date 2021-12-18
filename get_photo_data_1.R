@@ -193,4 +193,6 @@ close(con)
 print(numSource)
 print(paste('Total photos =', sum(numSource)))
 
-write_tsv(df, 'data/photo_step_1.tsv')
+save(df, file='data/df1.Rda')
+
+# write_tsv(df, 'data/photo_step_1.tsv')
