@@ -39,7 +39,7 @@ for (i in seq_along(allRead)) {
   line = allRead[i]
   
   # ignore header and blank lines
-  if (line != '' && i > 20 && country_count < 199) {
+  if (line != '' && i > 19 && country_count < 199) {
     
     if (grepl('^[*][*][*]', line)) {
       
