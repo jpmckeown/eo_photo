@@ -33,7 +33,7 @@ save(df3, file='data/df3.Rda')
 rm(list = setdiff(ls(), lsf.str()))
    
 # where missing File_URL, use API to get ImageName and folder
-load('data/df3.Rda')
+df3 <- readRDS('data/df3.Rda')
 source('get_photo_data_4.R')
 save(df4, file='data/df4.Rda')
 rm(list = setdiff(ls(), lsf.str()))

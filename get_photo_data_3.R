@@ -117,6 +117,6 @@ folds <- df3 %>%
   select(folder)
 sum(is.na(folds))
 
-save(df3, file='data/df3.Rda')
+saveRDS(df3, file='data/df3.rds')
 
 # write_tsv(df3, 'data/photo_step_3.tsv')
