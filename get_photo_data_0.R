@@ -8,7 +8,9 @@ library(tools)
 library(Hmisc)
 library(RCurl)
 
-incr <- function(x) {eval.parent(substitute(x <- x + 1))}
+incr <- function(x) {
+  eval.parent(substitute(x <- x + 1))
+}
 
 cleanCaption <- function(line) {
   # stops odd characters

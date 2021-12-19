@@ -105,3 +105,6 @@ missing_iso3c <- setdiff(as.vector(eo$iso3c), iso3c_found)
 print(missing_iso3c)
 
 print(countrycode(missing_iso3c, origin = 'iso3c', destination = 'country.name'))
+
+saveRDS(iso3c_found, 'data/countries_with_photo.Rda')
+saveRDS(missing_iso3c, 'data/countries_lack_photo.Rda')
