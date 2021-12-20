@@ -5,7 +5,6 @@ library(stringr)
 library(stringi)
 library(countrycode)
 library(tools)
-library(Hmisc)
 library(RCurl)
 
 incr <- function(x) { eval.parent(substitute(x <- x + 1)) }
@@ -20,7 +19,7 @@ cleanCaption <- function(line) {
   caption <- stri_encode(line, '', 'UTF-8')
   # remove prefix
   caption <- sub('#', '', caption)
-  caption <- capitalize(caption)
+  caption <- firstCap(caption)
   # remove trailing spaces
   caption <- trimws(caption, which = "right", whitespace = "[ \t\r\n]")
   # add final period if missing
