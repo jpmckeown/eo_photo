@@ -40,7 +40,8 @@ for (i in seq_along(allRead)) {
   
   # ignore header and blank lines
   if (line != '' && i > 19 && country_count < 199) {
-    
+  #if (line != '' && i > 96 && i < 112) {
+      
     if (grepl('^[*][*][*]', line)) {
       
       # get country
@@ -184,6 +185,7 @@ for (i in seq_along(allRead)) {
     if (grepl('^#', line)) {
       caption <- cleanCaption(line)
       expectPhoto <- TRUE
+      print(caption)
     }
     
   } # blank line excluder
@@ -196,4 +198,4 @@ print(paste('Total photos =', sum(numSource)))
 saveRDS(numSource, file='data/providers.rds')
 saveRDS(df, file='data/df1.rds')
 
-write_tsv(df, 'data/photo_step_1.tsv')
+write_tsv(df, 'data/photo_step_1.tsv', escape = 'none')

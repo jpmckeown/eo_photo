@@ -17,7 +17,11 @@ source('old_photo_use.R')
 
 # get id, caption, URL from Photo gdoc
 source('get_photo_data_1.R')
-source('clean_get_photo_data_1.R')
+rm(list = setdiff(ls(), lsf.str()))
+
+df1 <- readRDS('data/df1.rds')
+df1a <- df1[order(df1$Provider), ]
+write_tsv(df1a, 'data/photo_step_1a.tsv')
 
 # merge previously acquired Wikimedia data
 source('get_photo_data_2.R')
