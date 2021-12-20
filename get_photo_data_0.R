@@ -10,7 +10,11 @@ library(RCurl)
 
 incr <- function(x) { eval.parent(substitute(x <- x + 1)) }
 
-# 
+firstCap <- function(str) {
+  Capstr <- paste0(toupper(substring(str, 1,1)), substring(str, 2))
+  return(Capstr)
+}
+ 
 cleanCaption <- function(line) {
   # stops odd characters
   caption <- stri_encode(line, '', 'UTF-8')
