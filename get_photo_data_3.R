@@ -64,6 +64,10 @@ for (i in 1:loopEnd) {
     # from FileURL can extract folders
     if (!is.na(fileURL)) {
       
+      # some FileURL do not include "/thumb/"
+      if (grepl('thumb')) {
+        
+      }
       folder <- fileURL_to_folder(fileURL)
       df3[i, 'folder'] <- folder
     }
