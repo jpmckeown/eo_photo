@@ -130,7 +130,11 @@ infoURL_to_imgName <- function(infoURL) {
 }
 
 fileURL_to_folder <- function(fileURL) {
-  folder <- sub('https://upload.wikimedia.org/wikipedia/commons/thumb/([A-Z|a-z|0-9]{1}/[A-Z|a-z|0-9]{2})/.*', '\\1', fileURL)
+  if (grepl('/thumb/', fileURL)) {
+    folder <- sub('https://upload.wikimedia.org/wikipedia/commons/thumb/([A-Z|a-z|0-9]{1}/[A-Z|a-z|0-9]{2})/.*', '\\1', fileURL)
+  } else {
+    folder <- sub('https://upload.wikimedia.org/wikipedia/commons/([A-Z|a-z|0-9]{1}/[A-Z|a-z|0-9]{2})/.*', '\\1', fileURL)
+  }
   return(paste0(folder, '/'))
 }
 
