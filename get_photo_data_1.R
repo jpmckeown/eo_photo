@@ -193,7 +193,7 @@ close(con)
 print(numSource)
 print(paste('Total photos =', sum(numSource)))
 
-saveRDS(numSource, file='data/providers.Rda')
-saveRDS(df, file='data/df1.Rda')
+saveRDS(numSource, file='data/providers.rds')
+saveRDS(df, file='data/df1.rds')
 
 write_tsv(df, 'data/photo_step_1.tsv')

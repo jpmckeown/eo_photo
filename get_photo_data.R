@@ -22,39 +22,39 @@ source('clean_get_photo_data_1.R')
 
 # merge previously acquired Wikimedia data
 source('get_photo_data_2.R')
-save(df2, file='data/df2.Rda')
+saveRDS(df2, file='data/df2.rds')
 rm(list = setdiff(ls(), lsf.str()))
 
 # reconstruct missing Info_URL, from FileURL get ImageName and folder
 # load('data/df2.Rda')
-df <- readRDS('data/df1.Rda')
+df <- readRDS('data/df1.rds')
 source('get_photo_data_3.R')
-save(df3, file='data/df3.Rda')
+saveRDS(df3, file='data/df3.rds')
 rm(list = setdiff(ls(), lsf.str()))
    
 # where missing File_URL, use API to get ImageName and folder
-df3 <- readRDS('data/df3.Rda')
+df3 <- readRDS('data/df3.rds')
 source('get_photo_data_4.R')
-save(df4, file='data/df4.Rda')
+saveRDS(df4, file='data/df4.rds')
 rm(list = setdiff(ls(), lsf.str()))
 
 # use API to get attribution data, from ImageName
 # assemble CreditHTML
-load('data/df4.Rda')
+df4 <- readRDS('data/df4.rds')
 source('get_photo_data_5.R')
-save(df5, file='data/df5.Rda')
+saveRDS(df5, file='data/df5.rds')
 rm(list = setdiff(ls(), lsf.str()))
 
 # download photo files
-load('data/d5.Rda')
+df5 <- readRDS('data/df5.rds')
 source('get_photo_data_6.R')
-save(df6, file='data/df6.Rda')
+saveRDS(df6, file='data/df6.rds')
 rm(list = setdiff(ls(), lsf.str()))
 
 # get width and height
-load('data/d6.Rda')
+df6 <- readRDS('data/df6.rds')
 source('get_photo_data_7.R')
-save(df7, file='data/df7.Rda')
+saveRDS(df7, file='data/df7.rds')
 rm(list = setdiff(ls(), lsf.str()))
 
 #############################################
