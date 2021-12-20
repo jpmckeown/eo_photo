@@ -1,20 +1,26 @@
 # 4th step relies on df3 from get_photo_data_3.R
 #  relies on complete InfoURL and ImageName columns
+library(jsonlite)
+
+# If run in small batches need to keep changed df4
 df4 <- df3
+# extra column so can see where 640URL added
+# df4['w640_URL'] <- NA
+add_column(df4, w640_URL = NA, .after="FileURL")
 
 # where folder (and FileURL) missing from Wikimedia
 # use Wikimedia API to get folder for FileURL construction
 # also get artist, artistURL, license, and licenseURL
-already = 0
+already <- 0
 found <- 0
-#i <- 0
-loopEnd <- nrow(df4)
-
-for (i in seq_len(loopEnd)) { 
+loopEnd <- nrow(df4) #
 
 # temp code to avoid looping all
-# while (found < 7) {
-#   incr(i)
+i <- 0
+while (found < 7) {
+  incr(i)
+
+# for (i in seq_len(loopEnd)) { 
   
   if (df4$Provider[i] == 'Wikimedia') {
     
@@ -23,8 +29,11 @@ for (i in seq_len(loopEnd)) {
 print(paste(df4$Country[i], df4$ID[i], i, found))   
 
 #if(0==1){
-      # first get URL of original image file (max size) from Wiki API
-      original_API <- paste0('https://commons.wikimedia.org/w/api.php?action=query&titles=File:', imgName, '&prop=imageinfo&iiprop=url&format=json')
+      # first get original image URL (maximum size) from Wiki API
+      # construct API get
+      imgName <- df4$ImageName[i]
+      common <- 'https://commons.wikimedia.org/w/api.php?action=query&titles=File:'
+      original_API <- paste0(common, imgName, '&prop=imageinfo&iiprop=url&format=json')
       
       original_JSON <- jsonlite::fromJSON(original_API)
       original <- unlist(original_JSON)
@@ -42,8 +51,8 @@ print(paste(df4$Country[i], df4$ID[i], i, found))
       imgName <- df4$ImageName[i]
       URL640 <- paste0('https://upload.wikimedia.org/wikipedia/commons/thumb/', folder, imgName, '/640px-', imgName)
       
-      #print(paste(i, URL640))
-      df4$FileURL[i] <- URL640
+      print(paste(i, URL640))
+      df4$w640_URL[i] <- URL640
 
 #} # prevent API calls
     } else {  # FileURL and folder were already present

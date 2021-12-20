@@ -135,6 +135,6 @@ fileURL_to_folder <- function(fileURL) {
 }
 
 originalURL_to_folder <- function(originalURL) {
-  folder <- sub('https://upload.wikimedia.org/wikipedia/commons/([A-Z|a-z|0-9]+/[A-Z|a-z|0-9]+)/.*', '\\1', uploadURL)
+  folder <- sub('https://upload.wikimedia.org/wikipedia/commons/([A-Z|a-z|0-9]+/[A-Z|a-z|0-9]+)/.*', '\\1', originalURL)
   return(paste0(folder, '/'))
 }
