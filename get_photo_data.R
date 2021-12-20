@@ -6,11 +6,10 @@ load('data/eo.Rda')
 
 # libraries and helper functions
 source('get_photo_data_0.R')
-# keep functions but clear variables
-rm(list = setdiff(ls(), lsf.str()))
 
 # check data from Photos Doc
 source('verify_photo.R')
+# keep functions but clear variables
 rm(list = setdiff(ls(), lsf.str()))
 
 # old photos recycle 640

@@ -26,69 +26,69 @@ for (i in seq_along(allRead)) {
   
   # ignore header and blank lines
   if (line != '' && i > 20) {
-  if (!grepl('[a-zA-Z0-9]+', line)) {
-    # print(paste('Exclude', line))
-  } else {
-    
-    # country
-    if (grepl('^[*][*][*]', line)) {
+    if (!grepl('[a-zA-Z0-9]+', line)) {
+      # print(paste('Exclude', line))
+    } else {
       
-      # get country name
-      country <- sub("^[*][*][*][ ]*([A-Z|a-z| ]*)[-|:| ]*", "\\1", line)
-      # not needed while only checking countries included
-      # country <- str_to_title(country)
-      # if (country == 'Guineabissau') {
-      #   country <- 'Guinea-Bissau'
-      # }
-# print(country)     
-      country_count <- country_count + 1
-      country_found[country_count] <- country
-
-      iso3c <- countrycode(country, origin = 'country.name', destination = 'iso3c')
-      iso3c_found[country_count] <- iso3c
-      
-      # makes Myanmar (Burma); Congo - Brazzaville; Congo - Kinshasa
-      # country <- countrycode(iso3c, origin = 'iso3c', destination = 'country.name')
-      
-      # ready to count photos in this country      
-      photoID <- 0
-      
-    } # country label
-    
-    # photo
-    if (expectPhoto) {
-      photoID <- photoID +1
-
-      if(grepl('https', line)) {
-        goodURL <- goodURL + 1
-        # if (url.exists(line)) {
-      print(paste(photoID, line))          
-        # } else {
-        #   print(paste('DODGY?===', photoID, line))
+      # country
+      if (grepl('^[*][*][*]', line)) {
+        
+        # get country name
+        country <- sub("^[*][*][*][ ]*([A-Z|a-z| ]*)[-|:| ]*", "\\1", line)
+        # not needed while only checking countries included
+        # country <- str_to_title(country)
+        # if (country == 'Guineabissau') {
+        #   country <- 'Guinea-Bissau'
         # }
-
+  # print(country)     
+        country_count <- country_count + 1
+        country_found[country_count] <- country
+  
+        iso3c <- countrycode(country, origin = 'country.name', destination = 'iso3c')
+        iso3c_found[country_count] <- iso3c
         
-      } else if (grepl('https', line) || grepl('jpg', line) || grepl('png', line) || grepl('JPG', line) || grepl('PNG', line) || grepl('svg', line)  || grepl('Photo-', line)) {
-        badURL <- badURL + 1
+        # makes Myanmar (Burma); Congo - Brazzaville; Congo - Kinshasa
+        # country <- countrycode(iso3c, origin = 'iso3c', destination = 'country.name')
         
-      } else {
-        print(paste('ID', photoID, country, 'no URL', line, caption))
+        # ready to count photos in this country      
+        photoID <- 0
+        
+      } # country label
+      
+      # photo
+      if (expectPhoto) {
+        photoID <- photoID +1
+  
+        if(grepl('https', line)) {
+          goodURL <- goodURL + 1
+          # if (url.exists(line)) {
+        print(paste(photoID, line))          
+          # } else {
+          #   print(paste('DODGY?===', photoID, line))
+          # }
+  
+          
+        } else if (grepl('https', line) || grepl('jpg', line) || grepl('png', line) || grepl('JPG', line) || grepl('PNG', line) || grepl('svg', line)  || grepl('Photo-', line)) {
+          badURL <- badURL + 1
+          
+        } else {
+          print(paste('ID', photoID, country, 'no URL', line, caption))
+        }
+        expectPhoto <- FALSE
       }
-      expectPhoto <- FALSE
-    }
-    
-    # caption
-    if (grepl('^#', line)) {
-      # caption <- cleanCaption(line)
-      expectPhoto <- TRUE
-    }
-    
-    # unspecified
-    if (grepl('pixabay.com/photos/search', line)) {
-      print(paste(country, 'ID', photoID, line))
-    }
-
-  } # GoogleDoc pagebreak symbol excluder
+      
+      # caption
+      if (grepl('^#', line)) {
+        # caption <- cleanCaption(line)
+        expectPhoto <- TRUE
+      }
+      
+      # unspecified
+      if (grepl('pixabay.com/photos/search', line)) {
+        print(paste(country, 'ID', photoID, line))
+      }
+  
+    } # GoogleDoc pagebreak symbol excluder
   } # blank line excluder
 } # read lines
 

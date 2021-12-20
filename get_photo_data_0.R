@@ -5,7 +5,7 @@ library(stringr)
 library(stringi)
 library(countrycode)
 library(tools)
-# library(Hmisc)
+library(Hmisc)
 library(RCurl)
 
 incr <- function(x) { eval.parent(substitute(x <- x + 1)) }
