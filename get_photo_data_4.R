@@ -5,8 +5,8 @@ library(jsonlite)
 # If run in small batches need to keep changed df4
 df4 <- df3
 # extra column so can see where 640URL added
-# df4['w640_URL'] <- NA
-add_column(df4, w640_URL = NA, .after="FileURL")
+df4['w640_URL'] <- NA
+# add_column(df4, w640_URL = NA, .after="FileURL")
 
 # where folder (and FileURL) missing from Wikimedia
 # use Wikimedia API to get folder for FileURL construction
@@ -26,9 +26,7 @@ while (found < 7) {
     
     if (is.na(df4$folder[i])) {
       incr(found)
-print(paste(df4$Country[i], df4$ID[i], i, found))   
 
-#if(0==1){
       # first get original image URL (maximum size) from Wiki API
       # construct API get
       imgName <- df4$ImageName[i]
@@ -48,7 +46,6 @@ print(paste(df4$Country[i], df4$ID[i], i, found))
       # but fill in missing FileURL so that no one adds it manually
       
       # construct URL of version 640 pixels width
-      imgName <- df4$ImageName[i]
       URL640 <- paste0('https://upload.wikimedia.org/wikipedia/commons/thumb/', folder, imgName, '/640px-', imgName)
       
       print(paste(i, URL640))
