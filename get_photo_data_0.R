@@ -5,13 +5,12 @@ library(stringr)
 library(stringi)
 library(countrycode)
 library(tools)
-library(Hmisc)
+# library(Hmisc)
 library(RCurl)
 
-incr <- function(x) {
-  eval.parent(substitute(x <- x + 1))
-}
+incr <- function(x) { eval.parent(substitute(x <- x + 1)) }
 
+# 
 cleanCaption <- function(line) {
   # stops odd characters
   caption <- stri_encode(line, '', 'UTF-8')
@@ -22,7 +21,10 @@ cleanCaption <- function(line) {
   caption <- trimws(caption, which = "right", whitespace = "[ \t\r\n]")
   # add final period if missing
   if (!str_sub(caption, -1) == '.') {
-    caption <- paste0(caption, '.')
+    # cope with American-style quote after period
+    if (!str_sub(caption, -2) == '.') {
+      caption <- paste0(caption, '.')
+    }
   }
   return(caption)
 }
