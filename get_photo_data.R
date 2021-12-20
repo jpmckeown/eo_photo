@@ -18,7 +18,7 @@ source('old_photo_use.R')
 # get id, caption, URL from Photo gdoc
 source('get_photo_data_1.R')
 rm(list = setdiff(ls(), lsf.str()))
-
+df1 = df
 df1 <- readRDS('data/df1.rds')
 df1a <- df1[order(df1$Provider), ]
 write_tsv(df1a, 'data/photo_step_1a.tsv')
@@ -30,7 +30,8 @@ rm(list = setdiff(ls(), lsf.str()))
 
 # reconstruct missing Info_URL, from FileURL get ImageName and folder
 # load('data/df2.Rda')
-df <- readRDS('data/df1.rds')
+df1 <- readRDS('data/df1.rds')
+df1a <- df1[order(df1$Provider), ]
 source('get_photo_data_3.R')
 saveRDS(df3, file='data/df3.rds')
 rm(list = setdiff(ls(), lsf.str()))

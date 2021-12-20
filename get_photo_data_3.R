@@ -25,8 +25,8 @@ freeimages_imgName_to_infoURL <- function(imgName) {
 
 photoCount <- 0
 # cannot filter because need to keep spreadsheet whole
-
-df3 <- df
+# use rows ordered with non-Wikimedia first
+df3 <- df1a
 # Wikimedia image name includes extension; FreeImages does not.
 
 loopEnd <- nrow(df3) # wikimedia_count # 
