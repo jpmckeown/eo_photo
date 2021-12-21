@@ -68,6 +68,7 @@ saveRDS(df7, file='data/df8.rds')
 # what can be typed in
 # Pixnio = Artist, License   (no ArtistURL)
 # Pixabay = Artist, ArtistURL (link from circle photo)  [standard license]
+# FreeImages = Artist, ArtistURL (link from name)   [standard license]
 
 #############################################
 

@@ -15,11 +15,11 @@ for (i in 1:loopEnd) {
     # https://creativecommons.org/licenses/publicdomain/
     
     if (df6$Provider == 'Wikimedia') {
-      credit_html <-
+      credit_html <- paste0('<a href="', df6$ArtistURL[i], '">', df6$Artist[i], '</a>', '<a href="', df6$LicenseURL[i], '">', df6$License[i], '</a>')
     }
     
     if (df6$Provider == 'Unsplash') {
-      credit_html <-
+      credit_html <- ''
     }
     
     if (df6$Provider == 'Pixnio') {
@@ -27,11 +27,12 @@ for (i in 1:loopEnd) {
     }
     
     if (df6$Provider == 'Pixabay') {
-      credit_html <-
+      credit_html <- ''
     }
     
+    # if you are using content for editorial purposes, you must include the following credit adjacent to the content: “FreeImages.com/Artist’s Member Name.”
     if (df6$Provider == 'FreeImages') {
-      credit_html <-
+      credit_html <- paste0('<a href="', df6$LicenseURL[i], '">', df6$License[i], '</a> / Artist: <a href="', df6$ArtistURL[i], '">', df6$Artist[i], '</a>')
     }
     
     df6$CreditHTML[i] <- credit_html    

@@ -148,8 +148,9 @@ print(paste('artistLine', artistLine))
     df5$LicenseURL <- 'https://pixnio.com/creative-commons-license'
   }
   
+  # if you are using content for editorial purposes, you must include the following credit adjacent to the content or in audio/visual production credits: “FreeImages.com/Artist’s Member Name.”
   if (df5$Provider == 'FreeImages') {
-    df5$License <- 'CC0'
+    df5$License <- 'FreeImages.com'
     df5$LicenseURL <- 'https://www.freeimages.com/license'
   }
 }
