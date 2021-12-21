@@ -3,12 +3,14 @@
 library(jsonlite)
 
 # If run in small batches need to keep changed df4
+df3 <- readRDS('data/df3.rds')
 df4 <- df3
-# df4['OriginURL'] <- NA
-add_column(df4, OriginalURL = as.character(NA), .after="InfoURL")
+df4['OriginURL'] <- as.character(NA)
 
 # extra column so can see where 640URL added
 df4['w640_URL'] <- as.character(NA)
+
+df4 <- df4[, c('Country', 'iso3c', 'ID', 'Caption', 'Provider', 'Artist', 'ArtistURL', 'License', 'LicenseURL', 'ImageName', 'InfoURL', 'OriginURL', 'folder', 'CreditHTML', 'Format', 'Width', 'Height', 'iso2c', 'w640_URL')]
 
 # where folder (and FileURL) missing from Wikimedia
 # use Wikimedia API to get folder for FileURL construction
@@ -18,7 +20,7 @@ found <- 0
 
 # temp code to avoid looping all
 i <- 0
-while (found < 7) {
+while (found < 9) {
   incr(i)
 
 # loopEnd <- nrow(df4) #
