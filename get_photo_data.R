@@ -65,6 +65,9 @@ df7 <- readRDS('data/df7.rds')
 source('get_photo_data_8.R')
 saveRDS(df7, file='data/df8.rds')
 
+# what can be typed in
+# Pixnio = Artist, License   (no ArtistURL)
+# Pixabay = Artist, ArtistURL (link from circle photo)  [standard license]
 
 #############################################
 

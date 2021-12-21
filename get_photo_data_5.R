@@ -21,7 +21,7 @@ licenseURL_vector <- rep(NA, nrow(df5))
 creditline_vector <- rep(NA, nrow(df5))
 
 # loop all rows
-loopEnd <- 7
+loopEnd <- 7 # nrow(df5)
 for (i in 1:loopEnd) {
   changed <- 0
 # i <- 0
@@ -132,4 +132,25 @@ print(paste('artistLine', artistLine))
     print(paste('license', licens))
     
   } # end Wikimedia with ImageName
+  
+  if (df5$Provider == 'Unsplash') {
+    # df5$License <- 'CC0'
+    # df5$LicenseURL <- 'https://pixnio.com/creative-commons-license'
+  }
+  
+  if (df5$Provider == 'Pixabay') {
+    df5$License <- 'Pixabay License'
+    df5$LicenseURL <- 'https://pixabay.com/service/license/'
+  }
+  
+  if (df5$Provider == 'Pixnio') {
+    df5$License <- 'CC0'
+    df5$LicenseURL <- 'https://pixnio.com/creative-commons-license'
+  }
+  
+  if (df5$Provider == 'FreeImages') {
+    df5$License <- 'CC0'
+    df5$LicenseURL <- 'https://www.freeimages.com/license'
+  }
 }
+saveRDS(df5, 'data/df5.rds')
