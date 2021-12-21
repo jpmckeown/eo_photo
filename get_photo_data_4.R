@@ -4,22 +4,24 @@ library(jsonlite)
 
 # If run in small batches need to keep changed df4
 df4 <- df3
+# df4['OriginURL'] <- NA
+add_column(df4, OriginalURL = as.character(NA), .after="InfoURL")
+
 # extra column so can see where 640URL added
-df4['w640_URL'] <- NA
-# add_column(df4, w640_URL = NA, .after="FileURL")
+df4['w640_URL'] <- as.character(NA)
 
 # where folder (and FileURL) missing from Wikimedia
 # use Wikimedia API to get folder for FileURL construction
 # also get artist, artistURL, license, and licenseURL
 already <- 0
 found <- 0
-loopEnd <- nrow(df4) #
 
 # temp code to avoid looping all
 i <- 0
 while (found < 7) {
   incr(i)
 
+# loopEnd <- nrow(df4) #
 # for (i in seq_len(loopEnd)) { 
   
   if (df4$Provider[i] == 'Wikimedia') {
@@ -37,6 +39,7 @@ while (found < 7) {
       original <- unlist(original_JSON)
       original_URL <- original[ grepl('imageinfo.url', names(original)) ]
       original_URL <- unname(original_URL)
+      df4$OriginalURL <- original_URL
       
       # get double folder where versions of image file stored
       folder <- originalURL_to_folder(original_URL)
@@ -52,14 +55,15 @@ while (found < 7) {
       df4$w640_URL[i] <- URL640
 
 #} # prevent API calls
-    } else {  # FileURL and folder were already present
+    } else {  
       folder <- df4$folder[i]
+      print(paste(i, folder))
 incr(already)
-    }
-  }
+    } # ends folder absent or present ?
+  } # end if Wikimedia
 
 }
 
 print(paste(found, 'need API to get folder from InfoURL'))
 print(paste(already, 'already have folder derived from FileURL'))
-#saveRDS(df4, file='data/df4.rds')
+saveRDS(df4, file='data/df4.rds')

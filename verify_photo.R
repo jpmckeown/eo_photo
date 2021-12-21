@@ -8,7 +8,7 @@
 
 # Output must be Tab-separated because commas in caption, attribution, and URLs
 # Goal is tsv with columns: Country, iso3c, (photo)ID, format, width, height, Caption, Attribution, File_address, Commons_address
-
+load('data/eo.Rda')
 
 country_count <- 0
 goodURL <- 0
@@ -103,8 +103,13 @@ if (length(unique(iso3c_found)) == length(iso3c_found)) {
 
 missing_iso3c <- setdiff(as.vector(eo$iso3c), iso3c_found)
 print(missing_iso3c)
+saveRDS(missing_iso3c, 'data/countryData_lack_photo.rds')
+
+# identify countries with photos but not in eo datasheet
+extra_iso3c <- setdiff(iso3c_found, as.vector(eo$iso3c))
+print(extra_iso3c)
+saveRDS(extra_iso3c, 'data/photos_lack_countryData.rds')
 
 print(countrycode(missing_iso3c, origin = 'iso3c', destination = 'country.name'))
 
 saveRDS(iso3c_found, 'data/countries_with_photo.rds')
-saveRDS(missing_iso3c, 'data/countries_lack_photo.rds')
