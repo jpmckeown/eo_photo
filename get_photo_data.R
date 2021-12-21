@@ -42,24 +42,29 @@ source('get_photo_data_4.R')
 saveRDS(df4, file='data/df4.rds')
 rm(list = setdiff(ls(), lsf.str()))
 
-# use API to get attribution data, from ImageName
-# assemble CreditHTML
+# use API to get Artist and Licence from ImageName
 df4 <- readRDS('data/df4.rds')
 source('get_photo_data_5.R')
 saveRDS(df5, file='data/df5.rds')
 rm(list = setdiff(ls(), lsf.str()))
 
-# download photo files
+# assemble CreditHTML for al Providers
 df5 <- readRDS('data/df5.rds')
 source('get_photo_data_6.R')
 saveRDS(df6, file='data/df6.rds')
 rm(list = setdiff(ls(), lsf.str()))
 
-# get width and height
+# download photo files
 df6 <- readRDS('data/df6.rds')
 source('get_photo_data_7.R')
 saveRDS(df7, file='data/df7.rds')
 rm(list = setdiff(ls(), lsf.str()))
+
+# get width and height
+df7 <- readRDS('data/df7.rds')
+source('get_photo_data_8.R')
+saveRDS(df7, file='data/df8.rds')
+
 
 #############################################
 
