@@ -21,7 +21,7 @@ licenseURL_vector <- rep(NA, nrow(df5))
 creditline_vector <- rep(NA, nrow(df5))
 
 # loop all rows
-loopEnd <- 9
+loopEnd <- 7
 for (i in 1:loopEnd) {
   changed <- 0
 # i <- 0
@@ -106,7 +106,7 @@ print(paste('artistLine', artistLine))
     
     licens <- gsub('.*"(/w*)"', '\\1', license_line)
     df5$License[i] <- licens
-    licens_vector[i] <- licens
+    license_vector[i] <- licens
 
     # get URL describing license from wikimedia API
     licenseURL_API <- paste0(
@@ -116,13 +116,20 @@ print(paste('artistLine', artistLine))
 
     licenseURL_JSON <- jsonlite::fromJSON(licenseURL_API)
     licenseURL_here <- unlist(licenseURL_JSON)
-    licenseURL_line <- licenseURL_here[ grepl('LicenseUrl.value', names(licenseURL_here)) ]
+    licenseURL_line1 <- licenseURL_here[ grepl('LicenseUrl.value', names(licenseURL_here)) ]
     licenseURL_line2 <- unname(licenseURL_line1)
-    licenseURL_line <- gsub('\n', '', license_line2)
     
-    df5$LicenseURL[i] <- licenseURL_line
-    licenseURL_vector[i] <- licenseURL_line
+    if (!identical(licenseURL_line2, character(0))) {
+      licenseURL_line2 <- unname(licenseURL_line1)
+      licenseURL_line <- gsub('\n', '', licenseURL_line2)
+      df5$LicenseURL[i] <- licenseURL_line
+      licenseURL_vector[i] <- licenseURL_line
+      print(paste('licenseURL', licenseURL_line)) 
+    }
+
     #licens <- gsub('.*"(/w*)"', '\\1', licenseURL_line)
+    
+    print(paste('license', licens))
     
   } # end Wikimedia with ImageName
 }
