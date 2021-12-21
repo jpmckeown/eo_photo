@@ -10,7 +10,7 @@ df4['OriginURL'] <- as.character(NA)
 # extra column so can see where 640URL added
 df4['w640_URL'] <- as.character(NA)
 
-df4 <- df4[, c('Country', 'iso3c', 'ID', 'Caption', 'Provider', 'Artist', 'ArtistURL', 'License', 'LicenseURL', 'ImageName', 'InfoURL', 'OriginURL', 'folder', 'CreditHTML', 'Format', 'Width', 'Height', 'iso2c', 'w640_URL')]
+df4 <- df4[, c('Country', 'iso3c', 'ID', 'Caption', 'Provider', 'Artist', 'ArtistURL', 'License', 'LicenseURL', 'ImageName', 'InfoURL', 'OriginURL', 'FileURL', 'folder', 'CreditHTML', 'Format', 'Width', 'Height', 'iso2c', 'w640_URL')]
 
 # where folder (and FileURL) missing from Wikimedia
 # use Wikimedia API to get folder for FileURL construction
@@ -41,7 +41,7 @@ while (found < 9) {
       original <- unlist(original_JSON)
       original_URL <- original[ grepl('imageinfo.url', names(original)) ]
       original_URL <- unname(original_URL)
-      df4$OriginalURL <- original_URL
+      df4$OriginURL[i] <- original_URL
       
       # get double folder where versions of image file stored
       folder <- originalURL_to_folder(original_URL)
@@ -58,9 +58,11 @@ while (found < 9) {
 
 #} # prevent API calls
     } else {  
+      incr(already)
+      # unsure if this needed, is it used?
       folder <- df4$folder[i]
       print(paste(i, folder))
-incr(already)
+
     } # ends folder absent or present ?
   } # end if Wikimedia
 
@@ -68,4 +70,5 @@ incr(already)
 
 print(paste(found, 'need API to get folder from InfoURL'))
 print(paste(already, 'already have folder derived from FileURL'))
+
 saveRDS(df4, file='data/df4.rds')
