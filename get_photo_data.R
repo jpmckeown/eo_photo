@@ -66,9 +66,27 @@ source('get_photo_data_8.R')
 saveRDS(df7, file='data/df8.rds')
 
 # what can be typed in
-# Pixnio = Artist, License   (no ArtistURL)
-# Pixabay = Artist, ArtistURL (link from circle photo)  [standard license]
-# FreeImages = Artist, ArtistURL (link from name)   [standard license]
+# Pixnio = Artist, License, LicenseURL   
+# (no ArtistURL, that offered when downloading is just InfoURL) 
+
+
+# Pixabay = Artist, ArtistURL (link from circle photo)  [no ImgName; standard license]
+
+# FreeImages = Artist, ArtistURL (link from name)   [no ImageName; standard license]
+
+# Unsplash = Artist, ArtistURL (link from name)
+# Photo by 2Photo Pots on Unsplash
+# https://unsplash.com/@2photopots
+# https://unsplash.com/?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText (site)
+
+# small 640w, medium 1920w
+
+# ask Sara for data using a form rather than spreadsheet
+
+# Pixabay: "Giving credit to the artist or Pixabay is not necessary but is always appreciated by our community."
+# Don't portray identifiable people in a bad light or in a way that is offensive.
+
+# FreeImages: if you are using content for editorial purposes, you must include the following credit adjacent to the content or in audio/visual production credits: “FreeImages.com/Artist’s Member Name.”
 
 #############################################
 

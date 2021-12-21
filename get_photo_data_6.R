@@ -22,8 +22,9 @@ for (i in 1:loopEnd) {
       credit_html <- ''
     }
     
+    # Photo by Artist on Pixnio
     if (df6$Provider == 'Pixnio') {
-      credit_html <- '<a href="https://pixnio.com/">Pixnio free images</a>'
+      credit_html <- paste0('Photo by <a href="', df6$InfoURL, '">', df6$Artist[i], '</a> on Pixnio <a href="https://pixnio.com/">free images</a> license <a href="', df6$LicenseURL[i], '">', df6$License[i], '</a>')
     }
     
     if (df6$Provider == 'Pixabay') {

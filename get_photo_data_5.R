@@ -133,14 +133,14 @@ print(paste('artistLine', artistLine))
     
   } # end Wikimedia with ImageName
   
+  # "Unsplash photographers appreciate it as it provides exposure to their work and encourages them to continue sharing.
   if (df5$Provider == 'Unsplash') {
-    # df5$License <- 'CC0'
-    # df5$LicenseURL <- 'https://pixnio.com/creative-commons-license'
+    df5$LicenseURL <- 'https://unsplash.com/license'
   }
   
   if (df5$Provider == 'Pixabay') {
     df5$License <- 'Pixabay License'
-    df5$LicenseURL <- 'https://pixabay.com/service/license/'
+    df5$LicenseURL <- 'https://pixabay.com/service/license/' # longer https://pixabay.com/service/terms/#license
   }
   
   if (df5$Provider == 'Pixnio') {
