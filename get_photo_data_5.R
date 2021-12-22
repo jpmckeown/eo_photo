@@ -4,7 +4,8 @@
 df4 <- readRDS('data/df4.rds')
 df5 <- df4
 
-# extra column so can see where 640URL added
+# retreated to old way using ArtistLine as a whole, instead of finding Artist & URL
+#  because of problems trying to extract them. 
 df5['ArtistHTML'] <- as.character(NA)
 
 df5 <- df5[, c('Country', 'iso3c', 'ID', 'Caption', 'Provider', 'Artist', 'ArtistURL', 'ArtistHTML', 'License', 'LicenseURL', 'ImageName', 'InfoURL', 'OriginURL', 'FileURL', 'folder', 'CreditHTML', 'Format', 'Width', 'Height', 'iso2c', 'w640_URL')]

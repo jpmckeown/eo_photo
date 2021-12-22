@@ -3,19 +3,48 @@
 df5 <- readRDS('data/df5.rds')
 df6 <- df5
 
-# Earlier efforts failed to extract Artist separately from ArtistURL
-#  because sometimes Artist string is divided, and may have 2 links e.g.
-# <a href='https://en.wikipedia.org/wiki/User:Khaufle' class='extiw' title='wikipedia:User:Khaufle'>Khaufle</a> at <a href='https://en.wikipedia.org/wiki/' class='extiw' title='wikipedia:'>English Wikipedia</a>
-# When not separable go back to old way of using ArtistLine as a whole.
-
-# Conditions = no link provided
-# link is Wikimedia flagged doesnt exist
+# Conditions needing attention
+# link is Wikimedia flagged as not existing
 # link not valid
+
+# DONE Look at ArtistHTML column, categorise & find targeted cases
+# easier to test after column populated by step 5
+
+# Earlier efforts failed to extract Artist and ArtistURL due to varying formats:
+
+# Artist has affiliation, and a 2nd link
+# <a href='https://en.wikipedia.org/wiki/User:Khaufle' class='extiw' title='wikipedia:User:Khaufle'>Khaufle</a> at <a href='https://en.wikipedia.org/wiki/' class='extiw' title='wikipedia:'>English Wikipedia</a>
+
+# 2nd link to personal website
+# <a href='//commons.wikimedia.org/wiki/User:JJ_Harrison' title='User:JJ Harrison'>JJ Harrison</a> (<a rel='nofollow' class='external free' href='https://www.jjharrison.com.au/'>https://www.jjharrison.com.au/</a>)
+
+# Artist all inside anchor; 1 link; missing https 
+# <a href='//commons.wikimedia.org/wiki/User:Albinfo' title='User:Albinfo'>Albinfo</a> AL1
+
+# As above but Artist continues after anchor
+# <a href='//commons.wikimedia.org/wiki/User:Liveon001' title='User:Liveon001'>Liveon001</a> © Travis K. Witt
+# <a href='//commons.wikimedia.org/wiki/User:Serouj' title='User:Serouj'>Serouj</a> (courtesy of Ani Vardanyan)
+
+# Flagged URL; redlink? Artist clean inside anchor
+# <a href='//commons.wikimedia.org/w/index.php?title=User:Goodfaith17&amp;action=edit&amp;redlink=1' class='new' title='User:Goodfaith17 (page does not exist)'>Goodfaith17</a>
+
+# Superfluous class and nofollow; Artist continues after anchor
+# <a rel='nofollow' class='external text' href='https://www.flickr.com/people/41000732@N04'>Adam Jones</a> from Kelowna, BC, Canada
+
+# As above but artist inside anchor.
+# <a rel='nofollow' class='external text' href='https://www.flickr.com/people/21187388@N06'>University of the Fraser Valley</a> AG3
+
+# no link, only Artist; wouldnt matter as ArtistHTML is simply Artist
+# Paulo César Santos
 
 artist_vector <- rep(NA, nrow(df6))
 artistURL_vector <- rep(NA, nrow(df6))
 
-if (df6$Provider == 'Unsplash') {
+loopEnd <- nrow(df6)
+for (i in 1:loopEnd) {
+  changed <- 0
+  
+  if (df6$Provider[i] == 'Wikimedia' && !is.na(df6$ArtistHTML)) {
   
 # if link flagged invalid just use Artist name
 # if (grepl('page does not exist', artistLine)) {
@@ -28,10 +57,7 @@ if (df6$Provider == 'Unsplash') {
 
 # where artist's URL is provided, the artistLine is 
 # a complete Anchor tag containing href with \" quotes
-# Examples
-# <a href='//commons.wikimedia.org/wiki/User:Alexxx1979' title='User:Alexxx1979'>Alexxx1979</a>
-# AL1 "<a href=\"//commons.wikimedia.org/wiki/User:Albinfo\" title=\"User:Albinfo\">Albinfo</a>"
-# AG3 <a rel='nofollow' class='external text' href='https://www.flickr.com/people/21187388@N06'>University of the Fraser Valley</a>
+
 
 # get artist and URL
 # if (!grepl('<a', artistLine)) {
@@ -46,25 +72,28 @@ if (df6$Provider == 'Unsplash') {
 
 # get artist_URL and check if valid and isn't missing at Provider
 # print(paste('artist', artist))
-} # end Wikimedia
+  
+  } # end Wikimedia with ArtistHTML
 
 # "Unsplash photographers appreciate it as it provides exposure to their work and encourages them to continue sharing.
-if (df6$Provider == 'Unsplash') {
-  df6$LicenseURL <- 'https://unsplash.com/license'
-}
+  # if (df6$Provider == 'Unsplash') {
+  #   df6$LicenseURL <- 'https://unsplash.com/license'
+  # }
+  # 
+  # if (df6$Provider == 'Pixabay') {
+  #   df6$License <- 'Pixabay License'
+  #   df6$LicenseURL <- 'https://pixabay.com/service/license/' # longer https://pixabay.com/service/terms/#license
+  # }
+  # 
+  # if (df6$Provider == 'Pixnio') {
+  #   df6$License <- 'CC0'
+  #   df6$LicenseURL <- 'https://pixnio.com/creative-commons-license'
+  # }
+  # 
+  # # if you are using content for editorial purposes, you must include the following credit adjacent to the content or in audio/visual production credits: “FreeImages.com/Artist’s Member Name.”
+  # if (df6$Provider == 'FreeImages') {
+  #   df6$License <- 'FreeImages.com'
+  #   df6$LicenseURL <- 'https://www.freeimages.com/license'
+  # }
 
-if (df6$Provider == 'Pixabay') {
-  df6$License <- 'Pixabay License'
-  df6$LicenseURL <- 'https://pixabay.com/service/license/' # longer https://pixabay.com/service/terms/#license
-}
-
-if (df6$Provider == 'Pixnio') {
-  df6$License <- 'CC0'
-  df6$LicenseURL <- 'https://pixnio.com/creative-commons-license'
-}
-
-# if you are using content for editorial purposes, you must include the following credit adjacent to the content or in audio/visual production credits: “FreeImages.com/Artist’s Member Name.”
-if (df6$Provider == 'FreeImages') {
-  df6$License <- 'FreeImages.com'
-  df6$LicenseURL <- 'https://www.freeimages.com/license'
-}
+} # photo loop
