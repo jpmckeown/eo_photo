@@ -43,7 +43,13 @@ loopEnd <- nrow(df6)
 for (i in 1:loopEnd) {
   changed <- 0
   
-  if (df6$Provider[i] == 'Wikimedia' && !is.na(df6$ArtistHTML)) {
+  artist_html <- df6$ArtistHTML[i]
+  
+  if (df6$Provider[i] == 'Wikimedia' && !is.na(artist_html)) {
+    
+    if (grepl('page does not exist', artist_html)) {
+      artist <- sub("^<a (.+)>(.+)<\\/a>", "\\2", artist_html)
+    }
   
 # if link flagged invalid just use Artist name
 # if (grepl('page does not exist', artistLine)) {
