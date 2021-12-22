@@ -38,19 +38,16 @@ rm(list = setdiff(ls(), lsf.str()))
    
 # 4. where missing File_URL, use API to get ImageName and folder and URL
 # not done many yet
-df3 <- readRDS('data/df3.rds')
 source('get_photo_data_4.R')
 saveRDS(df4, file='data/df4.rds')
 rm(list = setdiff(ls(), lsf.str()))
 
 # use API to get ArtistHTML and Licence from ImageName
-df4 <- readRDS('data/df4.rds')
 source('get_photo_data_5.R')
 saveRDS(df5, file='data/df5.rds')
 rm(list = setdiff(ls(), lsf.str()))
 
 # extract Artist and ArtistURL, where possible
-df5 <- readRDS('data/df5.rds')
 source('get_photo_data_6.R')
 saveRDS(df6, file='data/df6.rds')
 rm(list = setdiff(ls(), lsf.str()))

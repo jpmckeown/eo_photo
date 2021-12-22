@@ -2,13 +2,35 @@
 #  relies on complete InfoURL and ImageName columns
 library(jsonlite)
 
-pixabay_ID_to_fileURL <- function(imgName) {
+pixabay_ID_to_URL640 <- function(imgName) {
   Pixabay_API <- 'https://pixabay.com/api/?key=24587231-d8363fed1919782211f48ccc6&'
   this_API <- paste0(Pixabay_API, 'id=', imgName)
-  this_JSON <- jsonlite::fromJSON(this_API)
-  unlisted <- unlist(this_JSON)
-  web_URL <- unlisted[ grepl('webFormatURL', names(unlisted)) ]
-  url <- unname(web_URL)
+  this_JSON <- jsonlite::fromJSON(this_API, simplifyVector = TRUE)
+  # returns list, 3rd item is dataframe
+  df <- this_JSON[['hits']]
+  return(df$webformatURL)
+}
+pixabay_ID_to_URL1280 <- function(imgName) {
+  Pixabay_API <- 'https://pixabay.com/api/?key=24587231-d8363fed1919782211f48ccc6&'
+  this_API <- paste0(Pixabay_API, 'id=', imgName)
+  this_JSON <- jsonlite::fromJSON(this_API, simplifyVector = TRUE)
+  # returns list, 3rd item is dataframe
+  df <- this_JSON[['hits']]
+  return(df$largeImageURL)
+}
+API_pixabay_ID_to_fileURL <- function(imgName, width) {
+  Pixabay_API <- 'https://pixabay.com/api/?key=24587231-d8363fed1919782211f48ccc6&'
+  this_API <- paste0(Pixabay_API, 'id=', imgName)
+  this_JSON <- jsonlite::fromJSON(this_API, simplifyVector = TRUE)
+  # returns list, 3rd item is dataframe
+  df <- this_JSON[['hits']]
+  if (size == 640) {
+    url <- df$webformatURL
+  } else if (size ==1280) {
+    url <- df$largeImageURL
+  } else {
+    url <- 'NA'
+  }
   return(url)
 }
 
@@ -81,13 +103,9 @@ while (found < 9) {
   if (df4$Provider[i] == 'Pixabay') {
     
     imgName <- df4$ImageName[i]
-    # plan here to call function containing below
-    Pixabay_API <- 'https://pixabay.com/api/?key=24587231-d8363fed1919782211f48ccc6&'
-    this_API <- paste0(Pixabay_API, 'id=', imgName)
-    this_JSON <- jsonlite::fromJSON(this_API, simplifyVector = TRUE)
-    unlisted <- unlist(this_JSON)
-    web_URL <- unlisted[ grepl('hits.webFormatURL', names(unlisted)) ]
-    url <- unname(web_URL)
+    url640 <- API_pixabay_ID_to_fileURL(imgName, 640)
+    df4$w640_URL[i] <- url640
+
   }
   
   # Pixabay 24587231-d8363fed1919782211f48ccc6

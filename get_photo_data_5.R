@@ -1,8 +1,16 @@
 # 5th step relies on df4 from get_photo_data_4.R requires ImageName
 #  only do API, leave extraction attempt for next step
 
-df4 <- readRDS('data/df4.rds')
-df5 <- df4
+df5 <- readRDS('data/df4.rds')
+
+pixabay_ID_to_df <- function(imgName) {
+  Pixabay_API <- 'https://pixabay.com/api/?key=24587231-d8363fed1919782211f48ccc6&'
+  this_API <- paste0(Pixabay_API, 'id=', imgName)
+  this_JSON <- jsonlite::fromJSON(this_API, simplifyVector = TRUE)
+  # returns list, 3rd item is dataframe
+  df <- this_JSON[['hits']]
+  return(df)
+}
 
 # retreated to old way using ArtistLine as a whole, instead of finding Artist & URL
 #  because of problems trying to extract them. 
@@ -24,10 +32,10 @@ for (i in 1:loopEnd) {
 # i <- 0
 # while (changed < 3) {
   # incr(i)
+  imgName <- df5$ImageName[i]
   
-  if (df5$Provider[i] == 'Wikimedia' && !is.na(df5$ImageName[i])) {
+  if (df5$Provider[i] == 'Wikimedia' && !is.na(imgName)) {
     
-    imgName <- df5$ImageName[i]
     artist <- NA
     artistLine <- NA
     
@@ -102,13 +110,15 @@ for (i in 1:loopEnd) {
   
   # if API other Providers can get Artist or License, it goes here
   
-  if (df5$Provider[i] == 'Pixabay' && !is.na(df5$ImageName[i])) {
-    imgName <- df5$ImageName[i]
-    
+  # Pixabay has nice API
+  if (df5$Provider[i] == 'Pixabay' && !is.na(imgName)) {
+    Pixabay_df <- pixabay_ID_to_df(imgName)
+    artist <- Pixabay_df$user
+    u_id <- Pixabay_df$user_id
+    artistURL <- paste0('https://pixabay.com/users/', artist, '-', u_id, '/')
+    df5$Artist[i] <- artist
+    df5$ArtistURL[i] <- artistURL
   }
-  # Pixabay 24587231-d8363fed1919782211f48ccc6
-  # https://pixabay.com/api/?key=24587231-d8363fed1919782211f48ccc6&
-  # Pixabay uses ID number {5or6} instead of ImgName
   # "user_id":5475750,"user":"Graham-H"  Yes this matches what InfoURL says
   # https://pixabay.com/users/graham-h-5475750/  so ArtistURL can be constructed.
   
