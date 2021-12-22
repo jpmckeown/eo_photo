@@ -2,7 +2,17 @@
 #  relies on complete InfoURL and ImageName columns
 library(jsonlite)
 
-# If run in small batches need to keep changed df4
+pixabay_ID_to_fileURL <- function(imgName) {
+  Pixabay_API <- 'https://pixabay.com/api/?key=24587231-d8363fed1919782211f48ccc6&'
+  this_API <- paste0(Pixabay_API, 'id=', imgName)
+  this_JSON <- jsonlite::fromJSON(this_API)
+  unlisted <- unlist(this_JSON)
+  web_URL <- unlisted[ grepl('webFormatURL', names(unlisted)) ]
+  url <- unname(web_URL)
+  return(url)
+}
+
+# If run in small batches need to keep changed df4, avoid restarting
 df4 <- readRDS('data/df3.rds')
 
 df4['OriginURL'] <- as.character(NA)
@@ -69,20 +79,27 @@ while (found < 9) {
   # if API other Providers can get FileURL or InfoURL
   
   if (df4$Provider[i] == 'Pixabay') {
+    
     imgName <- df4$ImageName[i]
+    # plan here to call function containing below
     Pixabay_API <- 'https://pixabay.com/api/?key=24587231-d8363fed1919782211f48ccc6&'
     this_API <- paste0(Pixabay_API, 'id=', imgName)
-    this_JSON <- jsonlite::fromJSON(this_API)
+    this_JSON <- jsonlite::fromJSON(this_API, simplifyVector = TRUE)
     unlisted <- unlist(this_JSON)
-    web_URL <- unlisted[ grepl('imageinfo.url', names(original)) ]
-    original_URL <- unname(original_URL)
+    web_URL <- unlisted[ grepl('hits.webFormatURL', names(unlisted)) ]
+    url <- unname(web_URL)
   }
   
   # Pixabay 24587231-d8363fed1919782211f48ccc6
   # https://pixabay.com/api/?key=24587231-d8363fed1919782211f48ccc6&
   # Pixabay uses ID number {5or6} instead of ImgName
+  # JSON wrapped in 'hits'
   # webformatURL = w640; largeImageURL = w1280?
-  # Replace '_640' in any webformatURL value to access other image sizes
+  # Replace '_640' in any webformatURL value to access other image sizes # No this fails, but the 2nd URL works and is width 1280 despite JSON saying its 2560.
+
+  
+  # Pixnio lacks API
+  
 }
 
 print(paste(found, 'need API to get folder from InfoURL'))

@@ -1,7 +1,6 @@
 # 6th step, relies on df5 and ArtistHTML
 
-df5 <- readRDS('data/df5.rds')
-df6 <- df5
+df6 <- readRDS('data/df5.rds')
 
 # Conditions needing attention
 # link is Wikimedia flagged as not existing

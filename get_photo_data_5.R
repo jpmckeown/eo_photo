@@ -104,8 +104,8 @@ for (i in 1:loopEnd) {
   # Pixabay 24587231-d8363fed1919782211f48ccc6
   # https://pixabay.com/api/?key=24587231-d8363fed1919782211f48ccc6&
   # Pixabay uses ID number {5or6} instead of ImgName
-  # webformatURL = w640; largeImageURL = w1280?
-  # Replace '_640' in any webformatURL value to access other image sizes
+  # "user_id":5475750,"user":"Graham-H"  Yes this matches what InfoURL says
+  # https://pixabay.com/users/graham-h-5475750/  so ArtistURL can be constructed.
   
 }
 saveRDS(df5, 'data/df5.rds')

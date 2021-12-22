@@ -1,4 +1,4 @@
-# 6th step, assemble CreditHTML for all Providers
+# 7th step, assemble CreditHTML for all Providers
 #  no API call so can be run across whole df repeatedly
 
 df5 <- readRDS('data/df5.rds')
