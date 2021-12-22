@@ -3,8 +3,8 @@
 library(jsonlite)
 
 # If run in small batches need to keep changed df4
-df3 <- readRDS('data/df3.rds')
-df4 <- df3
+df4 <- readRDS('data/df3.rds')
+
 df4['OriginURL'] <- as.character(NA)
 
 # extra column so can see where 640URL added
@@ -69,7 +69,13 @@ while (found < 9) {
   # if API other Providers can get FileURL or InfoURL
   
   if (df4$Provider[i] == 'Pixabay') {
-    
+    imgName <- df4$ImageName[i]
+    Pixabay_API <- 'https://pixabay.com/api/?key=24587231-d8363fed1919782211f48ccc6&'
+    this_API <- paste0(Pixabay_API, 'id=', imgName)
+    this_JSON <- jsonlite::fromJSON(this_API)
+    unlisted <- unlist(this_JSON)
+    web_URL <- unlisted[ grepl('imageinfo.url', names(original)) ]
+    original_URL <- unname(original_URL)
   }
   
   # Pixabay 24587231-d8363fed1919782211f48ccc6

@@ -36,7 +36,8 @@ source('get_photo_data_3.R')
 saveRDS(df3, file='data/df3.rds')
 rm(list = setdiff(ls(), lsf.str()))
    
-# where missing File_URL, use API to get ImageName and folder
+# 4. where missing File_URL, use API to get ImageName and folder and URL
+# not done many yet
 df3 <- readRDS('data/df3.rds')
 source('get_photo_data_4.R')
 saveRDS(df4, file='data/df4.rds')
@@ -60,7 +61,6 @@ source('get_photo_data_7.R')
 saveRDS(df7, file='data/df7.rds')
 rm(list = setdiff(ls(), lsf.str()))
 
-# in which step API to get missing FileURL? must go before downloading
 df7 <- readRDS('data/df7.rds')
 source('get_photo_data_8.R')
 saveRDS(df8, file='data/df8.rds')
