@@ -101,11 +101,17 @@ for (i in 1:loopEnd) {
   } # end Wikimedia with ImageName
   
   # if API other Providers can get Artist or License, it goes here
+  
+  if (df5$Provider[i] == 'Pixabay' && !is.na(df5$ImageName[i])) {
+    imgName <- df5$ImageName[i]
+    
+  }
   # Pixabay 24587231-d8363fed1919782211f48ccc6
   # https://pixabay.com/api/?key=24587231-d8363fed1919782211f48ccc6&
   # Pixabay uses ID number {5or6} instead of ImgName
   # "user_id":5475750,"user":"Graham-H"  Yes this matches what InfoURL says
   # https://pixabay.com/users/graham-h-5475750/  so ArtistURL can be constructed.
   
-}
+} # end loop image rows
+
 saveRDS(df5, 'data/df5.rds')
