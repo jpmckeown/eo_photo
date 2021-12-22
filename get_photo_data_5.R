@@ -8,7 +8,10 @@ df5 <- df4
 #  because of problems trying to extract them. 
 df5['ArtistHTML'] <- as.character(NA)
 
-df5 <- df5[, c('Country', 'iso3c', 'ID', 'Caption', 'Provider', 'Artist', 'ArtistURL', 'ArtistHTML', 'License', 'LicenseURL', 'ImageName', 'InfoURL', 'OriginURL', 'FileURL', 'folder', 'CreditHTML', 'Format', 'Width', 'Height', 'iso2c', 'w640_URL')]
+
+df5 <- df5[, c('Country', 'iso3c', 'ID', 'Caption', 'Provider', 'Artist', 'ArtistURL', 'ArtistHTML', 'License', 'LicenseURL', 'ImageName', 'InfoURL', 'FileURL', 'OriginURL', 'folder', 'CreditHTML', 'Format', 'iso2c', 'w640_URL')]
+# eliminate columns width & height
+# df5 <- df5[, c('Country', 'iso3c', 'ID', 'Caption', 'Provider', 'Artist', 'ArtistURL', 'ArtistHTML', 'License', 'LicenseURL', 'ImageName', 'InfoURL', 'OriginURL', 'FileURL', 'folder', 'CreditHTML', 'Format', 'Width', 'Height', 'iso2c', 'w640_URL')]
 
 artistLine_vector <- rep(NA, nrow(df5))
 license_vector <- rep(NA, nrow(df5))
@@ -98,6 +101,11 @@ for (i in 1:loopEnd) {
   } # end Wikimedia with ImageName
   
   # if API other Providers can get Artist or License, it goes here
+  # Pixabay 24587231-d8363fed1919782211f48ccc6
+  # https://pixabay.com/api/?key=24587231-d8363fed1919782211f48ccc6&
+  # Pixabay uses ID number {5or6} instead of ImgName
+  # webformatURL = w640; largeImageURL = w1280?
+  # Replace '_640' in any webformatURL value to access other image sizes
   
 }
 saveRDS(df5, 'data/df5.rds')

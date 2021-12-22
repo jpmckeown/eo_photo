@@ -42,33 +42,37 @@ source('get_photo_data_4.R')
 saveRDS(df4, file='data/df4.rds')
 rm(list = setdiff(ls(), lsf.str()))
 
-# use API to get Artist and Licence from ImageName
+# use API to get ArtistHTML and Licence from ImageName
 df4 <- readRDS('data/df4.rds')
 source('get_photo_data_5.R')
 saveRDS(df5, file='data/df5.rds')
 rm(list = setdiff(ls(), lsf.str()))
 
-# assemble CreditHTML for al Providers
+# extract Artist and ArtistURL, where possible
 df5 <- readRDS('data/df5.rds')
 source('get_photo_data_6.R')
 saveRDS(df6, file='data/df6.rds')
 rm(list = setdiff(ls(), lsf.str()))
 
-# download photo files
+# assemble CreditHTML for all Providers
 df6 <- readRDS('data/df6.rds')
 source('get_photo_data_7.R')
 saveRDS(df7, file='data/df7.rds')
 rm(list = setdiff(ls(), lsf.str()))
 
-# get width and height
+# download photo files
 df7 <- readRDS('data/df7.rds')
 source('get_photo_data_8.R')
-saveRDS(df7, file='data/df8.rds')
+saveRDS(df8, file='data/df8.rds')
+rm(list = setdiff(ls(), lsf.str()))
 
-# what can be typed in
+# get width and height, for separate table
+
+
+# what can be typed in, Gsheets allows Protected Range
+
 # Pixnio = Artist, License, LicenseURL   
 # (no ArtistURL, that offered when downloading is just InfoURL) 
-
 
 # Pixabay = Artist, ArtistURL (link from circle photo)  [no ImgName; standard license]
 

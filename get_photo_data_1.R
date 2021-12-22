@@ -26,8 +26,6 @@ df <- data.frame(Country = character(),
                  folder = character(),   # only for Wikimedia
                  CreditHTML = character(),
                  Format = character(),
-                 Width = numeric(),
-                 Height = numeric(),
                  iso2c = character(),
                  stringsAsFactors=FALSE) 
 
@@ -85,19 +83,8 @@ for (i in seq_along(allRead)) {
       license <- NA
       licenseURL <- NA
       ext <- NA
-      width <- NA
-      height <- NA
-      # imgName <- ''
-      # imageFileAddr <- ''
-      # landingPageAddr <- ''
-      # creditHTML <- ''
-      # artist <- ''
-      # artistURL <- ''
-      # license <- ''
-      # licenseURL <- ''
-      # ext <- ''
-      # width <- 0
-      # height <- 0
+      
+      # store URL in correct column Info or File
       
       if (grepl('wikimedia.org', url)) {
         if (grepl('commons.wikimedia', url)) {
@@ -174,8 +161,6 @@ for (i in seq_along(allRead)) {
       df[p, 'InfoURL'] <- landingPageAddr
       df[p, 'CreditHTML'] <- creditHTML
       df[p, 'Format'] <- ext
-      df[p, 'Width'] <- width
-      df[p, 'Height'] <- height
       df[p, 'iso2c'] <- iso2c
       
       expectPhoto <- FALSE

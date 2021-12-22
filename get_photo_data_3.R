@@ -23,6 +23,11 @@ freeimages_imgName_to_infoURL <- function(imgName) {
   return(infoURL)
 }
 
+pixabay_infoURL_to_imgName <- function(infoURL) {
+  imgName <- sub('https://pixabay.com/photos/[a-z|-]+([0-9]+)/', '\\1', infoURL)
+  return(imgName)
+}
+
 photoCount <- 0
 # cannot filter because need to keep spreadsheet whole
 # use rows ordered with non-Wikimedia first
