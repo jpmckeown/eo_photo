@@ -1,47 +1,70 @@
-# 6th step, assemble CreditHTML for all Providers
-#  no API call so can be run across whole df repeatedly
+# 6th step, relies on df5 and ArtistHTML
 
 df5 <- readRDS('data/df5.rds')
 df6 <- df5
 
-loopEnd <- nrow(df6)
-for (i in 1:loopEnd) {
-  
-  # if CreditHTML exists we use that 
-  if (!is.na(df6$CreditHTML)) {
+# Earlier efforts failed to extract Artist separately from ArtistURL
+#  because sometimes Artist string is divided, and may have 2 links e.g.
+# <a href='https://en.wikipedia.org/wiki/User:Khaufle' class='extiw' title='wikipedia:User:Khaufle'>Khaufle</a> at <a href='https://en.wikipedia.org/wiki/' class='extiw' title='wikipedia:'>English Wikipedia</a>
+# When not separable go back to old way of using ArtistLine as a whole.
 
-    # Artist, ArtistURL, License, LicenseURL, ImageName, InfoURL
-    #  also provider prefix and suffix, or special way of assembling?
-    # https://creativecommons.org/licenses/publicdomain/
-    
-    if (df6$Provider == 'Wikimedia') {
-      credit_html <- paste0('<a href="', df6$ArtistURL[i], '">', df6$Artist[i], '</a>', '<a href="', df6$LicenseURL[i], '">', df6$License[i], '</a>')
-    }
-    
-    if (df6$Provider == 'Unsplash') {
-      credit_html <- ''
-    }
-    
-    # Photo by Artist on Pixnio
-    if (df6$Provider == 'Pixnio') {
-      credit_html <- paste0('Photo by <a href="', df6$InfoURL, '">', df6$Artist[i], '</a> on Pixnio <a href="https://pixnio.com/">free images</a> license <a href="', df6$LicenseURL[i], '">', df6$License[i], '</a>')
-    }
-    
-    if (df6$Provider == 'Pixabay') {
-      credit_html <- ''
-    }
-    
-    # if you are using content for editorial purposes, you must include the following credit adjacent to the content: “FreeImages.com/Artist’s Member Name.”
-    if (df6$Provider == 'FreeImages') {
-      credit_html <- paste0('<a href="', df6$LicenseURL[i], '">', df6$License[i], '</a> / Artist: <a href="', df6$ArtistURL[i], '">', df6$Artist[i], '</a>')
-    }
-    
-    df6$CreditHTML[i] <- credit_html    
-  }
+# Conditions = no link provided
+# link is Wikimedia flagged doesnt exist
+# link not valid
+
+artist_vector <- rep(NA, nrow(df6))
+artistURL_vector <- rep(NA, nrow(df6))
+
+if (df6$Provider == 'Unsplash') {
   
+# if link flagged invalid just use Artist name
+# if (grepl('page does not exist', artistLine)) {
+#   artist <- sub('<.*">', '', artistLine)
+#   artist <- sub('</a>', '', artist)
+#   df6$Artist[i] <- artist
+# } else {
+#   df6$ArtistHTML[i] <- artistLine
+# }
+
+# where artist's URL is provided, the artistLine is 
+# a complete Anchor tag containing href with \" quotes
+# Examples
+# <a href='//commons.wikimedia.org/wiki/User:Alexxx1979' title='User:Alexxx1979'>Alexxx1979</a>
+# AL1 "<a href=\"//commons.wikimedia.org/wiki/User:Albinfo\" title=\"User:Albinfo\">Albinfo</a>"
+# AG3 <a rel='nofollow' class='external text' href='https://www.flickr.com/people/21187388@N06'>University of the Fraser Valley</a>
+
+# get artist and URL
+# if (!grepl('<a', artistLine)) {
+#   artist <- artistLine
+# } else {
+#   artist <- sub('<.*">', '', artistLine)
+#   artist <- sub('</a>', '', artist)
+#   
+#   artist_URL <- sub("^<a .*href=(.)+>.*", "\\1", artistLine)
+#   # artist_URL <- sub("^<a .*href=(\"|')(.+)(\"|')>.*", "\\1", artistLine)
+# }
+
+# get artist_URL and check if valid and isn't missing at Provider
+# print(paste('artist', artist))
+} # end Wikimedia
+
+# "Unsplash photographers appreciate it as it provides exposure to their work and encourages them to continue sharing.
+if (df6$Provider == 'Unsplash') {
+  df6$LicenseURL <- 'https://unsplash.com/license'
 }
-linkLicense <- paste0("<a href='", licenseURL_line2, "'>", licens, "</a>")
 
+if (df6$Provider == 'Pixabay') {
+  df6$License <- 'Pixabay License'
+  df6$LicenseURL <- 'https://pixabay.com/service/license/' # longer https://pixabay.com/service/terms/#license
+}
 
-    
-saveRDS(df6, 'data/df6.rds')
+if (df6$Provider == 'Pixnio') {
+  df6$License <- 'CC0'
+  df6$LicenseURL <- 'https://pixnio.com/creative-commons-license'
+}
+
+# if you are using content for editorial purposes, you must include the following credit adjacent to the content or in audio/visual production credits: “FreeImages.com/Artist’s Member Name.”
+if (df6$Provider == 'FreeImages') {
+  df6$License <- 'FreeImages.com'
+  df6$LicenseURL <- 'https://www.freeimages.com/license'
+}
