@@ -1,8 +1,8 @@
-# 2nd step, relies on df2 created by get_photo_data_2
+# 2nd step, relies on df1 created by get_photo_data_1
 library(tidyverse)
 
-# retrieve Wikimedia attribution HTML and extract components
-# only used because there was earlier process calling API
+# retrieve Wikimedia attribution HTML and extract components.
+# Only used because there was earlier process calling API
 load('data/imgdata.Rda')
 
 loopEnd <- 1 # nrow(imgdata)
@@ -29,4 +29,5 @@ for (oldRun  in 1:loopEnd) {
   # }
 }
 
-write_tsv(df2, 'data/photo_step_2.tsv')
+saveRDS(df2, 'data/df2.rds')
+#write_tsv(df2, 'data/photo_step_2.tsv')
