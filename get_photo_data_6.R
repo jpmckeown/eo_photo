@@ -97,3 +97,5 @@ for (i in 1:loopEnd) {
   # }
 
 } # photo loop
+
+saveRDS(df6, 'data/df6.rds')

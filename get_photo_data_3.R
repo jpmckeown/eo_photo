@@ -76,8 +76,14 @@ for (i in 1:loopEnd) {
     
   } # end Wikimedia
   
+  if (df3[i, 'Provider'] == 'Pixabay') {
+    if (!is.na(InfoURL)) {
+      imgName <- pixabay_infoURL_to_imgName(infoURL)
+      df3[i, 'ImageName'] <- imgName
+      # need API to make FileURL in later step
+  }
+  
   if (df3[i, 'Provider'] == 'FreeImages') {
-    
     # InfoURL present
     if (!is.na(infoURL)) {
       

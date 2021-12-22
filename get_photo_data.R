@@ -60,14 +60,15 @@ source('get_photo_data_7.R')
 saveRDS(df7, file='data/df7.rds')
 rm(list = setdiff(ls(), lsf.str()))
 
-# download photo files
+# in which step API to get missing FileURL? must go before downloading
 df7 <- readRDS('data/df7.rds')
 source('get_photo_data_8.R')
 saveRDS(df8, file='data/df8.rds')
 rm(list = setdiff(ls(), lsf.str()))
 
-# get width and height, for separate table
+# download photo files
 
+# get width and height, for separate table
 
 # what can be typed in, Gsheets allows Protected Range
 

@@ -10,7 +10,7 @@ df4['OriginURL'] <- as.character(NA)
 # extra column so can see where 640URL added
 df4['w640_URL'] <- as.character(NA)
 
-df4 <- df4[, c('Country', 'iso3c', 'ID', 'Caption', 'Provider', 'Artist', 'ArtistURL', 'License', 'LicenseURL', 'ImageName', 'InfoURL', 'OriginURL', 'FileURL', 'folder', 'CreditHTML', 'Format', 'Width', 'Height', 'iso2c', 'w640_URL')]
+df4 <- df4[, c('Country', 'iso3c', 'ID', 'Caption', 'Provider', 'Artist', 'ArtistURL', 'License', 'LicenseURL', 'ImageName', 'InfoURL', 'OriginURL', 'FileURL', 'folder', 'CreditHTML', 'Format', 'iso2c', 'w640_URL')]
 
 # where folder (and FileURL) missing from Wikimedia
 # use Wikimedia API to get folder for FileURL construction
@@ -66,6 +66,17 @@ while (found < 9) {
     } # ends folder absent or present ?
   } # end if Wikimedia
 
+  # if API other Providers can get FileURL or InfoURL
+  
+  if (df4$Provider[i] == 'Pixabay') {
+    
+  }
+  
+  # Pixabay 24587231-d8363fed1919782211f48ccc6
+  # https://pixabay.com/api/?key=24587231-d8363fed1919782211f48ccc6&
+  # Pixabay uses ID number {5or6} instead of ImgName
+  # webformatURL = w640; largeImageURL = w1280?
+  # Replace '_640' in any webformatURL value to access other image sizes
 }
 
 print(paste(found, 'need API to get folder from InfoURL'))
