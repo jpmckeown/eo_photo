@@ -8,16 +8,18 @@
 
 # Output must be Tab-separated because commas in caption, attribution, and URLs
 # Goal is tsv with columns: Country, iso3c, (photo)ID, format, width, height, Caption, Attribution, File_address, Commons_address
+
+# because comparing with list of countries having data
 load('data/eo.Rda')
 
 country_count <- 0
 goodURL <- 0
 badURL <- 0
-expectPhoto <- FALSE
+expectPhoto <- FALSE  # Caption must precede URL
 country_found <- vector()
 iso3c_found <- vector()
 
-infile <- 'data/fromGoogleDoc.txt'
+infile <- 'data/fromGoogleDoc.txt'  # copy manually from web
 con = file(infile, "r")
 allRead <- readLines(con, warn = FALSE)
 
@@ -68,7 +70,8 @@ for (i in seq_along(allRead)) {
           # }
   
           
-        } else if (grepl('https', line) || grepl('jpg', line) || grepl('png', line) || grepl('JPG', line) || grepl('PNG', line) || grepl('svg', line)  || grepl('Photo-', line)) {
+        } else if (grepl('jpg', line) || grepl('png', line) || grepl('JPG', line) || grepl('PNG', line) || grepl('svg', line)  || grepl('Photo-', line)) {
+          # lacks https
           badURL <- badURL + 1
           
         } else {
@@ -79,7 +82,7 @@ for (i in seq_along(allRead)) {
       
       # caption
       if (grepl('^#', line)) {
-        # caption <- cleanCaption(line)
+        # caption <- cleanCaption(line)  # not yet
         expectPhoto <- TRUE
       }
       
