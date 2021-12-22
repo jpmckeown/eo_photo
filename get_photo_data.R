@@ -24,7 +24,9 @@ df1 <- readRDS('data/df1.rds')
 df1a <- df1[order(df1$Provider), ]
 write_tsv(df1a, 'data/photo_step_1a.tsv')
 
-# merge previously acquired Wikimedia data
+# merge previously acquired Wikimedia data ???
+# CreditHTML, FileURL (from InfoURL)
+# where iso2c + ID + imgName all match
 source('get_photo_data_2.R')
 saveRDS(df2, file='data/df2.rds')
 rm(list = setdiff(ls(), lsf.str()))

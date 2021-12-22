@@ -16,16 +16,16 @@ df <- data.frame(Country = character(),
                  ID = numeric(),
                  Caption = character(),
                  Provider = character(),
-                 Artist = character(),
-                 ArtistURL = character(),
-                 License = character(),
-                 LicenseURL = character(),
-                 ImageName = character(),
+                 # Artist = character(),
+                 # ArtistURL = character(),
+                 # License = character(),
+                 # LicenseURL = character(),
+                 # ImageName = character(),
                  InfoURL = character(),
                  FileURL = character(),
-                 folder = character(),   # only for Wikimedia
-                 CreditHTML = character(),
-                 Format = character(),
+                 # folder = character(),   # only for Wikimedia
+                 # CreditHTML = character(),
+                 # Format = character(),
                  iso2c = character(),
                  stringsAsFactors=FALSE) 
 
@@ -151,16 +151,16 @@ for (i in seq_along(allRead)) {
       df[p, 'ID'] <- photoID
       df[p, 'Caption'] <- caption
       df[p, 'Provider'] <- provider
-      df[p, 'Artist'] <- artist
-      df[p, 'ArtistURL'] <- artistURL
-      df[p, 'License'] <- license
-      df[p, 'LicenseURL'] <- licenseURL
-      df[p, 'ImageName'] <- imgName
-      df[p, 'folder'] <- folder
+      # df[p, 'Artist'] <- artist
+      # df[p, 'ArtistURL'] <- artistURL
+      # df[p, 'License'] <- license
+      # df[p, 'LicenseURL'] <- licenseURL
+      # df[p, 'ImageName'] <- imgName
+      # df[p, 'folder'] <- folder
       df[p, 'FileURL'] <- imageFileAddr
       df[p, 'InfoURL'] <- landingPageAddr
-      df[p, 'CreditHTML'] <- creditHTML
-      df[p, 'Format'] <- ext
+      # df[p, 'CreditHTML'] <- creditHTML
+      # df[p, 'Format'] <- ext
       df[p, 'iso2c'] <- iso2c
       
       expectPhoto <- FALSE
