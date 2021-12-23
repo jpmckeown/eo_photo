@@ -11,7 +11,7 @@ p <- 0 # photoCount
 country_found <- vector()
 iso3c_found <- vector()
 
-df <- data.frame(Country = character(),
+df1 <- data.frame(Country = character(),
                  iso3c = character(),
                  ID = numeric(),
                  Caption = character(),
@@ -72,6 +72,7 @@ for (i in seq_along(allRead)) {
       url <- cleanURL(line)
       incr(p)
       incr(photoID)
+      print(paste(iso3c, photoID, caption, url))
     
       imgName <- NA
       folder <- NA
@@ -146,22 +147,22 @@ for (i in seq_along(allRead)) {
         incr(numSource['other'])
       }
       
-      df[p, 'Country'] <- country
-      df[p, 'iso3c'] <- iso3c
-      df[p, 'ID'] <- photoID
-      df[p, 'Caption'] <- caption
-      df[p, 'Provider'] <- provider
-      # df[p, 'Artist'] <- artist
-      # df[p, 'ArtistURL'] <- artistURL
-      # df[p, 'License'] <- license
-      # df[p, 'LicenseURL'] <- licenseURL
-      # df[p, 'ImageName'] <- imgName
-      # df[p, 'folder'] <- folder
-      df[p, 'FileURL'] <- imageFileAddr
-      df[p, 'InfoURL'] <- landingPageAddr
-      # df[p, 'CreditHTML'] <- creditHTML
-      # df[p, 'Format'] <- ext
-      df[p, 'iso2c'] <- iso2c
+      df1[p, 'Country'] <- country
+      df1[p, 'iso3c'] <- iso3c
+      df1[p, 'ID'] <- photoID
+      df1[p, 'Caption'] <- caption
+      df1[p, 'Provider'] <- provider
+      # df1[p, 'Artist'] <- artist
+      # df1[p, 'ArtistURL'] <- artistURL
+      # df1[p, 'License'] <- license
+      # df1[p, 'LicenseURL'] <- licenseURL
+      # df1[p, 'ImageName'] <- imgName
+      # df1[p, 'folder'] <- folder
+      df1[p, 'FileURL'] <- imageFileAddr
+      df1[p, 'InfoURL'] <- landingPageAddr
+      # df1[p, 'CreditHTML'] <- creditHTML
+      # df1[p, 'Format'] <- ext
+      df1[p, 'iso2c'] <- iso2c
       
       expectPhoto <- FALSE
     }
@@ -170,7 +171,6 @@ for (i in seq_along(allRead)) {
     if (grepl('^#', line)) {
       caption <- cleanCaption(line)
       expectPhoto <- TRUE
-      print(paste(iso3c, photoID, caption))
     }
     
   } # blank line excluder
@@ -181,6 +181,6 @@ print(numSource)
 print(paste('Total photos =', sum(numSource)))
 
 saveRDS(numSource, file='data/providers.rds')
-saveRDS(df, file='data/df1.rds')
+saveRDS(df1, file='data/df1.rds')
 
-# write_tsv(df, 'data/photo_step_1.tsv', escape = 'none')
+# write_tsv(df1, 'data/photo_step_1.tsv', escape = 'none')

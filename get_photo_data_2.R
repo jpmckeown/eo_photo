@@ -3,6 +3,11 @@
 # get Wikimedia FileURL from early run API data
 load('data/imgdata.Rda')
 
+# retrospectively fix ID in imgdata to match Photos doc
+# imgdata[imgdata$iso2c=='FJ' && imgdata$ID==1,]
+imgdata$ID[114] <- 2  
+imgdata$ID[115] <- 3  
+
 # remember that in imgdata Namibia iso2c is 'NB'
 # imgdata[imgdata$Country=='Namibia',]$iso2c
 
@@ -21,6 +26,11 @@ imgdata_earlyFileURL <- imgdata %>%
 names(imgdata_earlyFileURL) <- c('iso3c', 'ID', 'InfoURL', 'EarlyFileURL')
 
 df2_earlyFileURL <- left_join(df2, imgdata_earlyFileURL)
+
+# check that FileURL == EarlyFileURL where both present
+check <- df2_earlyFileURL$FileURL == df2_earlyFileURL$EarlyFileURL
+which(check == FALSE)
+# 198 199 267 268 354  # was not expecting any, good did check!
 
 # can get Attribution HTML now all the earlier FileURL ready
 imgdata <- imgdata %>% 

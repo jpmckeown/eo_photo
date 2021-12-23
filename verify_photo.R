@@ -64,7 +64,7 @@ for (i in seq_along(allRead)) {
         if(grepl('https', line)) {
           goodURL <- goodURL + 1
           # if (url.exists(line)) {
-        print(paste(photoID, line))          
+        print(paste(iso3c, photoID, line))          
           # } else {
           #   print(paste('DODGY?===', photoID, line))
           # }
