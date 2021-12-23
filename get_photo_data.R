@@ -5,7 +5,7 @@ rm(list = ls())
 load('data/eo.Rda')
 
 # libraries and helper functions
-source('get_photo_data_0.R')
+source('get_photo_functions.R')
 
 # check data from Photos Doc
 source('verify_photo.R')
@@ -17,8 +17,13 @@ source('old_photo_use.R')
 
 # get id, caption, URL from Photo gdoc
 source('get_photo_data_1.R')
+
+# check Iran has 3
+df1 %>% 
+  filter(Country=='Iran') %>% 
+  select(ID, Caption)
+
 rm(list = setdiff(ls(), lsf.str()))
-df1 = df
 df1 <- readRDS('data/df1.rds')
 # only reorder just before exporting TSV for web
 df1a <- df1[order(df1$Provider), ]

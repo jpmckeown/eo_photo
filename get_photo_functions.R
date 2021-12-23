@@ -32,12 +32,56 @@ cleanCaption <- function(line) {
   return(caption)
 }
 
+cleanURL <- function(url) {
+  # remove any characters before http
+  line <- gsub('.*http', 'http', line)
+  # remove any trailing space
+  url <- trimws(line, which = "right", whitespace = "[ \t\r\n]")
+  return(url)
+}
+
+fileURL_to_infoURL <- function(fileURL) {
+  imgName <- fileURL_to_imgName(fileURL)
+  infoURL <- paste0('https://commons.wikimedia.org/wiki/File:', imgName)
+  return(infoURL)
+}
+
+imgName_to_infoURL <- function(imgName) {
+  infoURL <- paste0('https://commons.wikimedia.org/wiki/File:', imgName)
+  return(infoURL)
+}
+
+fileURL_to_imgName <- function(fileURL) {
+  # keeping extension as part of imgName
+  # imgName <- sub('https://upload.wikimedia.org/wikipedia/commons/thumb/[A-Z|a-z|0-9]+/[A-Z|a-z|0-9]+/([A-Z|a-z|0-9|-|_|%]+[.jpg|.JPG|.jpeg|.JPEG|.png|.PNG]+)/.*', '\\1', fileURL)
+  imgName <- sub('https://upload.wikimedia.org/wikipedia/commons/thumb/[A-Z|a-z|0-9]+/[A-Z|a-z|0-9]+/([A-Z|a-z|0-9|_|%|Ä|Å|‡|.|-]+)/.*', '\\1', fileURL)
+  return(imgName)
+}
+
+infoURL_to_imgName <- function(infoURL) {
+  imgName <- sub('https://commons.wikimedia.org/wiki/File:(.*)', '\\1', infoURL)
+  return(imgName)
+}
+
+fileURL_to_folder <- function(fileURL) {
+  if (grepl('/thumb/', fileURL)) {
+    folder <- sub('https://upload.wikimedia.org/wikipedia/commons/thumb/([A-Z|a-z|0-9]{1}/[A-Z|a-z|0-9]{2})/.*', '\\1', fileURL)
+  } else {
+    folder <- sub('https://upload.wikimedia.org/wikipedia/commons/([A-Z|a-z|0-9]{1}/[A-Z|a-z|0-9]{2})/.*', '\\1', fileURL)
+  }
+  return(paste0(folder, '/'))
+}
+
+originalURL_to_folder <- function(originalURL) {
+  folder <- sub('https://upload.wikimedia.org/wikipedia/commons/([A-Z|a-z|0-9]+/[A-Z|a-z|0-9]+)/.*', '\\1', originalURL)
+  return(paste0(folder, '/'))
+}
+
+# not by me
 url_exists <- function(x, non_2xx_return_value = FALSE, quiet = FALSE,...) {
-  
   suppressPackageStartupMessages({
     require("httr", quietly = FALSE, warn.conflicts = FALSE)
   })
-  
   # you don't need these two functions if you're alread using `purrr`
   # but `purrr` is a heavyweight compiled pacakge that introduces
   # many other "tidyverse" dependencies and this doesnt.
@@ -83,7 +127,6 @@ url_exists <- function(x, non_2xx_return_value = FALSE, quiet = FALSE,...) {
     return(TRUE)
   }
 }
-
 # c(
 #   "http://content.weird/",
 #   "http://rud.is/this/path/does/not_exist",
@@ -97,48 +140,3 @@ url_exists <- function(x, non_2xx_return_value = FALSE, quiet = FALSE,...) {
 #   some_urls,
 #   stringsAsFactors = FALSE
 # ) %>% dplyr::tbl_df() %>% print()
-
-cleanURL <- function(url) {
-  # remove any characters before http
-  line <- gsub('.*http', 'http', line)
-  # remove any trailing space
-  url <- trimws(line, which = "right", whitespace = "[ \t\r\n]")
-  return(url)
-}
-
-fileURL_to_infoURL <- function(fileURL) {
-  imgName <- fileURL_to_imgName(fileURL)
-  infoURL <- paste0('https://commons.wikimedia.org/wiki/File:', imgName)
-  return(infoURL)
-}
-
-imgName_to_infoURL <- function(imgName) {
-  infoURL <- paste0('https://commons.wikimedia.org/wiki/File:', imgName)
-  return(infoURL)
-}
-
-fileURL_to_imgName <- function(fileURL) {
-  # keeping extension as part of imgName
-  # imgName <- sub('https://upload.wikimedia.org/wikipedia/commons/thumb/[A-Z|a-z|0-9]+/[A-Z|a-z|0-9]+/([A-Z|a-z|0-9|-|_|%]+[.jpg|.JPG|.jpeg|.JPEG|.png|.PNG]+)/.*', '\\1', fileURL)
-  imgName <- sub('https://upload.wikimedia.org/wikipedia/commons/thumb/[A-Z|a-z|0-9]+/[A-Z|a-z|0-9]+/([A-Z|a-z|0-9|_|%|Ä|Å|‡|.|-]+)/.*', '\\1', fileURL)
-  return(imgName)
-}
-
-infoURL_to_imgName <- function(infoURL) {
-  imgName <- sub('https://commons.wikimedia.org/wiki/File:(.*)', '\\1', infoURL)
-  return(imgName)
-}
-
-fileURL_to_folder <- function(fileURL) {
-  if (grepl('/thumb/', fileURL)) {
-    folder <- sub('https://upload.wikimedia.org/wikipedia/commons/thumb/([A-Z|a-z|0-9]{1}/[A-Z|a-z|0-9]{2})/.*', '\\1', fileURL)
-  } else {
-    folder <- sub('https://upload.wikimedia.org/wikipedia/commons/([A-Z|a-z|0-9]{1}/[A-Z|a-z|0-9]{2})/.*', '\\1', fileURL)
-  }
-  return(paste0(folder, '/'))
-}
-
-originalURL_to_folder <- function(originalURL) {
-  folder <- sub('https://upload.wikimedia.org/wikipedia/commons/([A-Z|a-z|0-9]+/[A-Z|a-z|0-9]+)/.*', '\\1', originalURL)
-  return(paste0(folder, '/'))
-}

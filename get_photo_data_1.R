@@ -170,7 +170,7 @@ for (i in seq_along(allRead)) {
     if (grepl('^#', line)) {
       caption <- cleanCaption(line)
       expectPhoto <- TRUE
-      print(caption)
+      print(paste(iso3c, photoID, caption))
     }
     
   } # blank line excluder
@@ -183,4 +183,4 @@ print(paste('Total photos =', sum(numSource)))
 saveRDS(numSource, file='data/providers.rds')
 saveRDS(df, file='data/df1.rds')
 
-write_tsv(df, 'data/photo_step_1.tsv', escape = 'none')
+# write_tsv(df, 'data/photo_step_1.tsv', escape = 'none')
