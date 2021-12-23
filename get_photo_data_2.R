@@ -81,40 +81,27 @@ saveRDS(df2, 'data/df2.rds')
 
 ##### can get Attribution HTML now all the earlier FileURL ready #####
 
-# imgdata <- imgdata %>% 
-#   select(iso3c, ID, Info_address, File_address, Attribution)
-# names(imgdata) <- c('iso3c', 'ID', 'InfoURL', 'FileURL', 'Attribution')
-# 
-# # mresult <- merge(x=df1, y=imgdata, by=c('iso3c'='iso3c', 'ID'='ID', 'InfoURL'='Info_address', 'FileURL'='File_address'), all.x=TRUE)
-# jresult <- left_join(df1, imgdata)
-# 
-# loopEnd <- 1 # nrow(imgdata)
-# 
-# for (oldRun  in 1:loopEnd) {
-#   
-#   iso_2c <- imgdata$iso2c[oldRun]
-#   photo_id <- imgdata$ID[oldRun]
-#   
-#   row <- df[df$iso2c==iso_2c,]
-#   print(row)
+# What to match on? remember that df2 now has FileURL gaps filled
 
-  # fileURL <- as.character(df2[i, 'FileURL'])
-  # infoURL <- as.character(df2[i, 'InfoURL'])
-  # 
-  # if (fileURL != '' && infoURL == '') {
-  #   
-  #   imgName <- fileURL_to_imgName(fileURL)
-  #   infoURL <- imgName_to_infoURL(imgName)
-  #   print(paste(i, infoURL))
-  #   
-  #   df2[i, 'ImageName'] <- imgName
-  #   df2[i, 'InfoURL'] <- infoURL
-  # }
-#}
+imgdata_Credit <- imgdata %>%
+  select(iso3c, ID, Info_address, File_address, Attribution)
+names(imgdata_Credit) <- c('iso3c', 'ID', 'InfoURL', 'FileURL', 'Attribution')
 
-#saveRDS(df2, 'data/df2.rds')
+# mresult <- merge(x=df1, y=imgdata, by=c('iso3c'='iso3c', 'ID'='ID', 'InfoURL'='Info_address', 'FileURL'='File_address'), all.x=TRUE)
+df2_Attrib <- left_join(df2, imgdata_Credit)
+
+saveRDS(df2_Attrib, 'data/df2.rds')
+
+# extract ArtistHTML, License, and LicenseURL from earlier Attribution html #####
+
+for (i in 1:nrow(df2)) {
+  attrib <- df2$Attrib[i]
+  if (!is.na(attrib)) {
+    
+  }
+}
+
 #write_tsv(df2, 'data/photo_step_2.tsv')
-
 
 # check for anomalous ID numbering in df2
 # prev_iso3c = ''
