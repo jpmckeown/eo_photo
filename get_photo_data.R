@@ -2,7 +2,12 @@
 rm(list = ls())
 
 # from Country Data spreadsheet
-load('data/eo.Rda')
+eo <- readRDS('data/eo.rds')
+# until home lack script to refresh eo from Country Data sheet
+# visual inspection finds 186 rows and Guadeloupe gone (as recommended)
+# eo <- eo %>% 
+#   filter(iso3c != 'GLP')
+# saveRDS(eo, 'data/eo.rds')
 
 # libraries and helper functions
 source('get_photo_functions.R')
