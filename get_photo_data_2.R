@@ -21,8 +21,8 @@ imgdata$iso3c <- countrycode(imgdata$Country, origin = 'country.name', destinati
 # cannot match Attribution until FileURL reconstructed like in imgdata
 df2 <- readRDS('data/df1.rds')
 # temporarily reduce columns to make checking easier
-df2 <- df2 %>% 
-  select('iso3c', 'ID', 'InfoURL', 'FileURL')
+# df2 <- df2 %>% 
+#   select('iso3c', 'ID', 'InfoURL', 'FileURL')
 
 imgdata_earlyFileURL <- imgdata %>% 
   select(iso3c, ID, Info_address, File_address)
@@ -39,7 +39,25 @@ which(check == FALSE)
 #  but worrying as MR 1&2 both ID shifted but only id2 flagged
 
 # visual comparison confirms gaps where InfoURL but no early FileAddr are when photo didnt exist in early set.
-# only trust early FileURL where InfoURL present in early run.
+
+# copy earlier File_address to fill gaps in FileURL 
+#  only trust early where InfoURL present in early run.
+df2_fillGaps <- df2_earlyFileURL
+
+for (i in 1:nrow(df2_earlyFileURL)) {
+  
+  infourl <- df2_earlyFileURL$InfoURL[i]
+  fileurl <- df2_earlyFileURL$FileURL[i]
+  earlier <- df2_earlyFileURL$EarlyFileURL[i]
+#print(paste(i, infourl, fileurl, earlier))
+
+  if (!is.na(infourl) && is.na(fileurl) && !is.na(earlier)) {
+    df2_fillGaps$FileURL[i] <- earlier
+    print(paste(i, earlier))
+  }  
+}
+# remove column of earlier File_address
+df2 <- subset(df2_fillGaps, select = -c(EarlyFileURL))
 
 # can get Attribution HTML now all the earlier FileURL ready
 # imgdata <- imgdata %>% 
