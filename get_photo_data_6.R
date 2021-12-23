@@ -104,3 +104,11 @@ for (i in 1:loopEnd) {
 } # photo loop
 
 saveRDS(df6, 'data/df6.rds')
+
+# from step 2
+# if (!grepl('href', artist_html)) {
+#   artist <-  artist_html
+# } 
+# artist <- sub("^(.*), <a .*", "\\1", attrib)
+# artist_url <- sub("^(.*), <a .*", "\\1", attrib)
+

@@ -95,21 +95,27 @@ saveRDS(df2_Attrib, 'data/df2.rds')
 # extract ArtistHTML, License, and LicenseURL from earlier Attribution html #####
 
 # add new columns for artist and license
-df2['Artist'] <- as.character(NA)
-df2['ArtistURL'] <- as.character(NA)
+df2 <- df2_Attrib 
+df2['ArtistHTML'] <- as.character(NA)
+# df2['Artist'] <- as.character(NA)   # ArtistHTML processed in Step 6 
+# df2['ArtistURL'] <- as.character(NA)
 df2['License'] <- as.character(NA)
 df2['LicenseURL'] <- as.character(NA)
-df2['ArtistHTML'] <- as.character(NA)
 
-df2 <- df2[, c('Country', 'iso3c', 'ID', 'Caption', 'Provider', 'Artist', 'ArtistURL', 'License', 'LicenseURL', 'InfoURL', 'FileURL', 'ArtistHTML', 'iso2c', 'Attrib')]
+df2 <- df2[, c('Country', 'iso3c', 'ID', 'Caption', 'Provider', 'ArtistHTML', 'License', 'LicenseURL', 'InfoURL', 'FileURL', 'iso2c', 'Attribution')]
 
 for (i in 1:nrow(df2)) {
-  attrib <- df2$Attrib[i]
-  if (!is.na(attrib)) {
+  attrib <- df2$Attribution[i]
+  if (!is.na(attrib)) {  #  && df2$Provider == 'Wikimedia'
+    
     artist_html <- sub("^(.*), <a .*", "\\1", attrib)
     license_html <- sub("^.*, <a .*; (<a .*), via Wikimedia Commons", "\\1", attrib)
-    license_url <- sub("^<a href='(.*)'.*", "\\1", license_html)
     license <- sub("^<a href='.*'>(.*)<.*", "\\1", license_html)
+    license_url <- sub("^<a href='(.*)'.*", "\\1", license_html)
+    
+    df2$ArtistHTML[i] <- artist_html
+    df2$License[i] <- license
+    df2$LicenseURL[i] <- license_url
   }
 }
 
