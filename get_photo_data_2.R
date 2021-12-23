@@ -18,6 +18,18 @@ load('data/imgdata.rda')
 imgdata$iso3c <- countrycode(imgdata$Country, origin = 'country.name', destination = 'iso3c')
 # imgdata[imgdata$Country=='Namibia',]$iso3c  # check is fixed
 
+# check if anomalies in ID numbering of imgdata
+prev_iso3c = ''
+prev_ID <- 0
+for (i in 1:nrow(imgdata)) {
+  iso3c = imgdata$iso3c[i]
+  ID <- imgdata$ID[i]
+  if (ID != prev_ID + 1 && iso3c == prev_iso3c) {
+    print(paste('Anomaly', iso3c, ID))
+  }
+  prev_ID <- ID  
+}
+
 # cannot match Attribution until FileURL reconstructed like in imgdata
 df2 <- readRDS('data/df1.rds')
 # temporarily reduce columns to make checking easier
@@ -93,3 +105,4 @@ df2 <- subset(df2_fillGaps, select = -c(EarlyFileURL))
 
 #saveRDS(df2, 'data/df2.rds')
 #write_tsv(df2, 'data/photo_step_2.tsv')
+
