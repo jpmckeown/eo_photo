@@ -114,5 +114,7 @@ print(extra_iso3c)
 saveRDS(extra_iso3c, 'data/photos_lack_countryData.rds')
 
 print(countrycode(missing_iso3c, origin = 'iso3c', destination = 'country.name'))
+print(paste('Countries with photos =', length(iso3c_found)))
+print(paste('Country data lacking photo =', length(missing_iso3c)))
 
 saveRDS(iso3c_found, 'data/countries_with_photo.rds')
