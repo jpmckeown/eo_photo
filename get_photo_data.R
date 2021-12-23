@@ -23,13 +23,8 @@ source('old_photo_use.R')
 # get id, caption, URL from Photo gdoc
 source('get_photo_data_1.R')
 
-# row 566 caption has preceding space
-
 rm(list = setdiff(ls(), lsf.str()))
 df1 <- readRDS('data/df1.rds')
-# only reorder just before exporting TSV for web
-df1a <- df1[order(df1$Provider), ]
-write_tsv(df1a, 'data/photo_step_1a.tsv')
 
 # merge previously acquired Wikimedia data ???
 # CreditHTML, FileURL (from InfoURL)
@@ -71,6 +66,10 @@ df7 <- readRDS('data/df7.rds')
 source('get_photo_data_8.R')
 saveRDS(df8, file='data/df8.rds')
 rm(list = setdiff(ls(), lsf.str()))
+
+# only reorder just before exporting TSV for web
+df_by_provider <- df1[order(df1$Provider), ]
+write_tsv(df_by_provider, 'data/photos_by_provider.tsv')
 
 # download photo files
 

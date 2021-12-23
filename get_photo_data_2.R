@@ -1,7 +1,7 @@
 # 2nd step, relies on df1 created by get_photo_data_1
 
 # get Wikimedia FileURL from early run API data
-load('data/imgdata.rda')
+load('data/imgdata.Rda')
 
 # retrospectively fix IDs in imgdata to match Photos doc
 # imgdata$ID[114] <- 2  # Fiji
@@ -9,12 +9,12 @@ load('data/imgdata.rda')
 # imgdata$ID[214] <- 2  # Mauritania
 # imgdata$ID[215] <- 3  
 # imgdata$ID[34] <- 4  # was 5 
-# save(imgdata, file='data/imgdata.rda')
+# saveRDS(imgdata, 'data/imgdata.rds')
 
 # remember that in imgdata Namibia iso2c is 'NB'
 # imgdata[imgdata$Country=='Namibia',]$iso2c
 
-# add iso3c column to imgdata
+# add iso3c to imgdata to avoid Namibia problem
 imgdata$iso3c <- countrycode(imgdata$Country, origin = 'country.name', destination = 'iso3c')
 # imgdata[imgdata$Country=='Namibia',]$iso3c  # check is fixed
 
@@ -76,7 +76,11 @@ for (i in 1:nrow(df2_earlyFileURL)) {
 # remove column of earlier File_address
 df2 <- subset(df2_fillGaps, select = -c(EarlyFileURL))
 
-# can get Attribution HTML now all the earlier FileURL ready
+# temporary save before Attribution
+saveRDS(df2, 'data/df2.rds')
+
+##### can get Attribution HTML now all the earlier FileURL ready #####
+
 # imgdata <- imgdata %>% 
 #   select(iso3c, ID, Info_address, File_address, Attribution)
 # names(imgdata) <- c('iso3c', 'ID', 'InfoURL', 'FileURL', 'Attribution')
