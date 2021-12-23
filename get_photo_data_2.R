@@ -21,14 +21,19 @@ imgdata$iso3c <- countrycode(imgdata$Country, origin = 'country.name', destinati
 # check if anomalies in ID numbering of imgdata
 prev_iso3c = ''
 prev_ID <- 0
+anomaly_imgdata <- 0
 for (i in 1:nrow(imgdata)) {
   iso3c = imgdata$iso3c[i]
   ID <- imgdata$ID[i]
   if (ID != prev_ID + 1 && iso3c == prev_iso3c) {
-    print(paste('Anomaly', iso3c, ID))
+    incr(anomaly_imgdata)
+    print(paste(iso3c, ID))
   }
-  prev_ID <- ID  
+  prev_ID <- ID
+  prev_iso3c <- iso3c
 }
+print(paste(anomaly_imgdata, 'non-consecutive ID in imgdata'))
+# 1st run found 19 non-consecutive IDs
 
 # cannot match Attribution until FileURL reconstructed like in imgdata
 df2 <- readRDS('data/df1.rds')
@@ -106,3 +111,20 @@ df2 <- subset(df2_fillGaps, select = -c(EarlyFileURL))
 #saveRDS(df2, 'data/df2.rds')
 #write_tsv(df2, 'data/photo_step_2.tsv')
 
+
+# check for anomalous ID numbering in df2
+# prev_iso3c = ''
+# prev_ID <- 0
+# anomaly_df <- 0
+# for (i in 1:nrow(df2)) {
+#   iso3c = df2$iso3c[i]
+#   ID <- df2$ID[i]
+#   if (ID != prev_ID + 1 && iso3c == prev_iso3c) {
+#     incr(anomaly_df)
+#     print(paste(iso3c, ID))
+#   }
+#   prev_ID <- ID
+#   prev_iso3c <- iso3c
+# }
+# print(paste(anomaly_df, 'non-consecutive ID in df2'))
+# Result "0 non-consecutive ID in df2"
