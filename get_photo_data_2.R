@@ -6,8 +6,9 @@ load('data/imgdata.rda')
 # retrospectively fix IDs in imgdata to match Photos doc
 # imgdata$ID[114] <- 2  # Fiji
 # imgdata$ID[115] <- 3  
-# imgdata$ID[214] <- 2  # Mauritius
+# imgdata$ID[214] <- 2  # Mauritania
 # imgdata$ID[215] <- 3  
+# imgdata$ID[34] <- 4  # was 5 
 # save(imgdata, file='data/imgdata.rda')
 
 # remember that in imgdata Namibia iso2c is 'NB'
@@ -36,6 +37,9 @@ which(check == FALSE)
 # after Fiji and Iran fixed, only 355
 # after Mauritius fixed, none
 #  but worrying as MR 1&2 both ID shifted but only id2 flagged
+
+# visual comparison confirms gaps where InfoURL but no early FileAddr are when photo didnt exist in early set.
+# only trust early FileURL where InfoURL present in early run.
 
 # can get Attribution HTML now all the earlier FileURL ready
 # imgdata <- imgdata %>% 
