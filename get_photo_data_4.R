@@ -39,7 +39,7 @@ df4 <- readRDS('data/df3.rds')
 
 df4['OriginURL'] <- as.character(NA)
 
-# extra column so can see where 640URL added
+# add extra column so can see where 640URL added
 df4['w640_URL'] <- as.character(NA)
 
 df4 <- df4[, c('Country', 'iso3c', 'ID', 'Caption', 'Provider', 'Artist', 'ArtistURL', 'License', 'LicenseURL', 'ImageName', 'InfoURL', 'OriginURL', 'FileURL', 'folder', 'CreditHTML', 'Format', 'iso2c', 'w640_URL')]

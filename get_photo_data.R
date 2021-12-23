@@ -26,7 +26,7 @@ source('get_photo_data_1.R')
 rm(list = setdiff(ls(), lsf.str()))
 df1 <- readRDS('data/df1.rds')
 
-# merge previously acquired Wikimedia data ???
+# merge previously acquired Wikimedia data
 # CreditHTML, FileURL (from InfoURL)
 # where iso2c + ID + imgName all match
 source('get_photo_data_2.R')
