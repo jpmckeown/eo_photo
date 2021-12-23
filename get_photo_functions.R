@@ -15,13 +15,18 @@ firstCap <- function(str) {
 }
  
 cleanCaption <- function(line) {
+  
   # stops odd characters
   caption <- stri_encode(line, '', 'UTF-8')
+  
   # remove prefix
   caption <- sub('#', '', caption)
   caption <- firstCap(caption)
-  # remove trailing spaces
-  caption <- trimws(caption, which = "right", whitespace = "[ \t\r\n]")
+
+  # remove trailing spaces 
+  #  and leading spaces, changed which="right"
+  caption <- trimws(caption, which = "both", whitespace = "[ \t\r\n]")  
+
   # add final period if missing
   if (!str_sub(caption, -1) == '.') {
     # cope with American-style quote after period

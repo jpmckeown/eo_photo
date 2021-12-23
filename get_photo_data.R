@@ -23,10 +23,7 @@ source('old_photo_use.R')
 # get id, caption, URL from Photo gdoc
 source('get_photo_data_1.R')
 
-# check Iran has 3
-df1 %>% 
-  filter(Country=='Iran') %>% 
-  select(ID, Caption)
+# row 566 caption has preceding space
 
 rm(list = setdiff(ls(), lsf.str()))
 df1 <- readRDS('data/df1.rds')
