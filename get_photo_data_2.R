@@ -97,7 +97,7 @@ saveRDS(df2_Attrib, 'data/df2.rds')
 for (i in 1:nrow(df2)) {
   attrib <- df2$Attrib[i]
   if (!is.na(attrib)) {
-    
+    artist_html <- sub('(.*?), <a', '\\1', attrib)
   }
 }
 
