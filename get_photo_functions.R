@@ -61,7 +61,7 @@ fileURL_to_imgName <- function(fileURL) {
   if (grepl('/thumb/', fileURL)) {
     imgName <- sub('https://upload.wikimedia.org/wikipedia/commons/thumb/[A-Z|a-z|0-9]+/[A-Z|a-z|0-9]+/([A-Z|a-z|0-9|_|%|Ä|Å|‡|.|-]+)/.*', '\\1', fileURL)
   } else {
-    
+    imgName <- sub('https://upload.wikimedia.org/wikipedia/commons/[A-Z|a-z|0-9]+/[A-Z|a-z|0-9]+/([A-Z|a-z|0-9|_|%|Ä|Å|‡|.|-]+)/.*', '\\1', fileURL)
   }
   return(imgName)
 }

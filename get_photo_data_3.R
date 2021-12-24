@@ -148,7 +148,6 @@ for (i in 1:nrow(df3)) {
 }
 
 # adjust column sequence
-df3 <- readRDS('data/df3.rds')
 df3 <- df3[, c('Country', 'iso3c', 'ID', 'Caption', 'Provider', 'Artist', 'ArtistURL', 'ArtistHTML', 'License', 'LicenseURL', 'ImageName', 'InfoURL', 'FileURL', 'folder', 'iso2c', 'Attribution')]
 
 saveRDS(df3, file='data/df3.rds')
