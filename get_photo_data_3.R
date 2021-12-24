@@ -133,6 +133,20 @@ folds <- df3 %>%
   select(folder)
 sum(is.na(folds))
 
+# test for bad imgName
+# df3 %>% 
+#   filter(Provider == 'Wikimedia' && !is.na('ImageName')) %>%
+#   sum(grepl('https', ImageName))
+# grepl( 'https', df3$ImageName[!is.na(df3$ImageName)] )
+for (i in 1:nrow(df3)) {
+  img <- df3$ImageName[i]
+  if (!is.na(img)) {
+    if (grepl('https', img)) {
+      print(paste(i, img))
+    }
+  }
+}
+
 # adjust column sequence
 df3 <- readRDS('data/df3.rds')
 df3 <- df3[, c('Country', 'iso3c', 'ID', 'Caption', 'Provider', 'Artist', 'ArtistURL', 'ArtistHTML', 'License', 'LicenseURL', 'ImageName', 'InfoURL', 'FileURL', 'folder', 'iso2c', 'Attribution')]
