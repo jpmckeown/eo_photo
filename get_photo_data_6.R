@@ -1,13 +1,12 @@
-# 6th step, relies on df5 and ArtistHTML
+# 6th step, uses df5 ArtistHTML and also Attribution
+#  extract Artist and (if available) ArtistURL
+#  from old Attribution, otherwise Step 2 was wasted time!
 
 df6 <- readRDS('data/df5.rds')
 
 # Conditions needing attention
 # link is Wikimedia flagged as not existing
 # link not valid
-
-# DONE Look at ArtistHTML column, categorise & find targeted cases
-# easier to test after column populated by step 5
 
 # Earlier efforts failed to extract Artist and ArtistURL due to varying formats:
 
@@ -43,13 +42,28 @@ loopEnd <- nrow(df6)
 for (i in 1:loopEnd) {
   changed <- 0
   
+  attrib <- df6$Attribution[i]
   artist_html <- df6$ArtistHTML[i]
   
-  if (df6$Provider[i] == 'Wikimedia' && !is.na(artist_html)) {
+  if (df6$Provider[i] == 'Wikimedia') {
     
-    if (grepl('page does not exist', artist_html)) {
-      artist <- sub("^<a (.+)>(.+)<\\/a>", "\\2", artist_html)
-    }
+    if ( !is.na(attrib) ) {
+      
+      if (grepl('page does not exist', attrib)) {
+        artist <- sub("^<a (.+)>(.+)<\\/a>", "\\2", attrib)
+        print(paste(i, artist))
+      }
+    } # end: old Attribution available
+
+    if ( !is.na(artist_html) ) {
+    
+      if (grepl('page does not exist', artist_html)) {
+        artist <- sub("^<a (.+)>(.+)<\\/a>", "\\2", artist_html)
+        print(paste(i, artist))
+      }
+    } # end artist_html
+    
+  } # end Wikimedia 
   
 # if link flagged invalid just use Artist name
 # if (grepl('page does not exist', artistLine)) {
@@ -78,7 +92,7 @@ for (i in 1:loopEnd) {
 # get artist_URL and check if valid and isn't missing at Provider
 # print(paste('artist', artist))
   
-  } # end Wikimedia with ArtistHTML
+
 
 # "Unsplash photographers appreciate it as it provides exposure to their work and encourages them to continue sharing.
   # if (df6$Provider == 'Unsplash') {
@@ -100,6 +114,8 @@ for (i in 1:loopEnd) {
   #   df6$License <- 'FreeImages.com'
   #   df6$LicenseURL <- 'https://www.freeimages.com/license'
   # }
+  
+  
 
 } # photo loop
 

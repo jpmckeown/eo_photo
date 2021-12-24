@@ -163,4 +163,5 @@ df5$LicenseURL[392]='https://creativecommons.org/licenses/by-sa/4.0'
 df5$Attribution[392] = '<a href="https://commons.wikimedia.org/wiki/File:Red-billed_gull_colony,_Kaik%C5%8Dura,_New_Zealand_08.jpg">Michal Klajban</a>, <a href="https://creativecommons.org/licenses/by-sa/4.0">CC BY-SA 4.0</a>, via Wikimedia Commons' # Wikimedia, not constructed
 
 saveRDS(df5, 'data/df5.rds')
-#saveRDS(df5, 'data/df5_until_370.rds')
+
+write_tsv(df5, 'data/photo_step_5.tsv')
