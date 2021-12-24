@@ -3,7 +3,7 @@
 
 # disable while doing incremental run
 #df5 <- readRDS('data/df4.rds')
-#df5 <- readRDS('data/df5_until_141.rds')
+# df5 <- readRDS('data/df5_until_370.rds') # if session lost
 
 API_imgName_to_artistLine <- function(imgName) {
   # get Artist name from wikimedia API
@@ -15,12 +15,12 @@ API_imgName_to_artistLine <- function(imgName) {
   artist_JSON <- jsonlite::fromJSON(artist_API)
   artist_here <- unlist(artist_JSON)
   artistLine1 <- artist_here[ grepl('Artist.value', names(artist_here)) ]
-  if (artistLine1 == '') { 
+  artistLine2 <- unname(artistLine1)
+  
+  if (identical(artistLine2, character(0))) { 
     print(paste(i, 'JSON lacks Artist.value'))
     return('') 
   }
-  artistLine2 <- unname(artistLine1)
-  
   # harmonise to contain single quotes not double quotes
   #  but what if doublequotes ArtistLine also contains a singlequote?
   artistLine3 <- gsub('\"', "'", artistLine2)
@@ -55,19 +55,19 @@ licenseURL_vector <- rep(NA, nrow(df5))
 #   filter(ArtistHTML == '')  # none
 
 # Public domain url '' causing error
-for (i in 1:nrow(df5)) {
-  lurl <- df3$LicenseURL[i]
-  if (!is.na(lurl)) {
-    if (lurl=='') {
-      print(i)
-      #df3$LicenseURL[i] <- NA
-    }
-  }
-}
+# for (i in 1:nrow(df5)) {
+#   lurl <- df3$LicenseURL[i]
+#   if (!is.na(lurl)) {
+#     if (lurl=='') {
+#       print(i)
+#       #df3$LicenseURL[i] <- NA
+#     }
+#   }
+# }
 
 # loop all rows
 loopEnd <- nrow(df5)
-for (i in 162:loopEnd) {
+for (i in 370:loopEnd) {
   changed <- 0
 # i <- 0
 # while (changed < 3) {
@@ -151,4 +151,4 @@ for (i in 162:loopEnd) {
 } # end loop image rows
 
 saveRDS(df5, 'data/df5.rds')
-#saveRDS(df5, 'data/df5_until_141.rds')
+#saveRDS(df5, 'data/df5_until_370.rds')
