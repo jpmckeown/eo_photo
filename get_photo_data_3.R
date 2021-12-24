@@ -77,7 +77,7 @@ for (i in 1:loopEnd) {
   
   if (df3[i, 'Provider'] == 'Pixabay') {
     
-    if (!is.na(InfoURL)) {
+    if (!is.na(infoURL)) {
       imgName <- pixabay_infoURL_to_imgName(infoURL)
       df3[i, 'ImageName'] <- imgName
       # need API to make FileURL in later step
