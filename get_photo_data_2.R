@@ -128,6 +128,11 @@ df2$License[c(279,302)] <- 'CC BY-SA 3.0 igo'
 df2$LicenseURL[c(279,302)] <- 'https://creativecommons.org/licenses/by-sa/3.0/igo/deed.en'
 df2$ArtistHTML[c(279,302)] <- 'European Space Agency: contains modified Copernicus Sentinel data 2019'
 
+# check any ArtistHTML not string or NA; due to error in step 5
+# df2 <- readRDS('data/df2.rds') # dangerous here
+sum(is.na(df2$ArtistHTML)) # 221
+sum(df2$ArtistHTML == '') # none
+
 saveRDS(df2, 'data/df2.rds')
 #write_tsv(df2, 'data/photo_step_2.tsv')
 

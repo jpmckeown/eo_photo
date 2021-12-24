@@ -31,12 +31,12 @@ for (i in 1:loopEnd) {
 # while (changed < 3) {
   # incr(i)
   imgName <- df5$ImageName[i]
-  
-  # check artistHTML empty; Step 2 may have supplied already.
+  gotCred <- df5$artistHTML[i]
   
   if (df5$Provider[i] == 'Wikimedia' && !is.na(imgName) ) {
     
-    if (!is.na(df5$artistHTML[i])) {
+    # check artistHTML empty since Step 2 may have supplied already.
+    if (!is.na(gotCred)) {
       print(paste(i, 'got ArtistHTML from Step 2'))
     } else {
       artist <- NA
@@ -66,7 +66,7 @@ for (i in 1:loopEnd) {
       df5$ArtistHTML[i] <- artistLine
       
       print(paste(i, df5$iso3c[i], df5$ID[i]))
-      print(paste('artistLine', artistLine))  
+      print(paste(i, 'artistLine', artistLine))  
       
       # get license from wikimedia API
       license_API <- paste0(
@@ -107,7 +107,7 @@ for (i in 1:loopEnd) {
         print(paste('licenseURL', licenseURL_line)) 
       }
       
-      print(paste('license', licens))
+      print(paste(i, 'license', licens))
 
     } # end not previously supplied
   } # end Wikimedia with ImageName
