@@ -2,6 +2,7 @@
 #  only do API, leave extraction attempt for next step
 
 #df5 <- readRDS('data/df4.rds')
+#df5 <- readRDS('data/df5_until_141.rds')
 
 pixabay_ID_to_df <- function(imgName) {
   Pixabay_API <- 'https://pixabay.com/api/?key=24587231-d8363fed1919782211f48ccc6&'
