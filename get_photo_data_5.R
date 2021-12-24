@@ -150,5 +150,17 @@ for (i in 393:loopEnd) {
   
 } # end loop image rows
 
+# API failed for rows 371 = MNE id2
+df5$Artist[371] = 'Post of Montenegro'
+df5$ArtistURL[371] = 'https://commons.wikimedia.org/wiki/User:Materialscientist' # not in attrib
+df5$License[371] = 'Public domain'
+df5$Attribution[371] = '<a href="https://commons.wikimedia.org/wiki/File:Svetlana_Kana_Radevi%C4%87_2021_stamp_of_Montenegro.jpg">Post of Montenegro</a>, Public domain, via Wikimedia Commons'
+# 392 = NZL id1
+df5$Artist[392]='Michal Klajban'
+df5$ArtistURL[392]='https://commons.wikimedia.org/wiki/User:Podzemnik'
+df5$License[392]='CC BY-SA 4.0'
+df5$LicenseURL[392]='https://creativecommons.org/licenses/by-sa/4.0'
+df5$Attribution[392] = '<a href="https://commons.wikimedia.org/wiki/File:Red-billed_gull_colony,_Kaik%C5%8Dura,_New_Zealand_08.jpg">Michal Klajban</a>, <a href="https://creativecommons.org/licenses/by-sa/4.0">CC BY-SA 4.0</a>, via Wikimedia Commons' # Wikimedia, not constructed
+
 saveRDS(df5, 'data/df5.rds')
 #saveRDS(df5, 'data/df5_until_370.rds')
