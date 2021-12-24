@@ -70,9 +70,9 @@ found <- 0
 
 loopEnd <- nrow(df4) #
 # for (i in seq_len(loopEnd)) { 
-for (i in 63:loopEnd) { 
+for (i in 1:loopEnd) { 
   
-  if (df4$Provider[i] == 'Wikimedia') {
+  if (df4$Provider[i] == 'zzzWikimedia') {
     
     # blank folder means there is no FileURL yet
     if (is.na(df4$folder[i])) {
@@ -111,13 +111,13 @@ for (i in 63:loopEnd) {
 
   # if API other Providers can get FileURL or InfoURL
   
-  # if (df4$Provider[i] == 'Pixabay') {
-  #   
-  #   imgName <- df4$ImageName[i]
-  #   url640 <- API_pixabay_ID_to_fileURL(imgName, 640)
-  #   df4$w640_URL[i] <- url640
-  # 
-  # }
+  if (df4$Provider[i] == 'Pixabay') {
+
+    imgName <- df4$ImageName[i]
+    url640 <- API_pixabay_ID_to_fileURL(imgName, 640)
+    df4$w640_URL[i] <- url640
+
+  }
   
   # Pixabay 24587231-d8363fed1919782211f48ccc6
   # https://pixabay.com/api/?key=24587231-d8363fed1919782211f48ccc6&
@@ -128,10 +128,9 @@ for (i in 63:loopEnd) {
 
   
   # Pixnio lacks API
-  
 }
 
 print(paste(found, 'used API to get folder from InfoURL'))
 print(paste(already, 'already had folder derived from FileURL'))
 
-saveRDS(df4, file='data/df4.rds')
+# saveRDS(df4, file='data/df4.rds')
