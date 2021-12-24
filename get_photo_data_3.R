@@ -1,5 +1,4 @@
-# 3rd step after get_photo_data_1.R and relies on df2 created there
-# currently skipping 2nd step
+# 3rd step assumes df2 completed 
 
 # from FileURL reconstruct missing InfoURL
 # for Wikimedia, FreeImages
@@ -31,8 +30,8 @@ pixabay_infoURL_to_imgName <- function(infoURL) {
 photoCount <- 0
 # cannot filter because need to keep spreadsheet whole
 # use rows ordered with non-Wikimedia first
-df1 <- readRDS('data/df1.rds')
-df3 <- df1
+df3 <- readRDS('data/df2.rds')
+
 # Wikimedia image name includes extension; FreeImages does not.
 
 loopEnd <- nrow(df3) # wikimedia_count # 
@@ -77,10 +76,12 @@ for (i in 1:loopEnd) {
   } # end Wikimedia
   
   if (df3[i, 'Provider'] == 'Pixabay') {
+    
     if (!is.na(InfoURL)) {
       imgName <- pixabay_infoURL_to_imgName(infoURL)
       df3[i, 'ImageName'] <- imgName
       # need API to make FileURL in later step
+    }
   }
   
   if (df3[i, 'Provider'] == 'FreeImages') {

@@ -34,8 +34,6 @@ saveRDS(df2, file='data/df2.rds')
 rm(list = setdiff(ls(), lsf.str()))
 
 # reconstruct missing Info_URL, from FileURL get ImageName and folder
-# load('data/df2.Rda')
-df1 <- readRDS('data/df1.rds')
 source('get_photo_data_3.R')
 saveRDS(df3, file='data/df3.rds')
 rm(list = setdiff(ls(), lsf.str()))
