@@ -67,7 +67,7 @@ licenseURL_vector <- rep(NA, nrow(df5))
 
 # loop all rows
 loopEnd <- nrow(df5)
-for (i in 370:loopEnd) {
+for (i in 393:loopEnd) {
   changed <- 0
 # i <- 0
 # while (changed < 3) {
