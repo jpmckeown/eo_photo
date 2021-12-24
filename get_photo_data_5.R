@@ -1,7 +1,7 @@
 # 5th step relies on df4 from get_photo_data_4.R requires ImageName
 #  only do API, leave extraction attempt for next step
 
-df5 <- readRDS('data/df4.rds')
+#df5 <- readRDS('data/df4.rds')
 
 pixabay_ID_to_df <- function(imgName) {
   Pixabay_API <- 'https://pixabay.com/api/?key=24587231-d8363fed1919782211f48ccc6&'
@@ -19,19 +19,24 @@ pixabay_ID_to_df <- function(imgName) {
 # no new column for this step
 # df5 <- df5[, c('Country', 'iso3c', 'ID', 'Caption', 'Provider', 'Artist', 'ArtistURL', 'ArtistHTML', 'License', 'LicenseURL', 'ImageName', 'InfoURL', 'FileURL', 'folder', 'iso2c', 'OriginURL', 'w640_URL', 'Attribution')]
 
-artistLine_vector <- rep(NA, nrow(df5))
-license_vector <- rep(NA, nrow(df5))
-licenseURL_vector <- rep(NA, nrow(df5))
+# disable while doing incremental run
+# artistLine_vector <- rep(NA, nrow(df5))
+# license_vector <- rep(NA, nrow(df5))
+# licenseURL_vector <- rep(NA, nrow(df5))
+# 
+# df5 %>% 
+#   filter(is.na(ArtistHTML)) %>% 
+#   filter(ArtistHTML == '')  # none
 
 # loop all rows
-loopEnd <- 7 # nrow(df5)
-for (i in 1:loopEnd) {
+loopEnd <- nrow(df5)
+for (i in 7:loopEnd) {
   changed <- 0
 # i <- 0
 # while (changed < 3) {
   # incr(i)
   imgName <- df5$ImageName[i]
-  gotCred <- df5$artistHTML[i]
+  gotCred <- df5$ArtistHTML[i]
   
   if (df5$Provider[i] == 'Wikimedia' && !is.na(imgName) ) {
     
@@ -87,6 +92,7 @@ for (i in 1:loopEnd) {
       licens <- gsub('.*"(/w*)"', '\\1', license_line)
       df5$License[i] <- licens
       license_vector[i] <- licens
+      print(paste(i, 'license', licens))
       
       # get URL describing license from wikimedia API
       licenseURL_API <- paste0(
@@ -104,11 +110,8 @@ for (i in 1:loopEnd) {
         licenseURL_line <- gsub('\n', '', licenseURL_line2)
         df5$LicenseURL[i] <- licenseURL_line
         licenseURL_vector[i] <- licenseURL_line
-        print(paste('licenseURL', licenseURL_line)) 
+        print(paste(i, 'licenseURL', licenseURL_line)) 
       }
-      
-      print(paste(i, 'license', licens))
-
     } # end not previously supplied
   } # end Wikimedia with ImageName
   
@@ -128,4 +131,5 @@ for (i in 1:loopEnd) {
   
 } # end loop image rows
 
-saveRDS(df5, 'data/df5.rds')
+#saveRDS(df5, 'data/df5.rds')
+saveRDS(df5, 'data/df5_until_141.rds')
