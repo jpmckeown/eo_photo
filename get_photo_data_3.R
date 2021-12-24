@@ -31,6 +31,8 @@ photoCount <- 0
 # cannot filter because need to keep spreadsheet whole
 # use rows ordered with non-Wikimedia first
 df3 <- readRDS('data/df2.rds')
+df3['ImageName'] <- as.character(NA)
+df3['folder'] <- as.character(NA)
 
 # Wikimedia image name includes extension; FreeImages does not.
 
@@ -130,6 +132,10 @@ folds <- df3 %>%
   filter(Provider == 'Wikimedia' && !is.na('FileUrl')) %>% 
   select(folder)
 sum(is.na(folds))
+
+# adjust column sequence
+df3 <- readRDS('data/df3.rds')
+df3 <- df3[, c('Country', 'iso3c', 'ID', 'Caption', 'Provider', 'Artist', 'ArtistURL', 'ArtistHTML', 'License', 'LicenseURL', 'ImageName', 'InfoURL', 'FileURL', 'folder', 'iso2c', 'Attribution')]
 
 saveRDS(df3, file='data/df3.rds')
 
