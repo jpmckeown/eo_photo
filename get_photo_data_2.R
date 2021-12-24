@@ -77,7 +77,6 @@ for (i in 1:nrow(df2_earlyFileURL)) {
 df2 <- subset(df2_fillGaps, select = -c(EarlyFileURL))
 
 # temporary save before Attribution
-saveRDS(df2, 'data/df2.rds')
 
 ##### can get Attribution HTML now all the earlier FileURL ready #####
 
@@ -90,7 +89,7 @@ names(imgdata_Credit) <- c('iso3c', 'ID', 'InfoURL', 'FileURL', 'Attribution')
 # mresult <- merge(x=df1, y=imgdata, by=c('iso3c'='iso3c', 'ID'='ID', 'InfoURL'='Info_address', 'FileURL'='File_address'), all.x=TRUE)
 df2_Attrib <- left_join(df2, imgdata_Credit)
 
-saveRDS(df2_Attrib, 'data/df2.rds')
+#saveRDS(df2_Attrib, 'data/df2.rds')
 
 # extract ArtistHTML, License, and LicenseURL from earlier Attribution html #####
 
@@ -119,6 +118,13 @@ for (i in 1:nrow(df2)) {
   }
 }
 
+# visual inspection ITA1 KWT1 PNG2 License=‘Attribution’ & url empty no NA
+ 
+# df2_ <- df2 %>% mutate(License = replace(License, License == 'Attribution' && iso2c == 'PG'), 'Ok Tedi Mine CMCA Review') # Fails
+df2$License[419] <- 'Ok Tedi Mine CMCA Review'
+df2$LicenseURL[419] <- NA
+
+saveRDS(df2, 'data/df2.rds')
 #write_tsv(df2, 'data/photo_step_2.tsv')
 
 # check for anomalous ID numbering in df2
