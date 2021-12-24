@@ -15,6 +15,10 @@ API_imgName_to_artistLine <- function(imgName) {
   artist_JSON <- jsonlite::fromJSON(artist_API)
   artist_here <- unlist(artist_JSON)
   artistLine1 <- artist_here[ grepl('Artist.value', names(artist_here)) ]
+  if (artistLine1 == '') { 
+    print(paste(i, 'JSON lacks Artist.value'))
+    return('') 
+  }
   artistLine2 <- unname(artistLine1)
   
   # harmonise to contain single quotes not double quotes
