@@ -2,38 +2,18 @@
 #  extract Artist and (if available) ArtistURL
 #  from old Attribution, otherwise Step 2 was wasted time!
 
+attrib_to_html <- function(attrib) {
+  #result <- gsub("^<a (.+)\\>(.+)<\\/a>", "\\1 \\2", attrib)
+  #result <- gsub("^<a (.+)>(.+)<\\/a>", c('\\1', '\\2'), attrib)
+  result <- sub("^<a (.+)\\>(.+)<\\/a>.*", "\\2", attrib)
+  return(result)
+}
+attrib <- "<a rel='nofollow' class='external text' href='https://www.flickr.com/people/41000732@N04'>Adam Jones</a> from Kelowna, BC, Canada, <a href='https://commons.wikimedia.org/wiki/File:Farmer_in_Field_-_Theth_Village_-_Northern_Albania_(41838452595).jpg'>Farmer_in_Field_-_Theth_Village_-_Northern_Albania_(41838452595).jpg</a>; <a href='https://creativecommons.org/licenses/by-sa/2.0'>CC BY-SA 2.0</a>, via Wikimedia Commons"
+
+attrib_to_html(attrib)
+
 df6 <- readRDS('data/df5.rds')
 
-# Conditions needing attention
-# link is Wikimedia flagged as not existing
-# link not valid
-
-# Earlier efforts failed to extract Artist and ArtistURL due to varying formats:
-
-# Artist has affiliation, and a 2nd link
-# <a href='https://en.wikipedia.org/wiki/User:Khaufle' class='extiw' title='wikipedia:User:Khaufle'>Khaufle</a> at <a href='https://en.wikipedia.org/wiki/' class='extiw' title='wikipedia:'>English Wikipedia</a>
-
-# 2nd link to personal website
-# <a href='//commons.wikimedia.org/wiki/User:JJ_Harrison' title='User:JJ Harrison'>JJ Harrison</a> (<a rel='nofollow' class='external free' href='https://www.jjharrison.com.au/'>https://www.jjharrison.com.au/</a>)
-
-# Artist all inside anchor; 1 link; missing https 
-# <a href='//commons.wikimedia.org/wiki/User:Albinfo' title='User:Albinfo'>Albinfo</a> AL1
-
-# As above but Artist continues after anchor
-# <a href='//commons.wikimedia.org/wiki/User:Liveon001' title='User:Liveon001'>Liveon001</a> © Travis K. Witt
-# <a href='//commons.wikimedia.org/wiki/User:Serouj' title='User:Serouj'>Serouj</a> (courtesy of Ani Vardanyan)
-
-# Flagged URL; redlink? Artist clean inside anchor
-# <a href='//commons.wikimedia.org/w/index.php?title=User:Goodfaith17&amp;action=edit&amp;redlink=1' class='new' title='User:Goodfaith17 (page does not exist)'>Goodfaith17</a>
-
-# Superfluous class and nofollow; Artist continues after anchor
-# <a rel='nofollow' class='external text' href='https://www.flickr.com/people/41000732@N04'>Adam Jones</a> from Kelowna, BC, Canada
-
-# As above but artist inside anchor.
-# <a rel='nofollow' class='external text' href='https://www.flickr.com/people/21187388@N06'>University of the Fraser Valley</a> AG3
-
-# no link, only Artist; wouldnt matter as ArtistHTML is simply Artist
-# Paulo César Santos
 
 artist_vector <- rep(NA, nrow(df6))
 artistURL_vector <- rep(NA, nrow(df6))
@@ -48,13 +28,49 @@ for (i in 1:loopEnd) {
   if (df6$Provider[i] == 'Wikimedia') {
     
     if ( !is.na(attrib) ) {
+      if (!is.na(artist_html)) {
+        print('Attribution but already has ArtistHTML!')
+      }
       
-      if (grepl('page does not exist', attrib)) {
-        artist <- sub("^<a (.+)>(.+)<\\/a>", "\\2", attrib)
-        print(paste(i, artist))
+      # get ArtistHTML, License, LicenseURL
+      
       }
     } # end: old Attribution available
 
+    # Now from ArtistHTML extract Artist and ArtistURL especially if
+    # link is Wikimedia flagged as not existing, or detect link invalid
+
+    ##### Earlier effort failed due to varying formats of ArtistHTML #####
+    
+    # Artist has affiliation, and a 2nd link
+    # <a href='https://en.wikipedia.org/wiki/User:Khaufle' class='extiw' title='wikipedia:User:Khaufle'>Khaufle</a> at <a href='https://en.wikipedia.org/wiki/' class='extiw' title='wikipedia:'>English Wikipedia</a>
+    
+    # 2nd link to personal website
+    # <a href='//commons.wikimedia.org/wiki/User:JJ_Harrison' title='User:JJ Harrison'>JJ Harrison</a> (<a rel='nofollow' class='external free' href='https://www.jjharrison.com.au/'>https://www.jjharrison.com.au/</a>)
+    
+    # Artist all inside anchor; 1 link; missing https 
+    # <a href='//commons.wikimedia.org/wiki/User:Albinfo' title='User:Albinfo'>Albinfo</a> AL1
+    
+    # As above but Artist continues after anchor
+    # <a href='//commons.wikimedia.org/wiki/User:Liveon001' title='User:Liveon001'>Liveon001</a> © Travis K. Witt
+    # <a href='//commons.wikimedia.org/wiki/User:Serouj' title='User:Serouj'>Serouj</a> (courtesy of Ani Vardanyan)
+    
+    # Flagged URL; redlink? Artist clean inside anchor
+    # <a href='//commons.wikimedia.org/w/index.php?title=User:Goodfaith17&amp;action=edit&amp;redlink=1' class='new' title='User:Goodfaith17 (page does not exist)'>Goodfaith17</a>
+    
+    # Superfluous class and nofollow; Artist continues after anchor
+    # <a rel='nofollow' class='external text' href='https://www.flickr.com/people/41000732@N04'>Adam Jones</a> from Kelowna, BC, Canada
+    
+    # As above but artist inside anchor.
+    # <a rel='nofollow' class='external text' href='https://www.flickr.com/people/21187388@N06'>University of the Fraser Valley</a> AG3
+    
+    # no link, only Artist; wouldnt matter as ArtistHTML is simply Artist
+    # Paulo César Santos
+    
+  if (grepl('page does not exist', attrib)) {
+    artist <- sub("^<a (.+)>(.+)<\\/a>", "\\2", attrib)
+    print(paste(i, artist))
+  }
     if ( !is.na(artist_html) ) {
     
       if (grepl('page does not exist', artist_html)) {
