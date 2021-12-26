@@ -2,8 +2,7 @@
 #  only do API, leave extraction attempt for next step
 
 # disable while doing incremental run
-#df5 <- readRDS('data/df4.rds')
-# df5 <- readRDS('data/df5_until_370.rds') # if session lost
+# df5 <- readRDS('data/df4.rds')
 
 API_imgName_to_artistLine <- function(imgName) {
   # get Artist name from wikimedia API
@@ -64,6 +63,16 @@ licenseURL_vector <- rep(NA, nrow(df5))
 #     }
 #   }
 # }
+
+# special to fix Attributions with missing artist_html (detected in step 6)
+missing_artist <- c(51, 78, 163, 211, 241, 242)
+for (i in seq_along(missing_artist)) {
+  imgName <- df5$ImageName
+  artistLine <- API_imgName_to_artistLine(imgName)
+  print(paste(missing_artist[i], artistLine))
+}
+# JSON error, which explains why earlier missing artist
+
 
 # loop all rows
 loopEnd <- nrow(df5)
