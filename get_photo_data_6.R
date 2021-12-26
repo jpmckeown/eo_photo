@@ -17,8 +17,8 @@ artisthtml_with_2urls <- function(html) {
   s <- str_match(html, "^<a .*href ?= ?'(.*?)'.*>(.*)</a>(.*)<a .*href ?= ?'(.*?)'.*>(.*)</a>(.*)$")
   return(s)
 }
-
-df6 <- readRDS('data/df5.rds')
+# due to unknown state of df 5 after messup while ad hoc fixing 6 missing in step5; may need to retrieve archived df5.rds from other folder and then run step 5 fix on it again
+# df6 <- readRDS('data/df5.rds')
 
 artist_vector <- rep(NA, nrow(df6))
 artistURL_vector <- rep(NA, nrow(df6))
