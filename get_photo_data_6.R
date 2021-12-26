@@ -3,17 +3,22 @@
 #  from old Attribution, otherwise Step 2 was wasted time!
 
 attrib_to_html <- function(attrib) {
-  #result <- gsub("^<a (.+)\\>(.+)<\\/a>", "\\1 \\2", attrib)
-  #result <- gsub("^<a (.+)>(.+)<\\/a>", c('\\1', '\\2'), attrib)
-  result <- sub("^<a (.+)\\>(.+)<\\/a>.*", "\\2", attrib)
-  return(result)
+  #result <- gsub("^(.*), <a href='(.*)'>.*; <a href='(http.*)'>(.*)</a>.*", "\\1 \\3 \\4", attrib)
+  s <- str_match(attrib, "^(.*), <a href='(.*)'>.*; <a href='(http.*)'>(.*)</a>.*")
+  return(s)
 }
-attrib <- "<a rel='nofollow' class='external text' href='https://www.flickr.com/people/41000732@N04'>Adam Jones</a> from Kelowna, BC, Canada, <a href='https://commons.wikimedia.org/wiki/File:Farmer_in_Field_-_Theth_Village_-_Northern_Albania_(41838452595).jpg'>Farmer_in_Field_-_Theth_Village_-_Northern_Albania_(41838452595).jpg</a>; <a href='https://creativecommons.org/licenses/by-sa/2.0'>CC BY-SA 2.0</a>, via Wikimedia Commons"
 
-attrib_to_html(attrib)
+artisthtml_with_1url <- function(html) {
+  s <- str_match(html, "^(.*), <a href='(.*)'>.*; <a href='(http.*)'>(.*)</a>.*")
+  return(s)
+}
+
+artisthtml_with_2urls <- function(html) {
+  s <- str_match(html, "^<a .*href='(.*?)'.*>(.*)<\/a>.*<a.*href='(.*?)'.*>(.*)<\/a>.*")
+  return(s)
+}
 
 df6 <- readRDS('data/df5.rds')
-
 
 artist_vector <- rep(NA, nrow(df6))
 artistURL_vector <- rep(NA, nrow(df6))
@@ -27,13 +32,18 @@ for (i in 1:loopEnd) {
   
   if (df6$Provider[i] == 'Wikimedia') {
     
+    # already did this in Step 2 (true this is nicer code)
     if ( !is.na(attrib) ) {
       if (!is.na(artist_html)) {
-        print('Attribution but already has ArtistHTML!')
-      }
-      
-      # get ArtistHTML, License, LicenseURL
-      
+        print(paste(i, 'old Attribution but already has ArtistHTML!'))
+      } else {
+        
+        # get ArtistHTML, License, LicenseURL
+        x <- attrib_to_html(attrib)
+        artist_html <- x[2]
+        license <- x[4]
+        license_url <- x[5]
+        print(paste(artist_html, license, license_url))
       }
     } # end: old Attribution available
 
@@ -41,6 +51,27 @@ for (i in 1:loopEnd) {
     # link is Wikimedia flagged as not existing, or detect link invalid
 
     ##### Earlier effort failed due to varying formats of ArtistHTML #####
+
+    # Count number of links in ArtistHTML
+    links <- str_count(artist_html, "href ?=")
+    
+    if (links == 0) {
+      artist <- artist_html
+      
+    } else if (links == 1) {
+      
+    } else if (links ==  2) {
+      
+    } else {
+      print(paste(id, 'artisthml contains 3 links!'))
+    }
+    
+    #   artist <- sub('<.*">', '', artistLine)
+    #   artist <- sub('</a>', '', artist)
+    #   
+    #   artist_URL <- sub("^<a .*href=(.)+>.*", "\\1", artistLine)
+    #   # artist_URL <- sub("^<a .*href=(\"|')(.+)(\"|')>.*", "\\1", artistLine)
+    # }
     
     # Artist has affiliation, and a 2nd link
     # <a href='https://en.wikipedia.org/wiki/User:Khaufle' class='extiw' title='wikipedia:User:Khaufle'>Khaufle</a> at <a href='https://en.wikipedia.org/wiki/' class='extiw' title='wikipedia:'>English Wikipedia</a>
@@ -67,17 +98,16 @@ for (i in 1:loopEnd) {
     # no link, only Artist; wouldnt matter as ArtistHTML is simply Artist
     # Paulo César Santos
     
-  if (grepl('page does not exist', attrib)) {
-    artist <- sub("^<a (.+)>(.+)<\\/a>", "\\2", attrib)
-    print(paste(i, artist))
-  }
-    if ( !is.na(artist_html) ) {
-    
-      if (grepl('page does not exist', artist_html)) {
-        artist <- sub("^<a (.+)>(.+)<\\/a>", "\\2", artist_html)
-        print(paste(i, artist))
-      }
-    } # end artist_html
+    # if (grepl('page does not exist', attrib)) {
+    #   artist <- sub("^<a (.+)>(.+)<\\/a>", "\\2", attrib)
+    #   print(paste(i, artist))
+    # }
+    # if ( !is.na(artist_html) ) {
+    #   if (grepl('page does not exist', artist_html)) {
+    #     artist <- sub("^<a (.+)>(.+)<\\/a>", "\\2", artist_html)
+    #     print(paste(i, artist))
+    #   }
+    #} # end artist_html
     
   } # end Wikimedia 
   
@@ -94,16 +124,6 @@ for (i in 1:loopEnd) {
 # a complete Anchor tag containing href with \" quotes
 
 
-# get artist and URL
-# if (!grepl('<a', artistLine)) {
-#   artist <- artistLine
-# } else {
-#   artist <- sub('<.*">', '', artistLine)
-#   artist <- sub('</a>', '', artist)
-#   
-#   artist_URL <- sub("^<a .*href=(.)+>.*", "\\1", artistLine)
-#   # artist_URL <- sub("^<a .*href=(\"|')(.+)(\"|')>.*", "\\1", artistLine)
-# }
 
 # get artist_URL and check if valid and isn't missing at Provider
 # print(paste('artist', artist))
@@ -135,7 +155,7 @@ for (i in 1:loopEnd) {
 
 } # photo loop
 
-saveRDS(df6, 'data/df6.rds')
+#saveRDS(df6, 'data/df6.rds')
 
 # from step 2
 # if (!grepl('href', artist_html)) {
