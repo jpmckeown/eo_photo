@@ -1,8 +1,11 @@
 # 7th step, assemble CreditHTML for all Providers
 #  no API call so can be run across whole df repeatedly
 
-df5 <- readRDS('data/df5.rds')
-df6 <- df5
+df7 <- readRDS('data/df6.rds')
+
+# ad hoc fix Wikimedia link errors
+df7$ArtistInfo[247] <- df7$Artist[247] # Own work
+df7$Artist[247] <- 'Loriski' # manually from InfoURL
 
 loopEnd <- nrow(df6)
 for (i in 1:loopEnd) {
@@ -15,6 +18,11 @@ for (i in 1:loopEnd) {
     # https://creativecommons.org/licenses/publicdomain/
     
     if (df6$Provider == 'Wikimedia') {
+      
+      # Artist: ; License: ; Image:
+      # always Artist, License, ImageName, InfoURL
+      # optional fields AristURL, ArtistInfo, LicenseURL
+      
       credit_html <- paste0('<a href="', df6$ArtistURL[i], '">', df6$Artist[i], '</a>', '<a href="', df6$LicenseURL[i], '">', df6$License[i], '</a>')
     }
     

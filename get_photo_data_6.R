@@ -53,7 +53,7 @@ for (i in 1:loopEnd) {
     # Now from ArtistHTML extract Artist and ArtistURL especially if
     # link is Wikimedia flagged as not existing, or detect link invalid
 
-    ##### Earlier effort failed due to varying formats of ArtistHTML #####
+    ##### Earlier efforts failed due to varying formats of ArtistHTML #####
 
     if ( is.na(artist_html) && !is.na(artist) ) {
       print(paste(i, 'lacks ArtistHTML and Artist extracted manually'))
@@ -64,17 +64,21 @@ for (i in 1:loopEnd) {
       
       if (links == 0) {
         artist <- artist_html
+        print(paste(i, artist))
         incr(link0)
+        artist_vector[i] <- artist
         
       } else if (links == 1) {
         s <- artisthtml_with_1url(artist_html)
-        print(paste(i, 'one', s[2], s[3], s[4]))
+        #print(paste(i, 'one', s[2], s[3], s[4]))
         incr(link1)
+        artist_vector[i] <- s[2]
   
       } else if (links ==  2) {
         s <- artisthtml_with_2urls(artist_html)
-        print(paste(i, s[2], s[3], s[4], s[5], s[6]))
+        #print(paste(i, s[2], s[3], s[4], s[5], s[6]))
         incr(link2)
+        artist_vector[i] <- s[2]
   
       } else if (links >  2) {
         print(paste(i, 'contains more than 2 links'))
@@ -84,7 +88,9 @@ for (i in 1:loopEnd) {
       }
     } # end test if ArtistHTML present
     
-          # 
+    # count empty artist
+    artist_vector[artist_vector=='']
+           
     #   artist <- sub('<.*">', '', artistLine)
     #   artist <- sub('</a>', '', artist)
     #   
