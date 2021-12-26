@@ -9,12 +9,12 @@ attrib_to_html <- function(attrib) {
 }
 
 artisthtml_with_1url <- function(html) {
-  s <- str_match(html, "^(.*), <a href='(.*)'>.*; <a href='(http.*)'>(.*)</a>.*")
+  s <- str_match(html, "^<a .*href ?= ?'(.*?)'.*>(.*)</a>(.*)$")
   return(s)
 }
 
 artisthtml_with_2urls <- function(html) {
-  s <- str_match(html, "^<a .*href='(.*?)'.*>(.*)<\/a>.*<a.*href='(.*?)'.*>(.*)<\/a>.*")
+  s <- str_match(html, "^<a .*href ?= ?'(.*?)'.*>(.*)</a>(.*)<a .*href ?= ?'(.*?)'.*>(.*)</a>(.*)$")
   return(s)
 }
 
@@ -22,6 +22,7 @@ df6 <- readRDS('data/df5.rds')
 
 artist_vector <- rep(NA, nrow(df6))
 artistURL_vector <- rep(NA, nrow(df6))
+link0=0; link1=0; link2=0
 
 loopEnd <- nrow(df6)
 for (i in 1:loopEnd) {
@@ -29,43 +30,61 @@ for (i in 1:loopEnd) {
   
   attrib <- df6$Attribution[i]
   artist_html <- df6$ArtistHTML[i]
+  artist <- df6$Artist[i]
   
   if (df6$Provider[i] == 'Wikimedia') {
     
     # already did this in Step 2 (true this is nicer code)
-    if ( !is.na(attrib) ) {
-      if (!is.na(artist_html)) {
-        print(paste(i, 'old Attribution but already has ArtistHTML!'))
-      } else {
-        
-        # get ArtistHTML, License, LicenseURL
-        x <- attrib_to_html(attrib)
-        artist_html <- x[2]
-        license <- x[4]
-        license_url <- x[5]
-        print(paste(artist_html, license, license_url))
-      }
-    } # end: old Attribution available
+    # detects 371 and 392 as NA - manually extracted
+    # if ( !is.na(attrib) ) {
+    #   if ( !is.na(artist_html) ) {
+    #     print(paste(i, 'old Attribution but already has ArtistHTML!'))
+    #   } else {
+    #     
+    #     # get ArtistHTML, License, LicenseURL
+    #     x <- attrib_to_html(attrib)
+    #     artist_html <- x[2]
+    #     license <- x[4]
+    #     license_url <- x[5]
+    #     print(paste(i, artist_html, license, license_url))
+    #   }
+    # } # end: old Attribution available
 
     # Now from ArtistHTML extract Artist and ArtistURL especially if
     # link is Wikimedia flagged as not existing, or detect link invalid
 
     ##### Earlier effort failed due to varying formats of ArtistHTML #####
 
-    # Count number of links in ArtistHTML
-    links <- str_count(artist_html, "href ?=")
-    
-    if (links == 0) {
-      artist <- artist_html
-      
-    } else if (links == 1) {
-      
-    } else if (links ==  2) {
-      
+    if ( is.na(artist_html) && !is.na(artist) ) {
+      print(paste(i, 'lacks ArtistHTML and Artist extracted manually'))
     } else {
-      print(paste(id, 'artisthml contains 3 links!'))
-    }
+      
+      # Count number of links in ArtistHTML
+      links <- str_count(artist_html, "href ?=")
+      
+      if (links == 0) {
+        artist <- artist_html
+        incr(link0)
+        
+      } else if (links == 1) {
+        s <- artisthtml_with_1url(artist_html)
+        print(paste(i, 'one', s[2], s[3], s[4]))
+        incr(link1)
+  
+      } else if (links ==  2) {
+        s <- artisthtml_with_2urls(artist_html)
+        print(paste(i, s[2], s[3], s[4], s[5], s[6]))
+        incr(link2)
+  
+      } else if (links >  2) {
+        print(paste(i, 'contains more than 2 links'))
+      
+      } else {
+        print(paste(i, 'links not a number'))
+      }
+    } # end test if ArtistHTML present
     
+          # 
     #   artist <- sub('<.*">', '', artistLine)
     #   artist <- sub('</a>', '', artist)
     #   
