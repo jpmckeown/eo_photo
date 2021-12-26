@@ -88,8 +88,9 @@ for (i in 1:loopEnd) {
       }
     } # end test if ArtistHTML present
     
-    # count empty artist
-    artist_vector[artist_vector=='']
+    # find and count empty artist
+    which(stri_isempty(artist_vector)) # 51  78 163 211 241 242
+    sum(stri_isempty(artist_vector), na.rm=TRUE) # six
            
     #   artist <- sub('<.*">', '', artistLine)
     #   artist <- sub('</a>', '', artist)
