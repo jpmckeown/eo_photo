@@ -56,6 +56,10 @@ rm(list = setdiff(ls(), lsf.str()))
 
 # Prepare for sharing
 # merge w640 into FileURL, then delete w640
+# what others type in? no FileURL for Pixnio & cannot find Unsplash 
+# colour cell background; Gsheets allows Protected Ranges
+# could use gsheet API to automate this as a Step
+
 df7 <- df6
 for (i in 1:nrow(df7)) {
   if(is.na(df7$FileURL[i])) {
@@ -81,7 +85,18 @@ for (i in 1: nrow(df7)) {
   }  
 }
 
-# assemble CreditHTML for all Providers
+# rename photo files with iso3c, outside Steps
+# maybe Step 2 could helpful start?
+
+# 7 - download photo files
+
+# 8 - get width and height, for separate table
+
+# 9 - assemble CreditHTML for all Providers
+
+# 10 - screenshot InfoURL pages, and store
+#   name iso3c_photoID_info.jpg
+
 source('get_photo_data_7.R')
 saveRDS(df7, file='data/df7.rds')
 rm(list = setdiff(ls(), lsf.str()))
@@ -91,13 +106,6 @@ source('get_photo_data_8.R')
 saveRDS(df8, file='data/df8.rds')
 rm(list = setdiff(ls(), lsf.str()))
 
-
-
-# download photo files
-
-# get width and height, for separate table
-
-# what can be typed in, Gsheets allows Protected Range
 
 # Pixnio = Artist, License, LicenseURL   
 # (no ArtistURL, that offered when downloading is just InfoURL) 
