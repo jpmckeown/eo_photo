@@ -5,6 +5,12 @@ artist_remove_photoby <- function(artist) {
   result <- sub('[P|p]hoto by[:]*[ ]*(.*)', '\\1', artist)
   return(result)
 }
+# May prefix 'Photo by: ' on all credits.
+
+artist_remove_user <- function(artist) {
+  result <- sub("[U|u]ser[:]*[ ]*(.*)", '\\1', artist)
+  return(result)
+}
 
 df7 <- readRDS('data/df6.rds')
 
@@ -19,8 +25,14 @@ for (i in 1:loopEnd) {
   
   # clean up artist
   if (!is.na(artist)) {
-    artist <- artist_remove_photoby(artist)
+    if (grepl('hoto by', artist)) {
+      artist <- artist_remove_photoby(artist)      
+    }
+    if (grep(pattern = 'User|user', x = artist)) {
+      artist <- artist_remove_user(artist)
+    }
   }
+  
   # if CreditHTML exists we use that 
   if (!is.na(df6$CreditHTML)) {
 

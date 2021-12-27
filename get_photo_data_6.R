@@ -153,7 +153,7 @@ saveRDS(df6, 'data/df6.rds')
 # 230 Copyright c 
 # 343 &copy; 
 # 499 'photo by: '
-# User: 19
+# 19 User:
 # some UPPER CASE 104, 381, 463
 # <bdi> 229
 # 2, 82/200, bits should be in Extra 
