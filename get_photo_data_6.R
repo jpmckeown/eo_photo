@@ -97,23 +97,23 @@ for (i in 1:loopEnd) {
   
   # "Unsplash photographers appreciate as it provides exposure to their work and encourages them to continue sharing.
   if (df6$Provider == 'Unsplash') {
-    df6$LicenseURL <- 'https://unsplash.com/license'
+    df6$LicenseURL[i] <- 'https://unsplash.com/license'
   }
 
   if (df6$Provider == 'Pixabay') {
-    df6$License <- 'Pixabay License'
-    df6$LicenseURL <- 'https://pixabay.com/service/license/' # longer https://pixabay.com/service/terms/#license
+    df6$License[i] <- 'Pixabay License'
+    df6$LicenseURL[i] <- 'https://pixabay.com/service/license/' # longer https://pixabay.com/service/terms/#license
   }
 
   if (df6$Provider == 'Pixnio') {
-    df6$License <- 'CC0'
-    df6$LicenseURL <- 'https://pixnio.com/creative-commons-license'
+    df6$License[i] <- 'CC0'
+    df6$LicenseURL[i] <- 'https://pixnio.com/creative-commons-license'
   }
 
   # if you are using content for editorial purposes, you must include the following credit adjacent to the content or in audio/visual production credits: “FreeImages.com/Artist’s Member Name.”
   if (df6$Provider == 'FreeImages') {
-    df6$License <- 'FreeImages.com'
-    df6$LicenseURL <- 'https://www.freeimages.com/license'
+    df6$License[i] <- 'FreeImages.com'
+    df6$LicenseURL[i] <- 'https://www.freeimages.com/license'
   }
 
 } # photo loop
@@ -133,7 +133,7 @@ df6$ArtistURL <- artistURL_vector
 df6$ArtistExtra <- artExtra_vector
 df6$Artist2ndURL <- link2nd_vector
 
-#saveRDS(df6, 'data/df6.rds')
+saveRDS(df6, 'data/df6.rds')
 
 # Artist, fix ad hoc in Step 7
 #D 247 says Own work, no name (i did find it before)
