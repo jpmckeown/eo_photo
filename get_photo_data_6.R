@@ -72,7 +72,12 @@ for (i in 1:loopEnd) {
         s <- artisthtml_with_1url(artist_html)
         #print(paste(i, 'one', s[2], s[3], s[4]))
         incr(link1)
+        artistURL_vector[i] <- s[1]
         artist_vector[i] <- s[2]
+        artExtra_vector[i] <- s[3]
+        if (grepl('page does not exist', artist_html)) {
+          artistURL_vector[i] <- NA  
+        }
   
       } else if (links ==  2) {
         s <- artisthtml_with_2urls(artist_html)
@@ -92,18 +97,13 @@ for (i in 1:loopEnd) {
     which(stri_isempty(artist_vector)) # 51  78 163 211 241 242
     sum(stri_isempty(artist_vector), na.rm=TRUE) # six
            
-    #   artist <- sub('<.*">', '', artistLine)
-    #   artist <- sub('</a>', '', artist)
-    #   
-    #   artist_URL <- sub("^<a .*href=(.)+>.*", "\\1", artistLine)
     #   # artist_URL <- sub("^<a .*href=(\"|')(.+)(\"|')>.*", "\\1", artistLine)
-    # }
-    
+
     # Artist has affiliation, and a 2nd link
     # <a href='https://en.wikipedia.org/wiki/User:Khaufle' class='extiw' title='wikipedia:User:Khaufle'>Khaufle</a> at <a href='https://en.wikipedia.org/wiki/' class='extiw' title='wikipedia:'>English Wikipedia</a>
     
     # 2nd link to personal website
-    # <a href='//commons.wikimedia.org/wiki/User:JJ_Harrison' title='User:JJ Harrison'>JJ Harrison</a> (<a rel='nofollow' class='external free' href='https://www.jjharrison.com.au/'>https://www.jjharrison.com.au/</a>)
+    # <a href='//commons.wikimedia.org/wiki/User:JJ_Harrison' title='User:JJ Harrison'>JJ Harrison</a> (<a rel='nofollow' class='external free' href='https://www.jjharrison.com.au/'>https://www.jjharrison.com.au/</a>
     
     # Artist all inside anchor; 1 link; missing https 
     # <a href='//commons.wikimedia.org/wiki/User:Albinfo' title='User:Albinfo'>Albinfo</a> AL1
@@ -124,10 +124,7 @@ for (i in 1:loopEnd) {
     # no link, only Artist; wouldnt matter as ArtistHTML is simply Artist
     # Paulo César Santos
     
-    # if (grepl('page does not exist', attrib)) {
-    #   artist <- sub("^<a (.+)>(.+)<\\/a>", "\\2", attrib)
-    #   print(paste(i, artist))
-    # }
+
     # if ( !is.na(artist_html) ) {
     #   if (grepl('page does not exist', artist_html)) {
     #     artist <- sub("^<a (.+)>(.+)<\\/a>", "\\2", artist_html)
