@@ -1,6 +1,11 @@
 # 7th step, assemble CreditHTML for all Providers
 #  no API call so can be run across whole df repeatedly
 
+artist_remove_photoby <- function(artist) {
+  result <- sub('[P|p]hoto by[:]*[ ]*(.*)', '\\1', artist)
+  return(result)
+}
+
 df7 <- readRDS('data/df6.rds')
 
 # ad hoc fix Wikimedia link errors
@@ -10,6 +15,12 @@ df7$Artist[247] <- 'Loriski' # manually from InfoURL
 loopEnd <- nrow(df6)
 for (i in 1:loopEnd) {
   
+  artist <- df7$Artist[i]
+  
+  # clean up artist
+  if (!is.na(artist)) {
+    artist <- artist_remove_photoby(artist)
+  }
   # if CreditHTML exists we use that 
   if (!is.na(df6$CreditHTML)) {
 

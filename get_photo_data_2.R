@@ -134,6 +134,24 @@ sum(is.na(df2$ArtistHTML)) # 221
 sum(df2$ArtistHTML == '') # none
 
 saveRDS(df2, 'data/df2.rds')
+
+# Alternative method moved from Step 6
+# already did this in Step 2 (true this is nicer code)
+# detects 371 and 392 as NA - manually extracted
+# if ( !is.na(attrib) ) {
+#   if ( !is.na(artist_html) ) {
+#     print(paste(i, 'old Attribution but already has ArtistHTML!'))
+#   } else {
+#     
+#     # get ArtistHTML, License, LicenseURL
+#     x <- attrib_to_html(attrib)
+#     artist_html <- x[2]
+#     license <- x[4]
+#     license_url <- x[5]
+#     print(paste(i, artist_html, license, license_url))
+#   }
+# } # end: old Attribution available
+
 #write_tsv(df2, 'data/photo_step_2.tsv')
 
 # check for anomalous ID numbering in df2
