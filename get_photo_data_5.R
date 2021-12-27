@@ -157,9 +157,11 @@ for (i in 393:loopEnd) {
     Pixabay_df <- pixabay_ID_to_df(imgName)
     artist <- Pixabay_df$user
     u_id <- Pixabay_df$user_id
+    fileurl <- Pixabay_df$webformatURL
     artistURL <- paste0('https://pixabay.com/users/', artist, '-', u_id, '/')
     df5$Artist[i] <- artist
     df5$ArtistURL[i] <- artistURL
+    df5$FileURL[i] <- fileurl
   }
   # "user_id":5475750,"user":"Graham-H"  Yes this matches what InfoURL says
   # https://pixabay.com/users/graham-h-5475750/  so ArtistURL can be constructed.

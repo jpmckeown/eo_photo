@@ -54,8 +54,34 @@ source('get_photo_data_6.R')
 saveRDS(df6, file='data/df6.rds')
 rm(list = setdiff(ls(), lsf.str()))
 
+# Prepare for sharing
+# merge w640 into FileURL, then delete w640
+df7 <- df6
+for (i in 1:nrow(df7)) {
+  if(is.na(df7$FileURL[i])) {
+    print(paste(i, 'FileURL missing'))
+    if (!is.na(df7$w640_URL[i])) {
+      print('sub')
+      df7$FileURL[i] <- df7$w640_URL[i]
+    }
+  }  
+}
+df7 <- df7[, c('Country', 'iso3c', 'ID', 'Caption', 'Provider', 'Artist', 'ArtistExtra', 'ArtistURL', 'Artist2ndURL', 'ArtistHTML', 'License', 'LicenseURL', 'InfoURL', 'FileURL', 'folder', 'iso2c', 'ImageName', 'OriginURL', 'Attribution')]
+# only reorder just before exporting TSV for web
+df_by_provider <- df7[order(df7$Provider), ]
+write_tsv(df_by_provider, 'data/photos_by_provider.tsv')
+
+for (i in 1: nrow(df7)) {
+  if(df7$Provider[i] == 'Pixabay') {
+    if(is.na(df7$FileURL[i])) {
+      dfp <- pixabay_ID_to_df(df7$ImageName[i])
+      
+      print(paste(i, df7$ImageName[i], dfp$webformatURL))
+    }
+  }  
+}
+
 # assemble CreditHTML for all Providers
-df6 <- readRDS('data/df6.rds')
 source('get_photo_data_7.R')
 saveRDS(df7, file='data/df7.rds')
 rm(list = setdiff(ls(), lsf.str()))
@@ -65,9 +91,7 @@ source('get_photo_data_8.R')
 saveRDS(df8, file='data/df8.rds')
 rm(list = setdiff(ls(), lsf.str()))
 
-# only reorder just before exporting TSV for web
-df_by_provider <- df1[order(df1$Provider), ]
-write_tsv(df_by_provider, 'data/photos_by_provider.tsv')
+
 
 # download photo files
 

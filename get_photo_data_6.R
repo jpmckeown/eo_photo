@@ -19,7 +19,7 @@ artisthtml_with_2urls <- function(html) {
 }
 
 # due to unknown state of df 5 after messup while ad hoc fixing 6 missing in step5; may need to retrieve archived df5.rds from other folder and then run step 5 fix on it again
-# df6 <- readRDS('data/df5.rds')
+df6 <- readRDS('data/df5.rds')
 
 artist_vector <- df5$Artist # rep(NA, nrow(df6))
 artistURL_vector <- rep(NA, nrow(df6))
@@ -96,22 +96,22 @@ for (i in 1:loopEnd) {
   } # end Wikimedia 
   
   # "Unsplash photographers appreciate as it provides exposure to their work and encourages them to continue sharing.
-  if (df6$Provider == 'Unsplash') {
+  if (df6$Provider[i] == 'Unsplash') {
     df6$LicenseURL[i] <- 'https://unsplash.com/license'
   }
 
-  if (df6$Provider == 'Pixabay') {
+  if (df6$Provider[i] == 'Pixabay') {
     df6$License[i] <- 'Pixabay License'
     df6$LicenseURL[i] <- 'https://pixabay.com/service/license/' # longer https://pixabay.com/service/terms/#license
   }
 
-  if (df6$Provider == 'Pixnio') {
+  if (df6$Provider[i] == 'Pixnio') {
     df6$License[i] <- 'CC0'
     df6$LicenseURL[i] <- 'https://pixnio.com/creative-commons-license'
   }
 
   # if you are using content for editorial purposes, you must include the following credit adjacent to the content or in audio/visual production credits: “FreeImages.com/Artist’s Member Name.”
-  if (df6$Provider == 'FreeImages') {
+  if (df6$Provider[i] == 'FreeImages') {
     df6$License[i] <- 'FreeImages.com'
     df6$LicenseURL[i] <- 'https://www.freeimages.com/license'
   }
@@ -123,7 +123,7 @@ for (i in 1:loopEnd) {
 # find and count empty artist
 emptyArt <- which(stri_isempty(artist_vector)) # 51  78 163 211 241 242
 nEmptyArt <- sum(stri_isempty(artist_vector), na.rm=TRUE) # six
-print(paste(nEmptyArt, '=', emptyArt))
+print(paste('Empty artist', nEmptyArt, '=', emptyArt))
 
 # how many Wikimedia with 0 1 2 hyperlinks?
 print(paste('Links 0:', link0, '1:', link1, '2:', link2))
