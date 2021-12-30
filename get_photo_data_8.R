@@ -1,5 +1,72 @@
-# 7th step, assemble CreditHTML for all Providers
+# 8th step, assemble CreditHTML for all Providers
 #  no API call so can be run across whole df repeatedly
+
+df8 <- read_tsv('data/EO_photo_providers.tsv')
+
+# Why have rows changed index? e.g. 247 now at 244
+df8 <- df8[with(df8, order(Country, ID)), ]
+
+df8['CreditHTML'] <- as.character(NA)
+
+loopEnd <- nrow(df8)
+
+# ad hoc fix Wikimedia link errors
+ownwork <- which(grepl('Own work', df8$Artist))
+df8$ArtistExtra[ownwork] <- 'Own work'
+df8$Artist[ownwork] <- 'Loriski' # manually from InfoURL
+
+for (i in 1:loopEnd) {
+
+  provider <- df8$Provider[i]  
+  artist <- df8$Artist[i]
+  artist_url <- df8$ArtistURL[i]
+  license <- df8$License[i]
+  license_url <- df8$LicenseURL[i]
+  info_url <- df8$InfoURL[i]
+  file_url <- df8$FileURL[i]
+
+  # Artist, ArtistURL, License, LicenseURL, ImageName, InfoURL
+  #  also provider prefix and suffix, or special way of assembling?
+  # https://creativecommons.org/licenses/publicdomain/
+  
+  if (provider == 'Wikimedia') {
+    
+    # Artist: ; License: ; Image:
+    # always Artist, License, ImageName, InfoURL
+    # optional fields AristURL, ArtistInfo, LicenseURL
+    
+    credit_html <- paste0('<a href="', artist_url, '">', artist, '</a>', 'License: <a href="', license_url, '">', license, '</a>', ' Image: ', 'a href="', info_url, '">', info_url, '</a> via Wikimedia Commons.')
+  }
+  
+  if (provider == 'Unsplash') {
+    if ( !is.na(info_url) ) {
+      credit_html <- paste0('<a href="', license_url, '">Unsplash License</a> Image: ', info_url)
+    } else if ( !is.na(file_url) ) {
+      credit_html <- paste0('<a href="', license_url, '">Unsplash License</a> Image: ', file_url)
+    }
+  }
+  
+  # Photo by Artist on Pixnio
+  if (df8$Provider[i] == 'Pixnio') {
+    credit_html <- paste0('Photo by <a href="', df8$InfoURL, '">', df8$Artist[i], '</a> on Pixnio <a href="https://pixnio.com/">free images</a> license <a href="', license_url, '">', license, '</a>')
+  }
+  
+  if (df8$Provider == 'Pixabay') {
+    credit_html <- paste0('<a href="', artist_url, '">', artist, '</a>', 'License: <a href="', license_url, '">Pixabay</a>', ' Image: ', 'a href="', info_url, '">', info_url, '</a>')
+  }
+  
+  # if you are using content for editorial purposes, you must include the following credit adjacent to the content: “FreeImages.com/Artist’s Member Name.”
+  if (df8$Provider == 'FreeImages') {
+    credit_html <- paste0('<a href="', df8$LicenseURL[i], '">', df8$License[i], '</a> / Artist: <a href="', df8$ArtistURL[i], '">', df8$Artist[i], '</a>')
+  }
+  
+  df8$CreditHTML[i] <- credit_html 
+}
+       
+#saveRDS(df8, 'data/df8.rds')
+
+  # # if CreditHTML exists we use that
+  # if (!is.na(df8$CreditHTML[i])) {
 
 artist_remove_photoby <- function(artist) {
   result <- sub('[P|p]hoto by[:]*[ ]*(.*)', '\\1', artist)
@@ -44,71 +111,13 @@ artist_remove_user <- function(artist) {
 # }
 
 #df7a <- readRDS('data/df7.rds')
-df8 <- read_tsv('data/EO_photo_providers.tsv')
-df8 <- df8[order(df8$Country), ]
-# Why have rows changed index? e.g. 247 now at 244
-df8 <- df8[with(df8, order(Country, ID)), ]
 
-df8['CreditHTML'] <- as.character(NA)
-
-loopEnd <- nrow(df8)
-
-# ad hoc fix Wikimedia link errors
-ownwork <- which(grepl('Own work', df8$Artist))
-df8$ArtistExtra[ownwork] <- 'Own work'
-df8$Artist[ownwork] <- 'Loriski' # manually from InfoURL
-
-for (i in 1:loopEnd) {
-  
-  artist <- df8$Artist[i]
-  
   # clean up artist
-  if (!is.na(artist)) {
-    if (grepl('hoto by', artist)) {
-      artist <- artist_remove_photoby(artist)      
-    }
-    if (grep(pattern = 'User|user', x = artist)) {
-      artist <- artist_remove_user(artist)
-    }
-  }
-  
-  # if CreditHTML exists we use that
-  if (!is.na(df8$CreditHTML)) {
-
-    # Artist, ArtistURL, License, LicenseURL, ImageName, InfoURL
-    #  also provider prefix and suffix, or special way of assembling?
-    # https://creativecommons.org/licenses/publicdomain/
-    
-    if (df8$Provider == 'Wikimedia') {
-      
-      # Artist: ; License: ; Image:
-      # always Artist, License, ImageName, InfoURL
-      # optional fields AristURL, ArtistInfo, LicenseURL
-      
-      credit_html <- paste0('<a href="', df8$ArtistURL[i], '">', df8$Artist[i], '</a>', 'License: <a href="', df8$LicenseURL[i], '">', df8$License[i], '</a>', ' Image: ', 'a href="', df8$InfoURL, '">', df8$InfoURL, '</a> via Wikimedia Commons.')
-    }
-    
-    if (df8$Provider == 'Unsplash') {
-      credit_html <- ''
-    }
-    
-    # Photo by Artist on Pixnio
-    if (df8$Provider == 'Pixnio') {
-      credit_html <- paste0('Photo by <a href="', df8$InfoURL, '">', df8$Artist[i], '</a> on Pixnio <a href="https://pixnio.com/">free images</a> license <a href="', df8$LicenseURL[i], '">', df8$License[i], '</a>')
-    }
-    
-    if (df8$Provider == 'Pixabay') {
-      credit_html <- ''
-    }
-    
-    # if you are using content for editorial purposes, you must include the following credit adjacent to the content: “FreeImages.com/Artist’s Member Name.”
-    if (df8$Provider == 'FreeImages') {
-      credit_html <- paste0('<a href="', df8$LicenseURL[i], '">', df8$License[i], '</a> / Artist: <a href="', df8$ArtistURL[i], '">', df8$Artist[i], '</a>')
-    }
-    
-    df8$CreditHTML[i] <- credit_html    
-  }
-  
-}
-
-saveRDS(df8, 'data/df8.rds')
+  # if (!is.na(artist )) {
+  #   if (grepl('hoto by', artist)) {
+  #     artist <- artist_remove_photoby(artist)      
+  #   }
+  #   if (grep(pattern = 'User|user', x = artist)) {
+  #     artist <- artist_remove_user(artist)
+  #   }
+  # }
