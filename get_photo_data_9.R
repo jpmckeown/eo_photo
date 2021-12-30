@@ -17,21 +17,28 @@ for (i in 1:loopEnd) {
   img_id <- df9$ID[i]
   info_url <- df9$InfoURL[i]
   file_url <- df9$FileURL[i]
+  country <- df9$Country[i]
   
   # if image not already stored, try download
   fn <- paste0(iso3c, '_', img_id)
   stored <- grep(fn, new_photos)
   
   if (length(stored) == 1) {
-    print(paste(i, 'Photo already stored', fn, stored, length(stored)))
+    # print(paste(i, 'Photo already stored', fn, stored, length(stored)))
     df9$file[i] <- 'Y'
   } 
   else if (length(stored) == 0) {
-    print(paste(i, 'Photo download needed', fn, stored, length(stored)))
     df9$file[i] <- 'N'
-    # if (is.na(df8$FileURL[i]) && is.na(df8$w640_URL[i])) {
-    #   incr(missing)
-    # }
+    if (is.na(df9$FileURL[i]))  {
+      incr(missing)
+      #print(paste(i, 'Photo not stored but lack FileURL to download', fn, stored, length(stored)))
+      print(paste(iso3c, img_id,country))
+    } else {
+      # download
+      # print(paste(i, 'Photo downloading', fn, stored, length(stored)))
+      # download.file(url, destfile, method, quiet = FALSE
+      
+    }
     
   } # end test if stored
 } # end new df loop
