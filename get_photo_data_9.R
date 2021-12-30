@@ -5,6 +5,8 @@ df9 <- readRDS('data/df8.rds')
 df9['file'] <- as.character(NA) 
 
 missing <- 0
+new_folder <- 'w640/'
+new_photos <- list.files(new_folder)
 #df9$file[i] <- 'Y'
 
 # count/identify missing FileURL
@@ -17,12 +19,23 @@ for (i in 1:loopEnd) {
   info_url <- df9$InfoURL[i]
   file_url <- df9$FileURL[i]
   
-  print(paste(iso3c, img_id))
+  # if image not already stored, try download
+  fn <- paste0(iso3c, '_', img_id)
+  stored <- grep(fn, new_photos)
+  print(paste(i, fn, stored, length(stored)))
   
-  # if (is.na(df8$FileURL[i]) && is.na(df8$w640_URL[i])) {
-  #   incr(missing)
-  # }
-}
+  if (length(stored) == 1) {
+    print(paste(i, 'Photo already stored'))
+  } 
+  else if (length(stored) == 0) {
+    print(paste(i, 'Photo download needed'))
+    
+    # if (is.na(df8$FileURL[i]) && is.na(df8$w640_URL[i])) {
+    #   incr(missing)
+    # }
+    
+  } # end test if stored
+} # end new df loop
 
 # df8_missing <- df8 %>%
 #   filter(is.na(FileURL)) %>%
