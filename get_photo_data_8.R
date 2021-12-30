@@ -76,8 +76,11 @@ for (i in 1:loopEnd) {
   
   df8$CreditHTML[i] <- credit_html 
 }
-       
-#saveRDS(df8, 'data/df8.rds')
+
+# Test!
+which(is.na(df8$CreditHTML)) # no NA
+
+saveRDS(df8, 'data/df8.rds')
 
   # # if CreditHTML exists we use that
   # if (!is.na(df8$CreditHTML[i])) {
