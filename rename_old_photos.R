@@ -14,22 +14,45 @@ new_folder <- 'w640/'
 oldPhotos <- list.files(old_folder) 
 
 # only act if in imgdata, to eliminate fake photos
-for (o in 1:nrow(imgdata)) {
+loopEnd <- 12 # nrow(imgdata)
+for (o in 1:loopEnd) {
   # info_addr <- imgdata$Info_address[o]
   old_fileurl <- imgdata$File_address[o]
   old_id <- imgdata$ID[o]
   old_iso2c <- imgdata$iso2c[o]
+  old_iso3c <- imgdata$iso3c[o]
   
-  # confirm file exists
+  # confirm photo in imgdata exists among files
   fn <- paste0(old_iso2c, '_', old_id)
   
+  #
   findOld <- grep(fn, oldPhotos)
   # if (grepl(fn, oldPhotos)) {
   #   print(paste(o, fn))
   # } else {
   #   print(paste(o, 'not in use now', fn))
   # }
-  print(paste(o, oldPhotos[findOld], findOld))
+  
+  # check still needed by match against df8
+  new_fileurl <- df8 %>% 
+    filter(iso2c == old_iso2c) %>% 
+    filter(ID == old_id) %>% 
+    select(FileURL)
+  new_fileurl <- as.character(new_fileurl)
+  
+  if (new_fileurl != old_fileurl) {
+    print( paste( 'Match fails', o, oldPhotos[findOld], new_fileurl ) )
+  } else {
+    # get suffix from old iso2c filename
+    suffix <- sub('(.*)?\\.(.*)', '\\2', oldPhotos[findOld])
+    # make new iso3c filename 
+    new_filename <- paste0(old_iso3c, '_', old_id, '.', suffix)
+    oldPath <- paste0(old_folder, oldPhotos[findOld])
+    newPath <- paste0(new_folder, new_filename)
+    #print( paste( o, oldPhotos[findOld], new_filename ) )
+    print( paste( o, oldPath, newPath ) )
+    file.copy(oldPath, newPath)
+  }
 }
 # Test, none missing
 # which(is.na(imgdata$File_address))
