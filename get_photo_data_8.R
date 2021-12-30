@@ -24,6 +24,7 @@ for (i in 1:loopEnd) {
   license_url <- df8$LicenseURL[i]
   info_url <- df8$InfoURL[i]
   file_url <- df8$FileURL[i]
+  credit_html <- ''
 
   # Artist, ArtistURL, License, LicenseURL, ImageName, InfoURL
   #  also provider prefix and suffix, or special way of assembling?
@@ -34,8 +35,11 @@ for (i in 1:loopEnd) {
     # Artist: ; License: ; Image:
     # always Artist, License, ImageName, InfoURL
     # optional fields AristURL, ArtistInfo, LicenseURL
-    
-    credit_html <- paste0('<a href="', artist_url, '">', artist, '</a>', 'License: <a href="', license_url, '">', license, '</a>', ' Image: ', 'a href="', info_url, '">', info_url, '</a> via Wikimedia Commons.')
+    if ( !is.na(artist_url) ) {
+      credit_html <- paste0('<a href="', artist_url, '">', artist, '</a>', '; License <a href="', license_url, '">', license, '</a>', '; Image ', 'a href="', info_url, '">', info_url, '</a> via Wikimedia Commons.')
+    } else {
+      credit_html <- paste0(artist, '; License <a href="', license_url, '">', license, '</a>', '; Image ', 'a href="', info_url, '">', info_url, '</a> via Wikimedia Commons.')
+    }
   }
   
   if (provider == 'Unsplash') {
@@ -47,17 +51,27 @@ for (i in 1:loopEnd) {
   }
   
   # Photo by Artist on Pixnio
-  if (df8$Provider[i] == 'Pixnio') {
+  if (provider == 'Pixnio') {
     credit_html <- paste0('Photo by <a href="', df8$InfoURL, '">', df8$Artist[i], '</a> on Pixnio <a href="https://pixnio.com/">free images</a> license <a href="', license_url, '">', license, '</a>')
   }
   
-  if (df8$Provider == 'Pixabay') {
-    credit_html <- paste0('<a href="', artist_url, '">', artist, '</a>', 'License: <a href="', license_url, '">Pixabay</a>', ' Image: ', 'a href="', info_url, '">', info_url, '</a>')
+  if (provider == 'Pixabay') {
+    if ( !is.na(artist_url) ) {
+      credit_html <- paste0('<a href="', artist_url, '">', artist, '</a>', 'License: <a href="', license_url, '">Pixabay</a>', ' Image: ', 'a href="', info_url, '">', info_url, '</a>')
+    } else {
+      credit_html <- paste0(artist, '; License; <a href="', license_url, '">Pixabay</a>', '; Image ', 'a href="', info_url, '">', info_url, '</a>')
+    }
   }
   
   # if you are using content for editorial purposes, you must include the following credit adjacent to the content: “FreeImages.com/Artist’s Member Name.”
-  if (df8$Provider == 'FreeImages') {
-    credit_html <- paste0('<a href="', df8$LicenseURL[i], '">', df8$License[i], '</a> / Artist: <a href="', df8$ArtistURL[i], '">', df8$Artist[i], '</a>')
+  if (provider == 'FreeImages') {
+    if ( !is.na(artist_url) ) {
+      credit_html <- paste0('<a href="', df8$LicenseURL[i], '">', df8$License[i], '</a> / Artist: <a href="', df8$ArtistURL[i], '">', df8$Artist[i], '</a>')
+    } else if ( !is.na(artist) ) {
+      credit_html <- paste0('<a href="', df8$LicenseURL[i], '">', df8$License[i], '</a> / Artist: ' , df8$Artist[i], '</a>')
+    } else {
+      credit_html <- paste0('<a href="', df8$LicenseURL[i], '">', df8$License[i], '</a>')
+    }
   }
   
   df8$CreditHTML[i] <- credit_html 
@@ -93,7 +107,7 @@ artist_remove_user <- function(artist) {
 # https://pixabay.com/users/graham-h-5475750/  so ArtistURL can be constructed.
 
 # for (i in 94:loopEnd) {
-#   if ( df8$Provider[i] == 'Pixabay' && !is.na(df8$Artist[i]) ) { #  
+#   if ( provider[i] == 'Pixabay' && !is.na(df8$Artist[i]) ) { #  
 #     imgName <- df8$ImageName[i]
 #     
 #     Pixabay_df <- pixabay_ID_to_df(imgName)
