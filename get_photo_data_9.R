@@ -78,7 +78,17 @@ table(df9$file)
 # print(paste('Missing', missing))
 # Wikimedia, Pixabay
 
-loopEnd <- nrow(df9)
+pixabay_ID_to_df <- function(imgName) {
+  Pixabay_API <- 'https://pixabay.com/api/?key=24587231-d8363fed1919782211f48ccc6&'
+  this_API <- paste0(Pixabay_API, 'id=', imgName)
+  this_JSON <- jsonlite::fromJSON(this_API, simplifyVector = TRUE)
+  # returns list, 3rd item is dataframe
+  df <- this_JSON[['hits']]
+  return(df)
+}
+
+new_photos <- list.files(new_folder)
+missing=0; loopEnd <- nrow(df9)
 for (i in 1:loopEnd) {
   
   provider <- df9$Provider[i]
@@ -87,8 +97,35 @@ for (i in 1:loopEnd) {
   info_url <- df9$InfoURL[i]
   file_url <- df9$FileURL[i]
   country <- df9$Country[i]
+  stored <- df9$file[i]
+  imgName <- df9$ImageName[i]
+  artist <- df9$Artist[i]
+  artist_url <- df9$ArtistURL[i]
   
   if (provider == 'Pixabay') {
-    print(i)
+    
+    # if image not already stored, try download
+    fn <- paste0(iso3c, '_', img_id)
+    stored <- grep(fn, new_photos)
+    
+    if (length(stored) == 1) {
+      print(paste(i, 'Photo already stored', fn, imgName)) #artist, artist_url))
+      df9$file[i] <- 'Y'
+    } 
+    else if (length(stored) == 0) {
+      df9$file[i] <- 'N'
+        incr(missing)
+        print(paste(i, 'Photo download needed', fn, imgName)) # artist, artist_url
+
+        # Pixabay_df <- pixabay_ID_to_df(imgName)
+        # # artist <- Pixabay_df$user
+        # # u_id <- Pixabay_df$user_id
+        # newfileurl <- Pixabay_df$webformatURL
+        # df9$FileURL <- newfileurl
+        # dest <- paste0(temp_folder, iso3c, '_', img_id, '.', suffix)
+        # print(paste(i, 'download', fn, dest))
+        # download.file(newfileurl, dest, quiet = FALSE)
+
+    }
   }
 }
