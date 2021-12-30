@@ -14,9 +14,9 @@ new_folder <- 'w640/'
 oldPhotos <- list.files(old_folder) 
 
 # only act if in imgdata, to eliminate fake photos
-loopEnd <- 12 # nrow(imgdata)
-for (o in 1:loopEnd) {
-  # info_addr <- imgdata$Info_address[o]
+loopEnd <- nrow(imgdata)
+for (o in 25:loopEnd) {
+  old_infourl <- imgdata$Info_address[o]
   old_fileurl <- imgdata$File_address[o]
   old_id <- imgdata$ID[o]
   old_iso2c <- imgdata$iso2c[o]
@@ -25,7 +25,7 @@ for (o in 1:loopEnd) {
   # confirm photo in imgdata exists among files
   fn <- paste0(old_iso2c, '_', old_id)
   
-  #
+  # find among list of photo files in old folder
   findOld <- grep(fn, oldPhotos)
   # if (grepl(fn, oldPhotos)) {
   #   print(paste(o, fn))
@@ -40,9 +40,23 @@ for (o in 1:loopEnd) {
     select(FileURL)
   new_fileurl <- as.character(new_fileurl)
   
-  if (new_fileurl != old_fileurl) {
+  print(paste(old_fileurl, new_fileurl))
+  
+  matched <-FALSE
+  if (!is.na(new_fileurl)) {
+    if (new_fileurl == old_fileurl) {
+      matched <- TRUE
+    }
+  }
+  else if (!is.na(new_infourl)) {
+    if (old_infourl == new_infourl) {
+      matched <- TRUE
+    }
+  }
+  
+  if (matched == FALSE) {
     print( paste( 'Match fails', o, oldPhotos[findOld], new_fileurl ) )
-  } else {
+  } else if (matched == TRUE) {
     # get suffix from old iso2c filename
     suffix <- sub('(.*)?\\.(.*)', '\\2', oldPhotos[findOld])
     # make new iso3c filename 
