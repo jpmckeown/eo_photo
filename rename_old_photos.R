@@ -40,7 +40,13 @@ for (o in 25:loopEnd) {
     select(FileURL)
   new_fileurl <- as.character(new_fileurl)
   
-  print(paste(old_fileurl, new_fileurl))
+  new_infourl <- df8 %>% 
+    filter(iso2c == old_iso2c) %>% 
+    filter(ID == old_id) %>% 
+    select(InfoURL)
+  new_infourl <- as.character(new_infourl)
+  
+  #print(paste(old_fileurl, new_fileurl))
   
   matched <-FALSE
   if (!is.na(new_fileurl)) {
@@ -64,8 +70,8 @@ for (o in 25:loopEnd) {
     oldPath <- paste0(old_folder, oldPhotos[findOld])
     newPath <- paste0(new_folder, new_filename)
     #print( paste( o, oldPhotos[findOld], new_filename ) )
-    print( paste( o, oldPath, newPath ) )
-    file.copy(oldPath, newPath)
+    #print( paste( o, oldPath, newPath ) )
+    #file.copy(oldPath, newPath)
   }
 }
 # Test, none missing
