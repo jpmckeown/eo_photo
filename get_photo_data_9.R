@@ -3,19 +3,21 @@
 #df9 <- readRDS('data/df8.rds')
 
 # switch helpful sheet remarks back to NA
-remarks <- grepl('not available; JM downloaded manually', df9$FileURL)
-df9$FileURL[remarks] <- NA
+# remarks <- grepl('not available; JM downloaded manually', df9$FileURL)
+# df9$FileURL[remarks] <- NA
 
 # column records if image downloaded already Y/N
-df9['file'] <- as.character(NA) 
+#df9['file'] <- as.character(NA) 
 
 missing <- 0
 new_folder <- 'w640/'
+temp_folder <- 'w640d/'
+#dir.create(temp_folder)
 new_photos <- list.files(new_folder)
 
 # count/identify missing FileURL
 loopEnd <- nrow(df9)
-for (i in 1:loopEnd) {
+for (i in 101:loopEnd) {
   
   provider <- df9$Provider[i]
   iso3c <- df9$iso3c[i]
@@ -34,14 +36,20 @@ for (i in 1:loopEnd) {
   } 
   else if (length(stored) == 0) {
     df9$file[i] <- 'N'
-    if (is.na(df9$FileURL[i]))  {
+    if (is.na(file_url))  {
       incr(missing)
       #print(paste(i, 'Photo not stored but lack FileURL to download', fn, stored, length(stored)))
       print(paste(i, iso3c, img_id, country, info_url))
     } else {
       # download
-      # print(paste(i, 'Photo downloading', fn, stored, length(stored)))
-      # download.file(url, destfile, method, quiet = FALSE
+      if (provider == 'Unsplash') {
+        suffix <- 'jpg'
+      } else {
+        suffix <- sub('(.*)?\\.(.*)', '\\2', file_url)        
+      }
+      dest <- paste0(temp_folder, iso3c, '_', img_id, '.', suffix)
+      print(paste(i, 'download', fn, dest))
+      download.file(file_url, dest, quiet = FALSE)
       
     }
     
@@ -51,14 +59,15 @@ for (i in 1:loopEnd) {
 # test if any weird stored?
 table(df9$file)
 
-# only 5 Unsplash showing as missing FileURL, why are Pixnio gaps not being flagged?
+#saveRDS(df9, 'data/df9.rds')
+
+
+# only 5 Unsplash showing as missing FileURL, why are Pixnio gaps not being flagged? because of helpful remarks instead of NA
 # AUT 3 Austria
 # FIN 1 Finland
 # IND 2 India
 # MDG 1 Madagascar
 # SGP 2 Singapore
-
-saveRDS(df9, 'data/df9.rds')
 
 # df8_missing <- df8 %>%
 #   filter(is.na(FileURL)) %>%
