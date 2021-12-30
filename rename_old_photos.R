@@ -6,6 +6,8 @@
 # instead copy all files to new folder and loop; No! because oldest fake photos are still there!
 
 # df8 <- readRDS('data/df8.rds')
+df8['file'] <- as.character(NA) # image downloaded already = 'Y'
+
 # imgdata <- readRDS('data/imgdata.rds')
 # dir.create('w640/')
 
