@@ -17,7 +17,7 @@ new_photos <- list.files(new_folder)
 
 # count/identify missing FileURL
 loopEnd <- nrow(df9)
-for (i in 101:loopEnd) {
+for (i in 136:loopEnd) {
   
   provider <- df9$Provider[i]
   iso3c <- df9$iso3c[i]
@@ -39,7 +39,7 @@ for (i in 101:loopEnd) {
     if (is.na(file_url))  {
       incr(missing)
       #print(paste(i, 'Photo not stored but lack FileURL to download', fn, stored, length(stored)))
-      print(paste(i, iso3c, img_id, country, info_url))
+      print(paste(i, iso3c, img_id, country, 'Photo not stored but lack FileURL to download', info_url))
     } else {
       # download
       if (provider == 'Unsplash') {
@@ -49,9 +49,10 @@ for (i in 101:loopEnd) {
       }
       dest <- paste0(temp_folder, iso3c, '_', img_id, '.', suffix)
       print(paste(i, 'download', fn, dest))
-      download.file(file_url, dest, quiet = FALSE)
-      
-    }
+      if (provider != 'Pixabay') {
+        # download.file(file_url, dest, quiet = FALSE)        
+      }
+    } # end FileURL available and not stored, so download
     
   } # end test if stored
 } # end new df loop
@@ -76,3 +77,18 @@ table(df9$file)
 # 
 # print(paste('Missing', missing))
 # Wikimedia, Pixabay
+
+loopEnd <- nrow(df9)
+for (i in 1:loopEnd) {
+  
+  provider <- df9$Provider[i]
+  iso3c <- df9$iso3c[i]
+  img_id <- df9$ID[i]
+  info_url <- df9$InfoURL[i]
+  file_url <- df9$FileURL[i]
+  country <- df9$Country[i]
+  
+  if (provider == 'Pixabay') {
+    print(i)
+  }
+}
