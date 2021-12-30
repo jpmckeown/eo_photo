@@ -22,11 +22,14 @@ for (o in 1:nrow(imgdata)) {
   
   # confirm file exists
   fn <- paste0(old_iso2c, '_', old_id)
-  print(paste(o, fn))
-  # if (grepl()) {
-  #   
+  
+  findOld <- grep(fn, oldPhotos)
+  # if (grepl(fn, oldPhotos)) {
+  #   print(paste(o, fn))
+  # } else {
+  #   print(paste(o, 'not in use now', fn))
   # }
-  #print(paste(o, file_addr))
+  print(paste(o, oldPhotos[findOld], findOld))
 }
 # Test, none missing
 # which(is.na(imgdata$File_address))
