@@ -1,6 +1,11 @@
 # Step 9 download photos other platforms and new Wikimedia
 
 df9 <- readRDS('data/df8.rds')
+
+# switch helpful sheet remarks back to NA
+remarks <- grepl('not available; JM will download manually', df9$FileURL)
+df9$FileURL[remarks] <- NA
+
 # column records if image downloaded already Y/N
 df9['file'] <- as.character(NA) 
 
@@ -32,7 +37,7 @@ for (i in 1:loopEnd) {
     if (is.na(df9$FileURL[i]))  {
       incr(missing)
       #print(paste(i, 'Photo not stored but lack FileURL to download', fn, stored, length(stored)))
-      print(paste(iso3c, img_id,country))
+      print(paste(i, iso3c, img_id, country, info_url))
     } else {
       # download
       # print(paste(i, 'Photo downloading', fn, stored, length(stored)))
@@ -45,6 +50,13 @@ for (i in 1:loopEnd) {
 
 # test if any weird stored?
 table(df9$file)
+
+# only 5 Unsplash showing as missing FileURL, why are Pixnio gaps not being flagged?
+# AUT 3 Austria
+# FIN 1 Finland
+# IND 2 India
+# MDG 1 Madagascar
+# SGP 2 Singapore
 
 saveRDS(df9, 'data/df9.rds')
 
