@@ -1,9 +1,9 @@
 # Step 9 download photos other platforms and new Wikimedia
 
-df9 <- readRDS('data/df8.rds')
+#df9 <- readRDS('data/df8.rds')
 
 # switch helpful sheet remarks back to NA
-remarks <- grepl('not available; JM will download manually', df9$FileURL)
+remarks <- grepl('not available; JM downloaded manually', df9$FileURL)
 df9$FileURL[remarks] <- NA
 
 # column records if image downloaded already Y/N
