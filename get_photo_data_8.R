@@ -12,21 +12,19 @@ artist_remove_user <- function(artist) {
   return(result)
 }
 
-df7a <- readRDS('data/df7.rds')
-df8 <- read_tsv('data/EO_photo_providers.tsv')
-
 # 59 Rapponi caused API error
-pixabay_ID_to_df <- function(imgName) {
-  Pixabay_API <- 'https://pixabay.com/api/?key=24587231-d8363fed1919782211f48ccc6&'
-  this_API <- paste0(Pixabay_API, 'id=', imgName)
-  this_JSON <- jsonlite::fromJSON(this_API, simplifyVector = TRUE)
-  # returns list, 3rd item is dataframe
-  df <- this_JSON[['hits']]
-  return(df)
-}
+# pixabay_ID_to_df <- function(imgName) {
+#   Pixabay_API <- 'https://pixabay.com/api/?key=24587231-d8363fed1919782211f48ccc6&'
+#   this_API <- paste0(Pixabay_API, 'id=', imgName)
+#   this_JSON <- jsonlite::fromJSON(this_API, simplifyVector = TRUE)
+#   # returns list, 3rd item is dataframe
+#   df <- this_JSON[['hits']]
+#   return(df)
+# }
+
 # "user_id":5475750,"user":"Graham-H"  Yes this matches what InfoURL says
 # https://pixabay.com/users/graham-h-5475750/  so ArtistURL can be constructed.
-loopEnd <- nrow(df8)
+
 # for (i in 94:loopEnd) {
 #   if ( df8$Provider[i] == 'Pixabay' && !is.na(df8$Artist[i]) ) { #  
 #     imgName <- df8$ImageName[i]
@@ -45,12 +43,21 @@ loopEnd <- nrow(df8)
 #   }
 # }
 
-# i jumbled by Provider re-ordering? # df8[1,]
-# ad hoc fix Wikimedia link errors
-df8$ArtistInfo[247] <- df8$Artist[247] # Own work
-df8$Artist[247] <- 'Loriski' # manually from InfoURL
+#df7a <- readRDS('data/df7.rds')
+df8 <- read_tsv('data/EO_photo_providers.tsv')
+df8 <- df8[order(df8$Country), ]
+# Why have rows changed index? e.g. 247 now at 244
+df8 <- df8[with(df8, order(Country, ID)), ]
+
+df8['CreditHTML'] <- as.character(NA)
 
 loopEnd <- nrow(df8)
+
+# ad hoc fix Wikimedia link errors
+ownwork <- which(grepl('Own work', df8$Artist))
+df8$ArtistExtra[ownwork] <- 'Own work'
+df8$Artist[ownwork] <- 'Loriski' # manually from InfoURL
+
 for (i in 1:loopEnd) {
   
   artist <- df8$Artist[i]
@@ -65,7 +72,7 @@ for (i in 1:loopEnd) {
     }
   }
   
-  # if CreditHTML exists we use that 
+  # if CreditHTML exists we use that
   if (!is.na(df8$CreditHTML)) {
 
     # Artist, ArtistURL, License, LicenseURL, ImageName, InfoURL
@@ -78,7 +85,7 @@ for (i in 1:loopEnd) {
       # always Artist, License, ImageName, InfoURL
       # optional fields AristURL, ArtistInfo, LicenseURL
       
-      credit_html <- paste0('<a href="', df8$ArtistURL[i], '">', df8$Artist[i], '</a>', '<a href="', df8$LicenseURL[i], '">', df8$License[i], '</a>')
+      credit_html <- paste0('<a href="', df8$ArtistURL[i], '">', df8$Artist[i], '</a>', 'License: <a href="', df8$LicenseURL[i], '">', df8$License[i], '</a>', ' Image: ', 'a href="', df8$InfoURL, '">', df8$InfoURL, '</a> via Wikimedia Commons.')
     }
     
     if (df8$Provider == 'Unsplash') {
@@ -103,7 +110,5 @@ for (i in 1:loopEnd) {
   }
   
 }
-linkLicense <- paste0("<a href='", licenseURL_line2, "'>", licens, "</a>")
-
 
 saveRDS(df8, 'data/df8.rds')
