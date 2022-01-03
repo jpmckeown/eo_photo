@@ -60,8 +60,7 @@ for (i in 136:loopEnd) {
 # test if any weird stored?
 table(df9$file)
 
-#saveRDS(df9, 'data/df9.rds')
-
+saveRDS(df9, 'data/df9.rds')
 
 # only 5 Unsplash showing as missing FileURL, why are Pixnio gaps not being flagged? because of helpful remarks instead of NA
 # AUT 3 Austria

@@ -3,3 +3,6 @@
 .RData
 .Ruserdata
 data/*.Rda
+data/
+photo/
+w640*/
