@@ -16,8 +16,8 @@
 
 loopEnd <- nrow(df8)
 
-# for (i in 1:loopEnd) {}
-for (i in 1:10) {
+for (i in 1:loopEnd) {
+# for (i in 1:10) {
 
   provider <- df8$Provider[i]  
   artist <- df8$Artist[i]
@@ -48,10 +48,18 @@ for (i in 1:10) {
   
   if (provider == 'Unsplash') {
     if ( !is.na(info_url) ) {
-      credit_html <- paste0('<a href="', license_url, '">Unsplash License</a>; Image <a href="', info_url, '">', info_url, '</a>')
+      url <- info_url
     } else if ( !is.na(file_url) ) {
-      credit_html <- paste0('<a href="', license_url, '">Unsplash License</a>; Image <a href="', file_url, '">', file_url, '</a>')
+      url <- file_url
     }
+    if ( !is.na(artist_url) && !is.na(artist) ) {
+      credit_html <- paste0('<a href="', artist_url, '">', artist, '</a>;', ' License <a href="', license_url, '">Unsplash</a>; Image <a href="', url, '">', url, '</a>')
+    } else if ( !is.na(artist) ) {
+      credit_html <- paste0(artist, '; ', '<a href="', license_url, '">Unsplash License</a>; Image <a href="', url, '">', url, '</a>')
+    } else{
+      credit_html <- paste0('<a href="', license_url, '">Unsplash License</a>; Image <a href="', url, '">', url, '</a>')      
+    }
+    print(paste(i, credit_html))
   }
   
   # Photo by Artist on Pixnio
@@ -60,10 +68,12 @@ for (i in 1:10) {
   }
   
   if (provider == 'Pixabay') {
-    if ( !is.na(artist_url) ) {
-      credit_html <- paste0('<a href="', artist_url, '">', artist, '</a>', 'License: <a href="', license_url, '">Pixabay</a>', ' Image: ', 'a href="', info_url, '">', info_url, '</a>')
+    if ( !is.na(artist_url) && !is.na(artist) ) {
+      credit_html <- paste0('<a href="', artist_url, '">', artist, '</a>; ', 'License <a href="', license_url, '">Pixabay</a>', '; Image ', 'a href="', info_url, '">', info_url, '</a>')
+    } else if ( !is.na(artist) ) {
+        credit_html <- paste0(artist, '; ', 'License <a href="', license_url, '">Pixabay</a>', '; Image ', 'a href="', info_url, '">', info_url, '</a>')
     } else {
-      credit_html <- paste0(artist, '; License; <a href="', license_url, '">Pixabay</a>', '; Image ', 'a href="', info_url, '">', info_url, '</a>')
+      credit_html <- paste0('License <a href="', license_url, '">Pixabay</a>', '; Image ', 'a href="', info_url, '">', info_url, '</a>')
     }
   }
   
@@ -77,7 +87,7 @@ for (i in 1:10) {
       credit_html <- paste0('<a href="', license_url, '">', license, '</a>')
     }
   }
-  print(paste(i, credit_html))
+
   df8$CreditHTML[i] <- credit_html 
 }
 
