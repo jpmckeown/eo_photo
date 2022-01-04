@@ -48,9 +48,9 @@ for (i in 1:10) {
   
   if (provider == 'Unsplash') {
     if ( !is.na(info_url) ) {
-      credit_html <- paste0('<a href="', license_url, '">Unsplash License</a> Image: ', info_url)
+      credit_html <- paste0('<a href="', license_url, '">Unsplash License</a>; Image <a href="', info_url, '">', info_url, '</a>')
     } else if ( !is.na(file_url) ) {
-      credit_html <- paste0('<a href="', license_url, '">Unsplash License</a> Image: ', file_url)
+      credit_html <- paste0('<a href="', license_url, '">Unsplash License</a>; Image <a href="', file_url, '">', file_url, '</a>')
     }
   }
   
@@ -82,9 +82,9 @@ for (i in 1:10) {
 }
 
 # Test!
-# which(is.na(df8$CreditHTML)) # no NA
+which(is.na(df8$CreditHTML)) # no NA
 # 
-# saveRDS(df8, 'data/df8.rds')
+saveRDS(df8, 'data/df8.rds')
 # 
 #   # # if CreditHTML exists we use that
 #   # if (!is.na(df8$CreditHTML[i])) {
