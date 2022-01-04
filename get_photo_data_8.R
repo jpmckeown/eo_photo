@@ -1,7 +1,10 @@
 # 8th step, assemble CreditHTML for all Providers
 #  no API call so can be run across whole df repeatedly
+library(tidyverse)
 
-df8 <- read_tsv('data/EO_photo_providers.tsv')
+# df8 <- read_tsv('data/EO_photo_providers.tsv')
+df8 <- read_tsv('data/EO_photo_providers_edited.tsv')
+df8$Artist[which(df8$Artist == '<copy paste>')] <- NA
 
 # Why have rows changed index? e.g. 247 now at 244
 df8 <- df8[with(df8, order(Country, ID)), ]
@@ -36,7 +39,7 @@ for (i in 1:loopEnd) {
     # always Artist, License, ImageName, InfoURL
     # optional fields AristURL, ArtistInfo, LicenseURL
     if ( !is.na(artist_url) ) {
-      credit_html <- paste0('<a href="', artist_url, '">', artist, '</a>', '; License <a href="', license_url, '">', license, '</a>', '; Image ', 'a href="', info_url, '">', info_url, '</a> via Wikimedia Commons.')
+      credit_html <- paste0('<a href="', artist_url, '">', artist, '</a>', '; License <a href="', license_url, '">', license, '</a>', '; Image ', '<a href="', info_url, '">', info_url, '</a> via Wikimedia Commons.')
     } else {
       credit_html <- paste0(artist, '; License <a href="', license_url, '">', license, '</a>', '; Image ', 'a href="', info_url, '">', info_url, '</a> via Wikimedia Commons.')
     }
