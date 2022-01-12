@@ -128,3 +128,32 @@ for (i in 1:loopEnd) {
     }
   }
 }
+
+# test if any zero size images
+path <- '../eo_html/w640/'
+photos640 <- paste0(path, list.files(path))
+fn640 <- list.files(path)
+file640 <- substr(fn640, 1, 5)
+filesizes <- file.info(photos640)$size
+
+# test if all rows df9 correspond to file
+library(tools)
+library(stringr)
+df9 <- readRDS('../eo_html/data/df9.rds')
+head(df9$iso3c)
+looper <- 3 # nrow(df9)
+for (i in 1:looper) {
+  iso3c <- df9$iso3c[i]
+  id <- df9$ID[i]
+  fname <- paste0(iso3c, '_', id)
+
+  arr <- str_detect(file640, fname)
+  if (sum(arr)==1) {
+    print(paste(fname, 'Found once among files'))
+  } else if (sum(arr)==0) {
+    print(paste(iso3c, id, 'Not found among files'))
+  } else {
+    print(paste(sum(arr), 'found'))
+  }
+  #if (file.exist
+}
