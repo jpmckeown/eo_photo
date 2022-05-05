@@ -17,6 +17,7 @@
 loopEnd <- nrow(df8)
 
 for (i in 1:loopEnd) {
+
 # for (i in 1:10) {
 
   provider <- df8$Provider[i]  
@@ -27,7 +28,13 @@ for (i in 1:loopEnd) {
   info_url <- df8$InfoURL[i]
   file_url <- df8$FileURL[i]
   credit_html <- ''
-
+  
+  if ( !is.na(info_url) ) {
+    url <- info_url
+  } else if ( !is.na(file_url) ) {
+    url <- file_url
+  }
+  
   # Artist, ArtistURL, License, LicenseURL, ImageName, InfoURL
   #  also provider prefix and suffix, or special way of assembling?
   # https://creativecommons.org/licenses/publicdomain/
@@ -38,20 +45,15 @@ for (i in 1:loopEnd) {
     # always Artist, License, ImageName, InfoURL
     # optional fields ArtistURL, ArtistInfo, LicenseURL
     if ( !is.na(artist_url) && !is.na(artist)) {
-      credit_html <- paste0('<a href="', artist_url, '">', artist, '</a>', '; License <a href="', license_url, '">', license, '</a>', '; Image ', '<a href="', info_url, '">', info_url, '</a> via Wikimedia Commons.')
+      credit_html <- paste0('<a href="', artist_url, '">', artist, '</a>', '; License <a href="', license_url, '">', license, '</a>', '; Image ', '<a href="', url, '">', url, '</a> via Wikimedia Commons.')
     } else if ( !is.na(artist) ) {
-        credit_html <- paste0(artist, '; License <a href="', license_url, '">', license, '</a>', '; Image ', '<a href="', info_url, '">', info_url, '</a> via Wikimedia Commons.')
+        credit_html <- paste0(artist, '; License <a href="', license_url, '">', license, '</a>', '; Image ', '<a href="', url, '">', url, '</a> via Wikimedia Commons.')
     } else {
-      credit_html <- paste0('License <a href="', license_url, '">', license, '</a>', '; Image ', 'a href="', info_url, '">', info_url, '</a> via Wikimedia Commons.')
+      credit_html <- paste0('License <a href="', license_url, '">', license, '</a>', '; Image ', 'a href="', url, '">', url, '</a> via Wikimedia Commons.')
     }
   }
   
   if (provider == 'Unsplash') {
-    if ( !is.na(info_url) ) {
-      url <- info_url
-    } else if ( !is.na(file_url) ) {
-      url <- file_url
-    }
     if ( !is.na(artist_url) && !is.na(artist) ) {
       credit_html <- paste0('<a href="', artist_url, '">', artist, '</a>;', ' License <a href="', license_url, '">Unsplash</a>; Image <a href="', url, '">', url, '</a>')
     } else if ( !is.na(artist) ) {
@@ -69,11 +71,11 @@ for (i in 1:loopEnd) {
   
   if (provider == 'Pixabay') {
     if ( !is.na(artist_url) && !is.na(artist) ) {
-      credit_html <- paste0('<a href="', artist_url, '">', artist, '</a>; ', 'License <a href="', license_url, '">Pixabay</a>', '; Image ', 'a href="', info_url, '">', info_url, '</a>')
+      credit_html <- paste0('<a href="', artist_url, '">', artist, '</a>; ', 'License <a href="', license_url, '">Pixabay</a>', '; Image ', '<a href="', url, '">', url, '</a>')
     } else if ( !is.na(artist) ) {
-        credit_html <- paste0(artist, '; ', 'License <a href="', license_url, '">Pixabay</a>', '; Image ', 'a href="', info_url, '">', info_url, '</a>')
+        credit_html <- paste0(artist, '; ', 'License <a href="', license_url, '">Pixabay</a>', '; Image ', '<a href="', url, '">', url, '</a>')
     } else {
-      credit_html <- paste0('License <a href="', license_url, '">Pixabay</a>', '; Image ', 'a href="', info_url, '">', info_url, '</a>')
+      credit_html <- paste0('License <a href="', license_url, '">Pixabay</a>', '; Image ', '<a href="', url, '">', url, '</a>')
     }
   }
   

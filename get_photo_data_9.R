@@ -141,7 +141,7 @@ library(tools)
 library(stringr)
 df9 <- readRDS('../eo_html/data/df9.rds')
 head(df9$iso3c)
-looper <- 3 # nrow(df9)
+looper <- nrow(df9)
 for (i in 1:looper) {
   iso3c <- df9$iso3c[i]
   id <- df9$ID[i]
@@ -149,7 +149,7 @@ for (i in 1:looper) {
 
   arr <- str_detect(file640, fname)
   if (sum(arr)==1) {
-    print(paste(fname, 'Found once among files'))
+    # print(paste(fname, 'Found once among files'))
   } else if (sum(arr)==0) {
     print(paste(iso3c, id, 'Not found among files'))
   } else {
@@ -157,3 +157,13 @@ for (i in 1:looper) {
   }
   #if (file.exist
 }
+
+# [1] "BEN 4 Not found among files"
+# [1] "BTN 4 Not found among files"
+# [1] "BOL 2 Not found among files"
+# [1] "BOL 3 Not found among files"
+# [1] "BOL 4 Not found among files"
+# [1] "BIH 3 Not found among files"
+# [1] "BWA 2 Not found among files"
+# [1] "BWA 3 Not found among files"
+# [1] "KHM 1 Not found among files"
