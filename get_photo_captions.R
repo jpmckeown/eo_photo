@@ -37,4 +37,7 @@ which(df10[,4] != import[,4 ])
 # 248 249 250 283 287 288 291 315 390 398 463 567
 
 df10$Caption <- import$Caption
+df10$CreditHTML[239] <- "GRAPH from Ouagadougou Partnership/Adapted by J.Bardi/CFR; Terms of use <a href=\"https://www.thinkglobalhealth.org/terms-use\">https://www.thinkglobalhealth.org/terms-use</a>; Image <a href=\"https://www.thinkglobalhealth.org/sites/default/files/2020-03/JF.MB-W.AfricaOP-3.18.20-Graph-2-THREE-TWO.jpg\">https://www.thinkglobalhealth.org/sites/default/files/2020-03/JF.MB-W.AfricaOP-3.18.20-Graph-2-THREE-TWO.jpg</a>."
+
+df10$Caption[239] <- "The country is part of the Ouagadougou Partnership which supports the nine Francophone countries in West Africa† to address the need for modern contraception in the region."
 saveRDS(df10, '../eo_html/data/df10.rds')
